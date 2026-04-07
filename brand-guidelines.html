@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edge Energy — Brand Guidelines</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --green-900: #1B4332;
+  --green-700: #2D6A4F;
+  --green-500: #40916C;
+  --green-300: #52B788;
+  --green-100: #95D5B2;
+  --green-50:  #D8F3DC;
+  --slate-900: #0F1A14;
+  --slate-700: #1B2B3A;
+  --slate-500: #2D3E48;
+  --slate-300: #5C6B62;
+  --slate-100: #9BA8A0;
+  --cream:     #FAFAF8;
+  --warm:      #F4F4F0;
+  --border:    #E4E4DC;
+  --white:     #FFFFFF;
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans:  'Inter', system-ui, sans-serif;
+}
+body { font-family: var(--sans); background: var(--cream); color: var(--slate-700); line-height: 1.6; }
+
+/* PAGE LAYOUT */
+.page { max-width: 960px; margin: 0 auto; padding: 60px 40px 100px; }
+
+/* COVER */
+.cover { display: flex; justify-content: space-between; align-items: flex-end; padding-bottom: 48px; border-bottom: 3px solid var(--green-700); margin-bottom: 64px; }
+.cover-left h1 { font-family: var(--serif); font-size: 3rem; font-weight: 900; color: var(--slate-700); line-height: 1; letter-spacing: -0.03em; margin-bottom: 8px; }
+.cover-left h1 span { color: var(--green-700); }
+.cover-left p { font-size: 0.8rem; color: var(--slate-300); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500; }
+.cover-right { font-size: 0.75rem; color: var(--slate-100); text-align: right; line-height: 1.8; }
+
+/* SECTION */
+.section { margin-bottom: 72px; }
+.section-tag { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--green-500); margin-bottom: 8px; }
+.section-title { font-family: var(--serif); font-size: 2rem; font-weight: 900; color: var(--slate-700); letter-spacing: -0.02em; margin-bottom: 8px; }
+.section-title em { font-style: italic; color: var(--green-700); }
+.section-desc { font-size: 0.875rem; color: var(--slate-300); max-width: 540px; line-height: 1.8; margin-bottom: 32px; }
+.rule { height: 1px; background: var(--border); margin: 12px 0 32px; }
+
+/* LOGO SHOWCASE */
+.logo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 16px; }
+.logo-card { border-radius: 10px; padding: 36px 28px; display: flex; flex-direction: column; align-items: center; gap: 20px; border: 1px solid transparent; }
+.logo-card.on-white { background: var(--white); border-color: var(--border); }
+.logo-card.on-dark { background: var(--slate-700); }
+.logo-card.on-green { background: var(--green-700); }
+.logo-card.on-cream { background: var(--cream); border-color: var(--border); }
+.logo-label { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; }
+.logo-card.on-white .logo-label, .logo-card.on-cream .logo-label { color: var(--slate-100); }
+.logo-card.on-dark .logo-label, .logo-card.on-green .logo-label { color: rgba(255,255,255,0.3); }
+.logo-span2 { grid-column: span 2; }
+.logo-span3 { grid-column: span 3; }
+
+/* DO/DONT */
+.do-dont { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+.do-card, .dont-card { border-radius: 8px; padding: 20px; }
+.do-card { background: #F0FDF4; border: 1px solid #86EFAC; }
+.dont-card { background: #FFF1F2; border: 1px solid #FCA5A5; }
+.do-card h4 { color: #166534; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+.dont-card h4 { color: #BE123C; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+.do-card li, .dont-card li { font-size: 0.78rem; color: var(--slate-300); margin-left: 1rem; margin-bottom: 4px; line-height: 1.6; }
+
+/* COLOUR PALETTE */
+.palette-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 24px; }
+.swatch { border-radius: 8px; overflow: hidden; }
+.swatch-colour { height: 80px; }
+.swatch-info { padding: 8px; background: white; border: 1px solid var(--border); border-top: none; border-radius: 0 0 8px 8px; }
+.swatch-name { font-size: 0.7rem; font-weight: 600; color: var(--slate-700); display: block; margin-bottom: 2px; }
+.swatch-hex { font-size: 0.65rem; color: var(--slate-100); font-family: monospace; }
+
+.palette-secondary { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
+
+/* TYPOGRAPHY */
+.type-sample { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 28px; margin-bottom: 16px; }
+.type-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--green-500); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.type-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.type-specimen { font-family: var(--serif); font-size: 2.8rem; font-weight: 900; color: var(--slate-700); line-height: 1.1; letter-spacing: -0.02em; }
+.type-specimen em { color: var(--green-700); font-style: italic; }
+.type-specimen-sans { font-family: var(--sans); font-size: 1rem; color: var(--slate-300); font-weight: 300; line-height: 1.8; margin-top: 8px; }
+.type-meta { font-size: 0.72rem; color: var(--slate-100); margin-top: 12px; line-height: 1.7; }
+
+/* SPACING */
+.spacing-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; }
+.spacing-item { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.spacing-block { background: var(--green-300); border-radius: 4px; width: 40px; }
+.spacing-label { font-size: 0.65rem; color: var(--slate-100); font-family: monospace; }
+
+/* USAGE EXAMPLES */
+.usage-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.usage-card { border-radius: 10px; padding: 24px; border: 1px solid var(--border); }
+.usage-card h4 { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--slate-300); margin-bottom: 12px; }
+
+/* TONE */
+.tone-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.tone-item { background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: 20px; }
+.tone-item h4 { font-size: 0.7rem; font-weight: 700; color: var(--green-700); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+.tone-item p { font-size: 0.82rem; color: var(--slate-300); line-height: 1.7; }
+
+@media (max-width: 640px) {
+  .logo-grid { grid-template-columns: 1fr; }
+  .palette-grid, .palette-secondary { grid-template-columns: repeat(3, 1fr); }
+  .do-dont, .usage-grid, .tone-grid { grid-template-columns: 1fr; }
+  .cover { flex-direction: column; gap: 16px; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- COVER -->
+  <div class="cover">
+    <div class="cover-left">
+      <h1>edge<span>.</span><br>energy</h1>
+      <p>Brand Guidelines — v1.0</p>
+    </div>
+    <div class="cover-right">
+      Independent Business Energy Broker<br>
+      London, England<br>
+      edge-energy.uk<br>
+      2026
+    </div>
+  </div>
+
+  <!-- LOGO -->
+  <div class="section">
+    <div class="section-tag">01 — Identity</div>
+    <div class="section-title">The <em>logo</em></div>
+    <p class="section-desc">The Edge Energy mark is built from three layered chevrons graduating from deep forest green to bright mint — representing momentum, clarity, and forward motion. Always use the logo at the correct minimum size and never alter its proportions.</p>
+    <div class="rule"></div>
+
+    <div class="logo-grid">
+      <!-- Primary on white -->
+      <div class="logo-card on-white">
+        <svg width="180" height="56" viewBox="0 0 200 62" fill="none">
+          <defs>
+            <linearGradient id="lg1a" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#52B788"/><stop offset="100%" stop-color="#2D6A4F"/></linearGradient>
+            <linearGradient id="lg1b" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#74C69D"/><stop offset="100%" stop-color="#40916C"/></linearGradient>
+            <linearGradient id="lg1c" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#95D5B2"/><stop offset="100%" stop-color="#74C69D"/></linearGradient>
+          </defs>
+          <path d="M4 46 L14 24 L20 24 L12 42 L28 42 L18 60 L12 60 L20 44 Z" fill="url(#lg1a)" opacity="0.55"/>
+          <path d="M9 35 L19 13 L25 13 L17 31 L33 31 L23 51 L17 51 L25 33 Z" fill="url(#lg1b)" opacity="0.8"/>
+          <path d="M14 24 L24 4 L30 4 L22 20 L38 20 L28 40 L22 40 L30 22 Z" fill="url(#lg1c)"/>
+          <text x="50" y="28" font-family="Inter,sans-serif" font-size="20" font-weight="700" fill="#1B2B3A" y="34">edge energy</text>
+        </svg>
+        <div class="logo-label">Primary — Light</div>
+      </div>
+
+      <!-- Primary on dark -->
+      <div class="logo-card on-dark">
+        <svg width="180" height="56" viewBox="0 0 200 62" fill="none">
+          <defs>
+            <linearGradient id="lg2a" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#52B788"/><stop offset="100%" stop-color="#2D6A4F"/></linearGradient>
+            <linearGradient id="lg2b" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#74C69D"/><stop offset="100%" stop-color="#40916C"/></linearGradient>
+            <linearGradient id="lg2c" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#95D5B2"/><stop offset="100%" stop-color="#74C69D"/></linearGradient>
+          </defs>
+          <path d="M4 46 L14 24 L20 24 L12 42 L28 42 L18 60 L12 60 L20 44 Z" fill="url(#lg2a)" opacity="0.55"/>
+          <path d="M9 35 L19 13 L25 13 L17 31 L33 31 L23 51 L17 51 L25 33 Z" fill="url(#lg2b)" opacity="0.8"/>
+          <path d="M14 24 L24 4 L30 4 L22 20 L38 20 L28 40 L22 40 L30 22 Z" fill="url(#lg2c)"/>
+          <text x="50" y="28" font-family="Inter,sans-serif" font-size="20" font-weight="700" fill="#FFFFFF">edge energy</text>
+        </svg>
+        <div class="logo-label">Primary — Dark</div>
+      </div>
+
+      <!-- Primary on green -->
+      <div class="logo-card on-green">
+        <svg width="180" height="56" viewBox="0 0 200 62" fill="none">
+          <path d="M4 46 L14 24 L20 24 L12 42 L28 42 L18 60 L12 60 L20 44 Z" fill="rgba(255,255,255,0.15)"/>
+          <path d="M9 35 L19 13 L25 13 L17 31 L33 31 L23 51 L17 51 L25 33 Z" fill="rgba(255,255,255,0.45)"/>
+          <path d="M14 24 L24 4 L30 4 L22 20 L38 20 L28 40 L22 40 L30 22 Z" fill="rgba(255,255,255,0.9)"/>
+          <text x="50" y="28" font-family="Inter,sans-serif" font-size="20" font-weight="700" fill="#FFFFFF">edge energy</text>
+        </svg>
+        <div class="logo-label">Primary — Green</div>
+      </div>
+
+      <!-- Icon only -->
+      <div class="logo-card on-dark">
+        <svg width="64" height="64" viewBox="0 0 64 72" fill="none">
+          <defs>
+            <linearGradient id="lg3a" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#2D6A4F"/><stop offset="100%" stop-color="#1B4332"/></linearGradient>
+            <linearGradient id="lg3b" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#52B788"/><stop offset="100%" stop-color="#2D6A4F"/></linearGradient>
+            <linearGradient id="lg3c" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#95D5B2"/><stop offset="100%" stop-color="#52B788"/></linearGradient>
+          </defs>
+          <path d="M4 60 L18 28 L27 28 L14 54 L38 54 L24 70 L15 70 L28 52 Z" fill="url(#lg3a)" opacity="0.55"/>
+          <path d="M10 45 L24 13 L33 13 L20 39 L44 39 L30 65 L21 65 L34 41 Z" fill="url(#lg3b)" opacity="0.8"/>
+          <path d="M16 30 L30 2 L39 2 L26 24 L50 24 L36 50 L27 50 L40 26 Z" fill="url(#lg3c)"/>
+        </svg>
+        <div class="logo-label">Icon — Favicon/App</div>
+      </div>
+
+      <!-- Horizontal lockup -->
+      <div class="logo-card on-white logo-span2">
+        <svg width="340" height="52" viewBox="0 0 360 56" fill="none">
+          <defs>
+            <linearGradient id="lg4a" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#52B788"/><stop offset="100%" stop-color="#2D6A4F"/></linearGradient>
+            <linearGradient id="lg4b" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#74C69D"/><stop offset="100%" stop-color="#40916C"/></linearGradient>
+            <linearGradient id="lg4c" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#95D5B2"/><stop offset="100%" stop-color="#74C69D"/></linearGradient>
+          </defs>
+          <path d="M2 42 L10 22 L15 22 L9 38 L23 38 L15 54 L10 54 L17 40 Z" fill="url(#lg4a)" opacity="0.55"/>
+          <path d="M6 32 L14 12 L19 12 L13 28 L27 28 L19 46 L14 46 L21 30 Z" fill="url(#lg4b)" opacity="0.8"/>
+          <path d="M10 22 L18 4 L23 4 L17 18 L31 18 L23 36 L18 36 L25 20 Z" fill="url(#lg4c)"/>
+          <rect x="42" y="8" width="1" height="38" fill="#E4E4DC"/>
+          <text x="54" y="26" font-family="Inter,sans-serif" font-size="20" font-weight="700" fill="#1B2B3A" y="34">edge energy</text>
+          <text x="54" y="46" font-family="Inter,sans-serif" font-size="9" font-weight="400" fill="#9BA8A0" letter-spacing="2.5"></text>
+        </svg>
+        <div class="logo-label">Horizontal — Full Lockup with Tagline</div>
+      </div>
+    </div>
+
+    <div class="do-dont">
+      <div class="do-card">
+        <h4>✓ Do</h4>
+        <ul>
+          <li>Use the logo on white, dark slate, or forest green backgrounds</li>
+          <li>Maintain clear space equal to the height of the 'e' around all sides</li>
+          <li>Use the icon-only mark for favicons, app icons, and small spaces</li>
+          <li>Use the full lockup when space allows</li>
+        </ul>
+      </div>
+      <div class="dont-card">
+        <h4>✗ Don't</h4>
+        <ul>
+          <li>Stretch, rotate, or alter the logo proportions</li>
+          <li>Place on busy photographic backgrounds without a backing</li>
+          <li>Recreate the mark — always use the provided SVG files</li>
+          <li>Change the gradient colours or use flat fills on the chevron mark</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- COLOUR PALETTE -->
+  <div class="section">
+    <div class="section-tag">02 — Colour</div>
+    <div class="section-title">The <em>palette</em></div>
+    <p class="section-desc">The Edge Energy palette is anchored in forest green — confident, natural, and distinct in the energy sector. The full range from deep forest to bright mint allows flexible use across light and dark surfaces.</p>
+    <div class="rule"></div>
+
+    <div class="palette-grid">
+      <div class="swatch">
+        <div class="swatch-colour" style="background:#1B4332"></div>
+        <div class="swatch-info"><span class="swatch-name">Forest</span><span class="swatch-hex">#1B4332</span></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-colour" style="background:#2D6A4F"></div>
+        <div class="swatch-info"><span class="swatch-name">Primary Green</span><span class="swatch-hex">#2D6A4F</span></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-colour" style="background:#40916C"></div>
+        <div class="swatch-info"><span class="swatch-name">Mid Green</span><span class="swatch-hex">#40916C</span></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-colour" style="background:#52B788"></div>
+        <div class="swatch-info"><span class="swatch-name">Light Green</span><span class="swatch-hex">#52B788</span></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-colour" style="background:#95D5B2"></div>
+        <div class="swatch-info"><span class="swatch-name">Mint</span><span class="swatch-hex">#95D5B2</span></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-colour" style="background:#D8F3DC"></div>
+        <div class="swatch-info"><span class="swatch-name">Pale Mint</span><span class="swatch-hex">#D8F3DC</span></div>
+      </div>
+    </div>
+
+    <div class="palette-secondary" style="margin-top:12px">
+      <div class="swatch">
+        <div class="swatch-colour" style="background:#0F1A14"></div>
+        <div class="swatch-info"><span class="swatch-name">Black</span><span class="swatch-hex">#0F1A14</span></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-colour" style="background:#1B2B3A"></div>
+        <div class="swatch-info"><span class="swatch-name">Slate</span><span class="swatch-hex">#1B2B3A</span></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-colour" style="background:#5C6B62"></div>
+        <div class="swatch-info"><span class="swatch-name">Mid Slate</span><span class="swatch-hex">#5C6B62</span></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-colour" style="background:#FAFAF8"></div>
+        <div class="swatch-info"><span class="swatch-name">Cream</span><span class="swatch-hex">#FAFAF8</span></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-colour" style="background:#F4F4F0"></div>
+        <div class="swatch-info"><span class="swatch-name">Warm White</span><span class="swatch-hex">#F4F4F0</span></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-colour" style="background:#E4E4DC; border:1px solid #ddd"></div>
+        <div class="swatch-info"><span class="swatch-name">Border</span><span class="swatch-hex">#E4E4DC</span></div>
+      </div>
+    </div>
+
+    <div style="margin-top:24px;background:var(--white);border:1px solid var(--border);border-radius:10px;padding:20px">
+      <div class="type-label">Colour usage rules</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:12px">
+        <div>
+          <div style="font-size:0.7rem;font-weight:600;color:var(--slate-700);margin-bottom:6px">Primary actions</div>
+          <div style="background:#2D6A4F;color:white;padding:8px 14px;border-radius:5px;font-size:0.8rem;font-weight:600;text-align:center">Primary Green #2D6A4F</div>
+        </div>
+        <div>
+          <div style="font-size:0.7rem;font-weight:600;color:var(--slate-700);margin-bottom:6px">Body text</div>
+          <div style="background:#1B2B3A;color:white;padding:8px 14px;border-radius:5px;font-size:0.8rem;font-weight:600;text-align:center">Slate #1B2B3A</div>
+        </div>
+        <div>
+          <div style="font-size:0.7rem;font-weight:600;color:var(--slate-700);margin-bottom:6px">Page background</div>
+          <div style="background:#FAFAF8;color:#1B2B3A;padding:8px 14px;border-radius:5px;font-size:0.8rem;font-weight:600;text-align:center;border:1px solid #E4E4DC">Cream #FAFAF8</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TYPOGRAPHY -->
+  <div class="section">
+    <div class="section-tag">03 — Typography</div>
+    <div class="section-title">The <em>typefaces</em></div>
+    <p class="section-desc">Two typefaces only. Playfair Display for headlines — bringing authority and elegance. Inter for body and UI — clean, legible, and modern.</p>
+    <div class="rule"></div>
+
+    <div class="type-sample">
+      <div class="type-label">Playfair Display — Headlines & Display</div>
+      <div class="type-specimen">Energy bills that <em>finally</em><br>work in your favour.</div>
+      <div class="type-meta">Weights used: 700 (Bold), 900 (Black) · Italic for emphasis and product names · Tracking: -0.02em</div>
+    </div>
+
+    <div class="type-sample">
+      <div class="type-label">Inter — Body, UI & Supporting Text</div>
+      <div class="type-specimen-sans" style="font-size:1.1rem;color:var(--slate-700)">We're independent UK energy brokers. We search the whole market, negotiate hard on your behalf, and handle the entire switch — so your business always gets the best possible deal.</div>
+      <div style="margin-top:16px;display:flex;gap:24px;flex-wrap:wrap">
+        <span style="font-size:0.78rem;color:var(--slate-100)">300 Light — body copy</span>
+        <span style="font-size:0.78rem;font-weight:400;color:var(--slate-100)">400 Regular — UI text</span>
+        <span style="font-size:0.78rem;font-weight:500;color:var(--slate-100)">500 Medium — labels</span>
+        <span style="font-size:0.78rem;font-weight:600;color:var(--slate-100)">600 SemiBold — buttons</span>
+        <span style="font-size:0.78rem;font-weight:700;color:var(--slate-100)">700 Bold — strong emphasis</span>
+      </div>
+    </div>
+
+    <div style="background:var(--white);border:1px solid var(--border);border-radius:10px;padding:20px">
+      <div class="type-label">Type scale</div>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:12px">
+        <div style="display:flex;align-items:baseline;gap:16px"><span style="font-family:var(--serif);font-size:2.8rem;font-weight:900;color:var(--slate-700);line-height:1">Aa</span><span style="font-size:0.72rem;color:var(--slate-100)">Display — 2.8rem / Playfair 900</span></div>
+        <div style="display:flex;align-items:baseline;gap:16px"><span style="font-family:var(--serif);font-size:2rem;font-weight:700;color:var(--slate-700);line-height:1">Aa</span><span style="font-size:0.72rem;color:var(--slate-100)">H2 — 2rem / Playfair 700</span></div>
+        <div style="display:flex;align-items:baseline;gap:16px"><span style="font-family:var(--serif);font-size:1.4rem;font-weight:700;color:var(--slate-700);line-height:1">Aa</span><span style="font-size:0.72rem;color:var(--slate-100)">H3 — 1.4rem / Playfair 700</span></div>
+        <div style="display:flex;align-items:baseline;gap:16px"><span style="font-size:1rem;font-weight:300;color:var(--slate-300);line-height:1">Aa</span><span style="font-size:0.72rem;color:var(--slate-100)">Body — 1rem / Inter 300</span></div>
+        <div style="display:flex;align-items:baseline;gap:16px"><span style="font-size:0.75rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--green-500);line-height:1">LABEL</span><span style="font-size:0.72rem;color:var(--slate-100)">Label — 0.75rem / Inter 600 / uppercase / +0.14em</span></div>
+        <div style="display:flex;align-items:baseline;gap:16px"><span style="font-size:0.72rem;color:var(--slate-100);line-height:1">Aa</span><span style="font-size:0.72rem;color:var(--slate-100)">Small / Meta — 0.72rem / Inter 400</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VOICE + TONE -->
+  <div class="section">
+    <div class="section-tag">04 — Voice & Tone</div>
+    <div class="section-title">How we <em>speak</em></div>
+    <p class="section-desc">Edge Energy speaks like a trusted advisor, not a salesperson. Direct, plain, and always honest.</p>
+    <div class="rule"></div>
+
+    <div class="tone-grid">
+      <div class="tone-item">
+        <h4>Confident, not arrogant</h4>
+        <p>"We'll tell you if your current contract is already competitive. We'd rather lose a deal than waste your time."</p>
+      </div>
+      <div class="tone-item">
+        <h4>Plain, not dumbed down</h4>
+        <p>"We search the whole market, negotiate with suppliers, and handle the switch from start to finish."</p>
+      </div>
+      <div class="tone-item">
+        <h4>Human, not corporate</h4>
+        <p>"A real person in the UK handles your account. No call centres. No bots."</p>
+      </div>
+      <div class="tone-item">
+        <h4>Honest, not salesy</h4>
+        <p>"Independent, whole-of-market, and always working in your interest." — Never "best deal guaranteed".</p>
+      </div>
+    </div>
+
+    <div style="background:var(--slate-700);border-radius:10px;padding:24px;margin-top:16px">
+      <div style="font-size:0.65rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:12px">The tagline</div>
+      <div style="font-family:var(--serif);font-size:1.8rem;font-weight:900;color:white;letter-spacing:-0.02em">The Edge in Business Energy<span style="color:#52B788">.</span></div>
+      <div style="font-size:0.78rem;color:rgba(255,255,255,0.4);margin-top:8px;line-height:1.7">Use in full on letterheads, email signatures, and footer. Use abbreviated "edge energy" in navigation and compact contexts. Always lowercase.</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div style="border-top:2px solid var(--green-700);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+    <div style="font-family:var(--serif);font-size:1.2rem;font-weight:900;color:var(--slate-700)">edge<span style="color:var(--green-700)">.</span>energy</div>
+    <div style="font-size:0.72rem;color:var(--slate-100)">Brand Guidelines v1.0 · 2026 · edge-energy.uk</div>
+  </div>
+
+</div>
+</body>
+</html>
