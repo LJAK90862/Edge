@@ -522,7 +522,7 @@ async function handleSubmit(e, form) {
   btn.textContent = 'sending...';
   btn.disabled = true;
   try {
-    await fetch('REPLACE_WITH_MAKE_S1_WEBHOOK_URL', {
+    await fetch('https://hook.eu1.make.com/fynn7fwxsxkq0v8p47nto7o56149atxt', {
       method: 'POST', mode: 'no-cors',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, email, company })
