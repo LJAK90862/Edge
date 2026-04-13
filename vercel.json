@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "api/**/*.js", "use": "@vercel/node" },
+    { "src": "*.html", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/api/$1" },
+    { "src": "/broker", "dest": "/broker.html" },
+    { "src": "/([a-f0-9-]{36})", "dest": "/portal.html" },
+    { "src": "/", "dest": "/portal.html" }
+  ]
+}
