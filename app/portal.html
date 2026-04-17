@@ -306,6 +306,36 @@ nav{background:var(--white);border-bottom:1px solid var(--border);padding:1rem 5
   </div>
 </div>
 
+<!-- Signup (shown when no deal ID) -->
+<div id="signup" style="display:none;">
+  <div class="signup-wrap">
+    <div class="signup-card">
+      <div id="signup-form-wrap">
+        <h1>get your <em>edge.</em></h1>
+        <p>create your personal deal room in 2 minutes. we'll search the whole market and find you the best energy deal.</p>
+        <form class="signup-form" onsubmit="handleSignup(event)">
+          <input type="text" name="name" placeholder="your full name" required />
+          <input type="email" name="email" placeholder="work email" required />
+          <input type="text" name="company" placeholder="company name" required />
+          <input type="tel" name="phone" placeholder="phone number" />
+          <input type="text" name="currentSupplier" placeholder="current energy supplier (optional)" />
+          <input type="number" name="annualKwh" placeholder="annual kWh usage (optional)" />
+          <input type="date" name="contractEndDate" placeholder="contract end date (optional)" />
+          <button type="submit" class="signup-submit" id="signup-btn">create my deal room →</button>
+        </form>
+        <p class="signup-note">we'll email you a link to your personal deal room.</p>
+      </div>
+      <div id="signup-success" style="display:none;">
+        <div class="signup-success">
+          <div style="font-size:2.5rem;margin-bottom:16px;">✓</div>
+          <h2>deal room created!</h2>
+          <p>check your email — we've sent you a link to your personal deal room. from there you can sign your letter of authority and track your energy switch.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Confirm supplier modal -->
 <div class="modal-overlay" id="modal">
   <div class="modal">
@@ -434,11 +464,39 @@ function updateStatus(status) {
   if (status === 'won') pill.classList.add('active');
 
   // LOA card
-  if (['loa_signed','quotes_requested','quotes_presented','contract_sent','won'].includes(status)) {
+  if (['loa_sent','loa_signed','quotes_requested','quotes_presented','contract_sent','won'].includes(status)) {
     document.getElementById('loa-unsigned').style.display = 'none';
     document.getElementById('loa-signed-state').style.display = 'block';
-    document.getElementById('loa-tag').textContent = 'signed';
+    document.getElementById('loa-tag').textContent = status === 'loa_sent' ? 'sent — check email' : 'signed';
     document.getElementById('loa-tag').className = 'card-tag tag-done';
+    if (status === 'loa_sent') {
+      document.querySelector('#loa-signed-state .loa-signed-text').textContent = 'letter of authority sent — check your email to sign via DocuSign.';
+    }
+  }
+
+  // Contract sent state
+  if (status === 'contract_sent' && dealData) {
+    document.getElementById('quotes-container').innerHTML = `
+      <div style="text-align:center;padding:32px;">
+        <div style="font-size:2.5rem;margin-bottom:12px;">📄</div>
+        <h3 style="font-family:var(--serif);font-size:1.2rem;color:var(--slate);margin-bottom:8px;">contract sent to your email</h3>
+        <p style="color:var(--mid);font-size:0.875rem;line-height:1.7;">we've sent your contract with <strong>${dealData.selected_supplier}</strong> via DocuSign.<br>check your email, review and sign digitally.</p>
+      </div>`;
+    document.getElementById('quotes-tag').textContent = 'contract sent';
+    document.getElementById('quotes-tag').className = 'card-tag tag-done';
+  }
+
+  // Won state — congratulations
+  if (status === 'won' && dealData) {
+    document.getElementById('quotes-container').innerHTML = `
+      <div style="text-align:center;padding:40px 20px;">
+        <div style="font-size:3rem;margin-bottom:16px;">🎉</div>
+        <h3 style="font-family:var(--serif);font-size:1.6rem;color:var(--slate);margin-bottom:8px;">congratulations!</h3>
+        <p style="color:var(--mid);font-size:0.95rem;line-height:1.8;max-width:400px;margin:0 auto;">your energy switch with <strong>${dealData.selected_supplier}</strong> is confirmed. we're handling everything from here — supplier notification, meter transfer, and switch coordination.</p>
+        <p style="color:var(--mid);font-size:0.875rem;line-height:1.7;margin-top:16px;">we'll be in touch to confirm your switch date.<br>we'll also track your renewal so you never overpay again.</p>
+      </div>`;
+    document.getElementById('quotes-tag').textContent = 'switched ✓';
+    document.getElementById('quotes-tag').className = 'card-tag tag-done';
   }
 }
 
@@ -455,23 +513,38 @@ function closeModal() {
 
 async function confirmSupplier() {
   if (!selectedQuote) return;
-  closeModal();
+  const btn = document.querySelector('#modal .btn-primary');
+  btn.textContent = 'sending contract…';
+  btn.disabled = true;
   try {
-    await fetch(`${API_BASE}/api/deals/${dealId}/select`, {
+    const res = await fetch(`${API_BASE}/api/deals/select`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ token, quoteId: selectedQuote.id, supplier: selectedQuote.supplier, unitRate: selectedQuote.rate, contractLength: selectedQuote.length })
+      body: JSON.stringify({ dealId, token, quoteId: selectedQuote.id, supplier: selectedQuote.supplier, unitRate: selectedQuote.rate, contractLength: selectedQuote.length })
     });
-    alert('great choice! we\'ll send your contract to sign shortly. check your email.');
+    if (!res.ok) throw new Error();
+    closeModal();
+    // Update UI to show contract sent state
+    updateStatus('contract_sent');
+    renderProgress('contract_sent');
+    document.getElementById('quotes-tag').textContent = 'contract sent';
+    document.getElementById('quotes-tag').className = 'card-tag tag-done';
+    // Show contract sent notice
+    document.getElementById('quotes-container').innerHTML = `
+      <div style="text-align:center;padding:32px;">
+        <div style="font-size:2.5rem;margin-bottom:12px;">📄</div>
+        <h3 style="font-family:var(--serif);font-size:1.2rem;color:var(--slate);margin-bottom:8px;">contract sent to your email</h3>
+        <p style="color:var(--mid);font-size:0.875rem;line-height:1.7;">we've sent your contract with <strong>${selectedQuote.supplier}</strong> at <strong>${selectedQuote.rate}p/kWh</strong> via DocuSign.<br>check your email, review and sign digitally.</p>
+      </div>`;
   } catch(e) {
-    alert('something went wrong. please email hello@edgeenergy.co.uk');
+    btn.textContent = 'something went wrong — try again';
+    btn.style.background = '#BE123C';
+    btn.disabled = false;
   }
 }
 
 function signLOA() {
-  // Redirect to HelloSign embedded signing
-  // This will be updated once HelloSign is connected
-  window.location.href = `${API_BASE}/api/deals/${dealId}/loa?token=${token}`;
+  window.location.href = `${API_BASE}/api/deals/loa?dealId=${dealId}&token=${token}`;
 }
 
 function startRenewal() {
@@ -620,6 +693,13 @@ document.getElementById('chat-input')?.addEventListener('input', function() {
   this.style.height = 'auto';
   this.style.height = Math.min(this.scrollHeight, 120) + 'px';
 });
+
+// Handle LOA redirect feedback
+if (params.get('loa') === 'sent') {
+  // Remove loa param from URL without reload
+  const cleanUrl = `${window.location.pathname}?token=${token}`;
+  window.history.replaceState({}, '', cleanUrl);
+}
 
 // Show signup or portal based on URL
 if (!dealId || !token) {

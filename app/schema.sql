@@ -44,6 +44,9 @@ create table deals (
   contract_start_date date,
   contract_end_date_new date,
   
+  -- Contract DocuSign
+  contract_docusign_envelope_id text,
+
   -- Renewal
   renewal_reminder_sent_at timestamp with time zone
 );

@@ -526,25 +526,32 @@ footer { background: var(--slate); padding: 3rem 5vw 2rem; }
 </footer>
 
 <script>
-async function handleSubmit(e, form) {
+const APP_API = 'https://app.edge-energy.uk';
+
+// Contact form → enquiries API
+async function handleContact(e, form) {
   e.preventDefault();
-  const btn = document.getElementById('cta-btn');
-  const name = document.getElementById('cta-name').value.trim();
-  const email = document.getElementById('cta-email').value.trim();
-  const company = document.getElementById('cta-company').value.trim();
+  const btn = document.getElementById('contact-btn');
+  const data = Object.fromEntries(new FormData(form));
   btn.textContent = 'sending...';
   btn.disabled = true;
   try {
-    await fetch('REPLACE_WITH_MAKE_S1_WEBHOOK_URL', {
+    const res = await fetch(`${APP_API}/api/enquiries/create`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, email, company })
+      body: JSON.stringify(data)
     });
-  } catch(e) {}
-  btn.textContent = "✓ we'll be in touch";
-  btn.style.background = '#40916C';
-  form.querySelectorAll('input').forEach(i => i.disabled = true);
+    if (!res.ok) throw new Error();
+    btn.textContent = "✓ we'll be in touch";
+    btn.style.background = '#40916C';
+    form.querySelectorAll('input,textarea').forEach(i => i.disabled = true);
+  } catch(e) {
+    btn.textContent = 'something went wrong — try again';
+    btn.style.background = '#BE123C';
+    btn.disabled = false;
+  }
 }
+
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
     const t = document.querySelector(a.getAttribute('href'));
