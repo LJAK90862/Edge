@@ -1,0 +1,139 @@
+{
+  "name": "Edge \u2014 7: Supplier Selected \u2192 Contract \u2192 Closed Won",
+  "flow": [
+    {
+      "id": 1,
+      "module": "gateway:CustomWebHook",
+      "version": 1,
+      "metadata": {
+        "designer": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "parameters": {
+        "hook": "edge-supplier-selected",
+        "maxResults": 1
+      },
+      "mapper": {}
+    },
+    {
+      "id": 2,
+      "module": "http:ActionSendData",
+      "version": 3,
+      "metadata": {
+        "designer": {
+          "x": 300,
+          "y": 0
+        }
+      },
+      "parameters": {
+        "handleErrors": false,
+        "useNewZLibDecompress": true
+      },
+      "mapper": {
+        "url": "https://api.docusign.com/v2.1/accounts/{{DOCUSIGN_ACCOUNT_ID}}/envelopes",
+        "serializeUrl": false,
+        "method": "POST",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "name": "Authorization",
+            "value": "Bearer {{DOCUSIGN_ACCESS_TOKEN}}"
+          }
+        ],
+        "qs": [],
+        "bodyType": "raw",
+        "parseResponse": true,
+        "authUser": "",
+        "authPass": "",
+        "timeout": "",
+        "shareCookies": false,
+        "ca": "",
+        "rejectUnauthorized": true,
+        "followRedirect": true,
+        "useQuerystring": false,
+        "gzip": true,
+        "useMtls": false,
+        "contentType": "application/json",
+        "data": "{\"emailSubject\": \"Your Energy Contract \\u2014 {{1.selectedSupplier}}\", \"templateId\": \"{{DOCUSIGN_CONTRACT_TEMPLATE_ID}}\", \"templateRoles\": [{\"email\": \"{{1.contactEmail}}\", \"name\": \"{{1.contactName}}\", \"roleName\": \"Client\"}], \"status\": \"sent\"}"
+      }
+    },
+    {
+      "id": 3,
+      "module": "http:ActionSendData",
+      "version": 3,
+      "metadata": {
+        "designer": {
+          "x": 600,
+          "y": 0
+        }
+      },
+      "parameters": {
+        "handleErrors": false,
+        "useNewZLibDecompress": true
+      },
+      "mapper": {
+        "url": "https://api.hubapi.com/crm/v3/objects/deals/{{1.dealId}}",
+        "serializeUrl": false,
+        "method": "PATCH",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "name": "Authorization",
+            "value": "Bearer {{HUBSPOT_API_KEY}}"
+          }
+        ],
+        "qs": [],
+        "bodyType": "raw",
+        "parseResponse": true,
+        "authUser": "",
+        "authPass": "",
+        "timeout": "",
+        "shareCookies": false,
+        "ca": "",
+        "rejectUnauthorized": true,
+        "followRedirect": true,
+        "useQuerystring": false,
+        "gzip": true,
+        "useMtls": false,
+        "contentType": "application/json",
+        "data": "{\"properties\": {\"selected_supplier\": \"{{1.selectedSupplier}}\", \"selected_unit_rate\": \"{{1.unitRate}}\", \"contract_docusign_envelope_id\": \"{{2.envelopeId}}\", \"dealstage\": \"{{HUBSPOT_STAGE_CONTRACT}}\"}}"
+      }
+    },
+    {
+      "id": 4,
+      "module": "gmail:ActionSendEmail",
+      "version": 1,
+      "metadata": {
+        "designer": {
+          "x": 900,
+          "y": 0
+        }
+      },
+      "mapper": {
+        "to": "{{BROKER_EMAIL}}",
+        "subject": "\ud83d\udcdd Contract sent: {{1.selectedSupplier}}",
+        "content": "Contract sent via DocuSign.\nSupplier: {{1.selectedSupplier}}\nDeal: {{1.dealId}}",
+        "contentType": "text"
+      }
+    }
+  ],
+  "metadata": {
+    "version": 1,
+    "scenario": {
+      "roundtrips": 1,
+      "maxErrors": 3,
+      "autoCommit": true
+    },
+    "designer": {
+      "orphans": []
+    }
+  }
+}

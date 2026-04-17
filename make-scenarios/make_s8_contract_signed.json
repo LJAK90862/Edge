@@ -1,0 +1,139 @@
+{
+  "name": "Edge \u2014 8: Contract Signed \u2192 Closed Won",
+  "flow": [
+    {
+      "id": 1,
+      "module": "gateway:CustomWebHook",
+      "version": 1,
+      "metadata": {
+        "designer": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "parameters": {
+        "hook": "edge-contract-signed",
+        "maxResults": 1
+      },
+      "mapper": {}
+    },
+    {
+      "id": 2,
+      "module": "http:ActionSendData",
+      "version": 3,
+      "metadata": {
+        "designer": {
+          "x": 300,
+          "y": 0
+        }
+      },
+      "parameters": {
+        "handleErrors": false,
+        "useNewZLibDecompress": true
+      },
+      "mapper": {
+        "url": "https://api.hubapi.com/crm/v3/objects/deals/search",
+        "serializeUrl": false,
+        "method": "POST",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "name": "Authorization",
+            "value": "Bearer {{HUBSPOT_API_KEY}}"
+          }
+        ],
+        "qs": [],
+        "bodyType": "raw",
+        "parseResponse": true,
+        "authUser": "",
+        "authPass": "",
+        "timeout": "",
+        "shareCookies": false,
+        "ca": "",
+        "rejectUnauthorized": true,
+        "followRedirect": true,
+        "useQuerystring": false,
+        "gzip": true,
+        "useMtls": false,
+        "contentType": "application/json",
+        "data": "{\"filterGroups\": [{\"filters\": [{\"propertyName\": \"contract_docusign_envelope_id\", \"operator\": \"EQ\", \"value\": \"{{1.envelopeId}}\"}]}], \"properties\": [\"dealname\", \"selected_supplier\", \"selected_unit_rate\", \"contact_email\"]}"
+      }
+    },
+    {
+      "id": 3,
+      "module": "http:ActionSendData",
+      "version": 3,
+      "metadata": {
+        "designer": {
+          "x": 600,
+          "y": 0
+        }
+      },
+      "parameters": {
+        "handleErrors": false,
+        "useNewZLibDecompress": true
+      },
+      "mapper": {
+        "url": "https://api.hubapi.com/crm/v3/objects/deals/{{2.results[0].id}}",
+        "serializeUrl": false,
+        "method": "PATCH",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "name": "Authorization",
+            "value": "Bearer {{HUBSPOT_API_KEY}}"
+          }
+        ],
+        "qs": [],
+        "bodyType": "raw",
+        "parseResponse": true,
+        "authUser": "",
+        "authPass": "",
+        "timeout": "",
+        "shareCookies": false,
+        "ca": "",
+        "rejectUnauthorized": true,
+        "followRedirect": true,
+        "useQuerystring": false,
+        "gzip": true,
+        "useMtls": false,
+        "contentType": "application/json",
+        "data": "{\"properties\": {\"dealstage\": \"{{HUBSPOT_STAGE_WON}}\", \"closedate\": \"{{now | date: '%s'}}\"}}"
+      }
+    },
+    {
+      "id": 4,
+      "module": "gmail:ActionSendEmail",
+      "version": 1,
+      "metadata": {
+        "designer": {
+          "x": 900,
+          "y": 0
+        }
+      },
+      "mapper": {
+        "to": "{{BROKER_EMAIL}}",
+        "subject": "\ud83c\udf89 DEAL WON \u2014 {{2.results[0].properties.dealname}}",
+        "content": "Contract signed. Deal closed won.\n\nSupplier: {{2.results[0].properties.selected_supplier}}\nRate: {{2.results[0].properties.selected_unit_rate}}p/kWh\n\n\u26a1 ACTION: Place with supplier and confirm switch date.",
+        "contentType": "text"
+      }
+    }
+  ],
+  "metadata": {
+    "version": 1,
+    "scenario": {
+      "roundtrips": 1,
+      "maxErrors": 3,
+      "autoCommit": true
+    },
+    "designer": {
+      "orphans": []
+    }
+  }
+}

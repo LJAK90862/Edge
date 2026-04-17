@@ -1,0 +1,197 @@
+{
+  "name": "Edge \u2014 6: Quote Received \u2192 Compile + Send to Client",
+  "flow": [
+    {
+      "id": 1,
+      "module": "gateway:CustomWebHook",
+      "version": 1,
+      "metadata": {
+        "designer": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "parameters": {
+        "hook": "edge-quote-received",
+        "maxResults": 1
+      },
+      "mapper": {}
+    },
+    {
+      "id": 2,
+      "module": "http:ActionSendData",
+      "version": 3,
+      "metadata": {
+        "designer": {
+          "x": 300,
+          "y": 0
+        }
+      },
+      "parameters": {
+        "handleErrors": false,
+        "useNewZLibDecompress": true
+      },
+      "mapper": {
+        "url": "https://api.hubapi.com/crm/v3/objects/deals/{{1.dealId}}?properties=dealname,annual_kwh,mpan,contact_email,panel_supplier_count,quotes_received_count,quotes_data_json",
+        "serializeUrl": false,
+        "method": "GET",
+        "headers": [
+          {
+            "name": "Authorization",
+            "value": "Bearer {{HUBSPOT_API_KEY}}"
+          }
+        ],
+        "qs": [],
+        "bodyType": "raw",
+        "parseResponse": true,
+        "authUser": "",
+        "authPass": "",
+        "timeout": "",
+        "shareCookies": false,
+        "ca": "",
+        "rejectUnauthorized": true,
+        "followRedirect": true,
+        "useQuerystring": false,
+        "gzip": true,
+        "useMtls": false,
+        "contentType": "application/json",
+        "data": ""
+      }
+    },
+    {
+      "id": 3,
+      "module": "http:ActionSendData",
+      "version": 3,
+      "metadata": {
+        "designer": {
+          "x": 600,
+          "y": 0
+        }
+      },
+      "parameters": {
+        "handleErrors": false,
+        "useNewZLibDecompress": true
+      },
+      "mapper": {
+        "url": "https://api.hubapi.com/crm/v3/objects/deals/{{1.dealId}}",
+        "serializeUrl": false,
+        "method": "PATCH",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "name": "Authorization",
+            "value": "Bearer {{HUBSPOT_API_KEY}}"
+          }
+        ],
+        "qs": [],
+        "bodyType": "raw",
+        "parseResponse": true,
+        "authUser": "",
+        "authPass": "",
+        "timeout": "",
+        "shareCookies": false,
+        "ca": "",
+        "rejectUnauthorized": true,
+        "followRedirect": true,
+        "useQuerystring": false,
+        "gzip": true,
+        "useMtls": false,
+        "contentType": "application/json",
+        "data": "{\"properties\": {\"quotes_received_count\": \"{{2.properties.quotes_received_count + 1}}\", \"quotes_data_json\": \"{{2.properties.quotes_data_json}}\"}}"
+      }
+    },
+    {
+      "id": 4,
+      "module": "gmail:ActionSendEmail",
+      "version": 1,
+      "metadata": {
+        "designer": {
+          "x": 900,
+          "y": 0
+        }
+      },
+      "mapper": {
+        "to": "{{2.properties.contact_email}}",
+        "subject": "Your energy quotes are ready \u2014 {{2.properties.dealname}}",
+        "content": "Hi,\n\nWe've collected your energy quotes.\n\nView your personalised comparison here:\nhttps://edge-energy.uk/quote.html?deal={{1.dealId}}\n\nClick your preferred supplier to proceed \u2014 we handle everything from there.\n\nEdge Energy\nhello@edgeenergy.co.uk",
+        "contentType": "text"
+      }
+    },
+    {
+      "id": 5,
+      "module": "http:ActionSendData",
+      "version": 3,
+      "metadata": {
+        "designer": {
+          "x": 1200,
+          "y": 0
+        }
+      },
+      "parameters": {
+        "handleErrors": false,
+        "useNewZLibDecompress": true
+      },
+      "mapper": {
+        "url": "https://api.hubapi.com/crm/v3/objects/deals/{{1.dealId}}",
+        "serializeUrl": false,
+        "method": "PATCH",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "name": "Authorization",
+            "value": "Bearer {{HUBSPOT_API_KEY}}"
+          }
+        ],
+        "qs": [],
+        "bodyType": "raw",
+        "parseResponse": true,
+        "authUser": "",
+        "authPass": "",
+        "timeout": "",
+        "shareCookies": false,
+        "ca": "",
+        "rejectUnauthorized": true,
+        "followRedirect": true,
+        "useQuerystring": false,
+        "gzip": true,
+        "useMtls": false,
+        "contentType": "application/json",
+        "data": "{\"properties\": {\"dealstage\": \"{{HUBSPOT_STAGE_QUOTES_PR}}\"}}"
+      }
+    },
+    {
+      "id": 6,
+      "module": "gmail:ActionSendEmail",
+      "version": 1,
+      "metadata": {
+        "designer": {
+          "x": 1500,
+          "y": 0
+        }
+      },
+      "mapper": {
+        "to": "{{BROKER_EMAIL}}",
+        "subject": "\ud83d\udcca Quote page sent: {{2.properties.dealname}}",
+        "content": "Comparison sent to client.\nQuote page: https://edge-energy.uk/quote.html?deal={{1.dealId}}",
+        "contentType": "text"
+      }
+    }
+  ],
+  "metadata": {
+    "version": 1,
+    "scenario": {
+      "roundtrips": 1,
+      "maxErrors": 3,
+      "autoCommit": true
+    },
+    "designer": {
+      "orphans": []
+    }
+  }
+}

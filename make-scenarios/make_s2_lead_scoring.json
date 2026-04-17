@@ -1,0 +1,143 @@
+{
+  "name": "Edge \u2014 2: Lead Scoring (Claude)",
+  "flow": [
+    {
+      "id": 1,
+      "module": "gateway:CustomWebHook",
+      "version": 1,
+      "metadata": {
+        "designer": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "parameters": {
+        "hook": "edge-score-contact",
+        "maxResults": 1
+      },
+      "mapper": {}
+    },
+    {
+      "id": 2,
+      "module": "http:ActionSendData",
+      "version": 3,
+      "metadata": {
+        "designer": {
+          "x": 300,
+          "y": 0
+        }
+      },
+      "parameters": {
+        "handleErrors": false,
+        "useNewZLibDecompress": true
+      },
+      "mapper": {
+        "url": "https://api.anthropic.com/v1/messages",
+        "serializeUrl": false,
+        "method": "POST",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "name": "x-api-key",
+            "value": "{{CLAUDE_API_KEY}}"
+          },
+          {
+            "name": "anthropic-version",
+            "value": "2023-06-01"
+          }
+        ],
+        "qs": [],
+        "bodyType": "raw",
+        "parseResponse": true,
+        "authUser": "",
+        "authPass": "",
+        "timeout": "",
+        "shareCookies": false,
+        "ca": "",
+        "rejectUnauthorized": true,
+        "followRedirect": true,
+        "useQuerystring": false,
+        "gzip": true,
+        "useMtls": false,
+        "contentType": "application/json",
+        "data": "{\"model\": \"claude-opus-4-5\", \"max_tokens\": 300, \"messages\": [{\"role\": \"user\", \"content\": \"Score this energy lead 1-10 for Edge Energy UK broker.\\nCompany: {{1.company}}\\nSector: {{1.sector}}\\nAnnual kWh: {{1.annualKwh}}\\nCurrent supplier: {{1.currentSupplier}}\\nRespond ONLY with JSON: {\\\"score\\\":7,\\\"reasoning\\\":\\\"2 sentences\\\",\\\"priority\\\":\\\"hot\\\",\\\"approach\\\":\\\"one sentence\\\"}\"}]}"
+      }
+    },
+    {
+      "id": 3,
+      "module": "http:ActionSendData",
+      "version": 3,
+      "metadata": {
+        "designer": {
+          "x": 600,
+          "y": 0
+        }
+      },
+      "parameters": {
+        "handleErrors": false,
+        "useNewZLibDecompress": true
+      },
+      "mapper": {
+        "url": "https://api.hubapi.com/crm/v3/objects/contacts/{{1.contactId}}",
+        "serializeUrl": false,
+        "method": "PATCH",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "name": "Authorization",
+            "value": "Bearer {{HUBSPOT_API_KEY}}"
+          }
+        ],
+        "qs": [],
+        "bodyType": "raw",
+        "parseResponse": true,
+        "authUser": "",
+        "authPass": "",
+        "timeout": "",
+        "shareCookies": false,
+        "ca": "",
+        "rejectUnauthorized": true,
+        "followRedirect": true,
+        "useQuerystring": false,
+        "gzip": true,
+        "useMtls": false,
+        "contentType": "application/json",
+        "data": "{\"properties\": {\"lead_source_detail\": \"{{2.content[0].text}}\"}}"
+      }
+    },
+    {
+      "id": 4,
+      "module": "gmail:ActionSendEmail",
+      "version": 1,
+      "metadata": {
+        "designer": {
+          "x": 900,
+          "y": 0
+        }
+      },
+      "mapper": {
+        "to": "{{BROKER_EMAIL}}",
+        "subject": "\ud83c\udfaf Lead scored: {{1.company}}",
+        "content": "Score received from Claude.\n\nCompany: {{1.company}}\nRaw response: {{2.content[0].text}}",
+        "contentType": "text"
+      }
+    }
+  ],
+  "metadata": {
+    "version": 1,
+    "scenario": {
+      "roundtrips": 1,
+      "maxErrors": 3,
+      "autoCommit": true
+    },
+    "designer": {
+      "orphans": []
+    }
+  }
+}

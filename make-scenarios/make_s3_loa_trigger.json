@@ -1,0 +1,184 @@
+{
+  "name": "Edge \u2014 3: LOA Trigger \u2192 DocuSign + Deal Creation",
+  "flow": [
+    {
+      "id": 1,
+      "module": "gateway:CustomWebHook",
+      "version": 1,
+      "metadata": {
+        "designer": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "parameters": {
+        "hook": "edge-loa-trigger",
+        "maxResults": 1
+      },
+      "mapper": {}
+    },
+    {
+      "id": 2,
+      "module": "http:ActionSendData",
+      "version": 3,
+      "metadata": {
+        "designer": {
+          "x": 300,
+          "y": 0
+        }
+      },
+      "parameters": {
+        "handleErrors": false,
+        "useNewZLibDecompress": true
+      },
+      "mapper": {
+        "url": "https://api.hubapi.com/crm/v3/objects/deals",
+        "serializeUrl": false,
+        "method": "POST",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "name": "Authorization",
+            "value": "Bearer {{HUBSPOT_API_KEY}}"
+          }
+        ],
+        "qs": [],
+        "bodyType": "raw",
+        "parseResponse": true,
+        "authUser": "",
+        "authPass": "",
+        "timeout": "",
+        "shareCookies": false,
+        "ca": "",
+        "rejectUnauthorized": true,
+        "followRedirect": true,
+        "useQuerystring": false,
+        "gzip": true,
+        "useMtls": false,
+        "contentType": "application/json",
+        "data": "{\"properties\": {\"dealname\": \"{{1.company}} \\u2014 Energy Contract\", \"pipeline\": \"{{HUBSPOT_PIPELINE_ID}}\", \"dealstage\": \"{{HUBSPOT_STAGE_LOA_SENT}}\", \"current_supplier\": \"{{1.currentSupplier}}\", \"mpan\": \"{{1.mpan}}\", \"annual_kwh\": \"{{1.annualKwh}}\"}}"
+      }
+    },
+    {
+      "id": 3,
+      "module": "http:ActionSendData",
+      "version": 3,
+      "metadata": {
+        "designer": {
+          "x": 600,
+          "y": 0
+        }
+      },
+      "parameters": {
+        "handleErrors": false,
+        "useNewZLibDecompress": true
+      },
+      "mapper": {
+        "url": "https://api.docusign.com/v2.1/accounts/{{DOCUSIGN_ACCOUNT_ID}}/envelopes",
+        "serializeUrl": false,
+        "method": "POST",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "name": "Authorization",
+            "value": "Bearer {{DOCUSIGN_ACCESS_TOKEN}}"
+          }
+        ],
+        "qs": [],
+        "bodyType": "raw",
+        "parseResponse": true,
+        "authUser": "",
+        "authPass": "",
+        "timeout": "",
+        "shareCookies": false,
+        "ca": "",
+        "rejectUnauthorized": true,
+        "followRedirect": true,
+        "useQuerystring": false,
+        "gzip": true,
+        "useMtls": false,
+        "contentType": "application/json",
+        "data": "{\"emailSubject\": \"Letter of Authority \\u2014 Edge Energy\", \"documents\": [{\"documentBase64\": \"{{LOA_TEMPLATE_BASE64}}\", \"name\": \"Letter of Authority.pdf\", \"fileExtension\": \"pdf\", \"documentId\": \"1\"}], \"recipients\": {\"signers\": [{\"email\": \"{{1.contactEmail}}\", \"name\": \"{{1.contactName}}\", \"recipientId\": \"1\", \"routingOrder\": \"1\"}]}, \"status\": \"sent\"}"
+      }
+    },
+    {
+      "id": 4,
+      "module": "http:ActionSendData",
+      "version": 3,
+      "metadata": {
+        "designer": {
+          "x": 900,
+          "y": 0
+        }
+      },
+      "parameters": {
+        "handleErrors": false,
+        "useNewZLibDecompress": true
+      },
+      "mapper": {
+        "url": "https://api.hubapi.com/crm/v3/objects/deals/{{2.id}}",
+        "serializeUrl": false,
+        "method": "PATCH",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "name": "Authorization",
+            "value": "Bearer {{HUBSPOT_API_KEY}}"
+          }
+        ],
+        "qs": [],
+        "bodyType": "raw",
+        "parseResponse": true,
+        "authUser": "",
+        "authPass": "",
+        "timeout": "",
+        "shareCookies": false,
+        "ca": "",
+        "rejectUnauthorized": true,
+        "followRedirect": true,
+        "useQuerystring": false,
+        "gzip": true,
+        "useMtls": false,
+        "contentType": "application/json",
+        "data": "{\"properties\": {\"loa_docusign_envelope_id\": \"{{3.envelopeId}}\"}}"
+      }
+    },
+    {
+      "id": 5,
+      "module": "gmail:ActionSendEmail",
+      "version": 1,
+      "metadata": {
+        "designer": {
+          "x": 1200,
+          "y": 0
+        }
+      },
+      "mapper": {
+        "to": "{{BROKER_EMAIL}}",
+        "subject": "\ud83d\udcc4 LOA sent: {{1.company}}",
+        "content": "LOA sent via DocuSign to {{1.contactEmail}}.\nDeal created in HubSpot.\nWaiting for signature.",
+        "contentType": "text"
+      }
+    }
+  ],
+  "metadata": {
+    "version": 1,
+    "scenario": {
+      "roundtrips": 1,
+      "maxErrors": 3,
+      "autoCommit": true
+    },
+    "designer": {
+      "orphans": []
+    }
+  }
+}

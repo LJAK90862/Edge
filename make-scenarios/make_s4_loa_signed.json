@@ -1,0 +1,187 @@
+{
+  "name": "Edge \u2014 4: LOA Signed \u2192 Meter Data Request",
+  "flow": [
+    {
+      "id": 1,
+      "module": "gateway:CustomWebHook",
+      "version": 1,
+      "metadata": {
+        "designer": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      "parameters": {
+        "hook": "edge-loa-signed",
+        "maxResults": 1
+      },
+      "mapper": {}
+    },
+    {
+      "id": 2,
+      "module": "http:ActionSendData",
+      "version": 3,
+      "metadata": {
+        "designer": {
+          "x": 300,
+          "y": 0
+        }
+      },
+      "parameters": {
+        "handleErrors": false,
+        "useNewZLibDecompress": true
+      },
+      "mapper": {
+        "url": "https://api.hubapi.com/crm/v3/objects/deals/search",
+        "serializeUrl": false,
+        "method": "POST",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "name": "Authorization",
+            "value": "Bearer {{HUBSPOT_API_KEY}}"
+          }
+        ],
+        "qs": [],
+        "bodyType": "raw",
+        "parseResponse": true,
+        "authUser": "",
+        "authPass": "",
+        "timeout": "",
+        "shareCookies": false,
+        "ca": "",
+        "rejectUnauthorized": true,
+        "followRedirect": true,
+        "useQuerystring": false,
+        "gzip": true,
+        "useMtls": false,
+        "contentType": "application/json",
+        "data": "{\"filterGroups\": [{\"filters\": [{\"propertyName\": \"loa_docusign_envelope_id\", \"operator\": \"EQ\", \"value\": \"{{1.envelopeId}}\"}]}], \"properties\": [\"dealname\", \"mpan\", \"annual_kwh\", \"current_supplier\", \"contact_email\"]}"
+      }
+    },
+    {
+      "id": 3,
+      "module": "http:ActionSendData",
+      "version": 3,
+      "metadata": {
+        "designer": {
+          "x": 600,
+          "y": 0
+        }
+      },
+      "parameters": {
+        "handleErrors": false,
+        "useNewZLibDecompress": true
+      },
+      "mapper": {
+        "url": "https://api.hubapi.com/crm/v3/objects/deals/{{2.results[0].id}}",
+        "serializeUrl": false,
+        "method": "PATCH",
+        "headers": [
+          {
+            "name": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "name": "Authorization",
+            "value": "Bearer {{HUBSPOT_API_KEY}}"
+          }
+        ],
+        "qs": [],
+        "bodyType": "raw",
+        "parseResponse": true,
+        "authUser": "",
+        "authPass": "",
+        "timeout": "",
+        "shareCookies": false,
+        "ca": "",
+        "rejectUnauthorized": true,
+        "followRedirect": true,
+        "useQuerystring": false,
+        "gzip": true,
+        "useMtls": false,
+        "contentType": "application/json",
+        "data": "{\"properties\": {\"dealstage\": \"{{HUBSPOT_STAGE_ACTIVE}}\", \"loa_signed_date\": \"{{now | date: '%s'}}'\"}}"
+      }
+    },
+    {
+      "id": 4,
+      "module": "gmail:ActionSendEmail",
+      "version": 1,
+      "metadata": {
+        "designer": {
+          "x": 900,
+          "y": 0
+        }
+      },
+      "mapper": {
+        "to": "{{CURRENT_SUPPLIER_EMAIL}}",
+        "subject": "Data Request \u2014 LOA Reference {{1.envelopeId}}",
+        "content": "Dear Energy Supply Team,\n\nWe are the appointed energy broker for one of your customers and hold a signed Letter of Authority.\n\nPlease provide:\n\u2022 MPAN: {{2.results[0].properties.mpan}}\n\u2022 Current contract end date\n\u2022 Current unit rate (p/kWh)\n\u2022 Annual consumption (EAC)\n\u2022 Profile class\n\nPlease reply to info@edgeenergy.co.uk referencing: {{2.results[0].id}}\n\nThank you,\nEdge Energy",
+        "contentType": "text"
+      }
+    },
+    {
+      "id": 5,
+      "module": "builtin:Sleep",
+      "version": 1,
+      "metadata": {
+        "designer": {
+          "x": 1200,
+          "y": 0
+        }
+      },
+      "mapper": {
+        "delay": "259200"
+      }
+    },
+    {
+      "id": 6,
+      "module": "gmail:ActionSendEmail",
+      "version": 1,
+      "metadata": {
+        "designer": {
+          "x": 1500,
+          "y": 0
+        }
+      },
+      "mapper": {
+        "to": "{{CURRENT_SUPPLIER_EMAIL}}",
+        "subject": "REMINDER: Data Request \u2014 {{2.results[0].properties.dealname}}",
+        "content": "This is a reminder of our data request sent 3 days ago.\n\nMPAN: {{2.results[0].properties.mpan}}\nReference: {{2.results[0].id}}\n\nPlease send the requested data to info@edgeenergy.co.uk.\n\nThank you,\nEdge Energy",
+        "contentType": "text"
+      }
+    },
+    {
+      "id": 7,
+      "module": "gmail:ActionSendEmail",
+      "version": 1,
+      "metadata": {
+        "designer": {
+          "x": 1800,
+          "y": 0
+        }
+      },
+      "mapper": {
+        "to": "{{BROKER_EMAIL}}",
+        "subject": "\u2705 LOA Signed: {{2.results[0].properties.dealname}}",
+        "content": "LOA signed. Deal moved to Active.\nSupplier data request sent.\nReminder scheduled for day 3 if no response.",
+        "contentType": "text"
+      }
+    }
+  ],
+  "metadata": {
+    "version": 1,
+    "scenario": {
+      "roundtrips": 1,
+      "maxErrors": 3,
+      "autoCommit": true
+    },
+    "designer": {
+      "orphans": []
+    }
+  }
+}
