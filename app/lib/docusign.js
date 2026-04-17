@@ -60,7 +60,7 @@ async function getAccessToken() {
     if (!res.ok) {
       const err = await res.text();
       console.error('DocuSign JWT auth error:', err);
-      throw new Error(`DocuSign JWT auth failed: ${res.status}`);
+      throw new Error(`DocuSign JWT auth failed: ${res.status} - ${err}`);
     }
 
     const data = await res.json();
