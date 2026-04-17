@@ -1,0 +1,853 @@
+# Edge Energy — German (de) Translation
+# Copyright (C) 2026 Edge Energy Ltd
+# This file is distributed under the same license as the edge-energy-site package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: edge-energy-site 1.0\n"
+"Report-Msgid-Bugs-To: hello@edgeenergy.co.uk\n"
+"POT-Creation-Date: 2026-04-17 00:00+0000\n"
+"PO-Revision-Date: 2026-04-17 00:00+0000\n"
+"Last-Translator: Edge Energy <hello@edgeenergy.co.uk>\n"
+"Language-Team: German <hello@edgeenergy.co.uk>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+# ============================================================
+# PAGE: index.html — Navigation
+# ============================================================
+
+#: index.html:title
+msgid "edge energy – the edge in business energy"
+msgstr "edge energy – der Vorsprung bei Geschäftsenergie"
+
+#: index.html:nav
+msgid "why us"
+msgstr "warum wir"
+
+#: index.html:nav
+msgid "how it works"
+msgstr "so funktioniert's"
+
+#: index.html:nav
+msgid "about"
+msgstr "über uns"
+
+#: index.html:nav
+msgid "reviews"
+msgstr "bewertungen"
+
+#: index.html:nav
+msgid "get started"
+msgstr "jetzt starten"
+
+# ============================================================
+# PAGE: index.html — Hero Section
+# ============================================================
+
+#: index.html:hero-label
+msgid "the edge in business energy"
+msgstr "der Vorsprung bei Geschäftsenergie"
+
+#: index.html:hero-h1
+msgid "stop overpaying to run your business."
+msgstr "zahlen Sie nicht zu viel für Ihr Unternehmen."
+
+#: index.html:hero-sub
+msgid "independent uk energy brokers. we search the whole market, negotiate hard, and handle the entire switch — so your business always gets the best deal."
+msgstr "unabhängige britische Energiemakler. Wir durchsuchen den gesamten Markt, verhandeln hart und übernehmen den kompletten Wechsel — damit Ihr Unternehmen immer das beste Angebot erhält."
+
+#: index.html:hero-actions
+msgid "get started →"
+msgstr "jetzt starten →"
+
+#: index.html:hero-actions
+msgid "contact us"
+msgstr "kontakt"
+
+#: index.html:hero-badge
+msgid "100% independent"
+msgstr "100% unabhängig"
+
+#: index.html:hero-badge
+msgid "no supplier ties"
+msgstr "keine Anbieterbindung"
+
+#: index.html:hero-badge
+msgid "whole of market"
+msgstr "gesamtmarktvergleich"
+
+#: index.html:hero-badge
+msgid "every major supplier"
+msgstr "alle großen Anbieter"
+
+#: index.html:hero-badge
+msgid "renewal tracking"
+msgstr "Verlängerungstracking"
+
+#: index.html:hero-badge
+msgid "we watch your dates"
+msgstr "wir behalten Ihre Termine im Blick"
+
+# ============================================================
+# PAGE: index.html — Hero Card (Market Snapshot)
+# ============================================================
+
+#: index.html:hero-card
+msgid "live market snapshot"
+msgstr "aktueller Marktüberblick"
+
+#: index.html:hero-card
+msgid "avg sme unit rate"
+msgstr "Ø KMU-Stückpreis"
+
+#: index.html:hero-card
+msgid "current market"
+msgstr "aktueller Markt"
+
+#: index.html:hero-card
+msgid "per kWh"
+msgstr "pro kWh"
+
+#: index.html:hero-card
+msgid "best available rate"
+msgstr "bester verfügbarer Tarif"
+
+#: index.html:hero-card
+msgid "2yr fixed"
+msgstr "2 Jahre Festpreis"
+
+#: index.html:hero-card
+msgid "avg saving"
+msgstr "Ø Ersparnis"
+
+#: index.html:hero-card
+msgid "per 100,000 kWh"
+msgstr "pro 100.000 kWh"
+
+#: index.html:hero-card
+msgid "per year"
+msgstr "pro Jahr"
+
+#: index.html:hero-card
+msgid "rates updated daily"
+msgstr "Tarife werden täglich aktualisiert"
+
+# ============================================================
+# PAGE: index.html — Why Section (Features)
+# ============================================================
+
+#: index.html:why-tag
+msgid "why we're different"
+msgstr "was uns unterscheidet"
+
+#: index.html:why-h2
+msgid "the brokers who actually have your back"
+msgstr "die Makler, die wirklich auf Ihrer Seite stehen"
+
+#: index.html:why-lead
+msgid "most energy brokers work for the supplier. we work for you. independent, whole-of-market, and focused entirely on your best deal."
+msgstr "die meisten Energiemakler arbeiten für den Anbieter. Wir arbeiten für Sie. Unabhängig, mit Gesamtmarktvergleich und ausschließlich auf Ihr bestes Angebot fokussiert."
+
+#: index.html:feature-1-title
+msgid "whole-of-market search"
+msgstr "gesamtmarktvergleich"
+
+#: index.html:feature-1-desc
+msgid "we compare every major uk supplier — not a preferred panel — so you get the genuinely best deal available, not the one we're incentivised to sell."
+msgstr "wir vergleichen alle großen britischen Anbieter — kein bevorzugtes Panel — damit Sie das tatsächlich beste Angebot erhalten, nicht das, das uns die höchste Provision bringt."
+
+#: index.html:feature-2-title
+msgid "dedicated account manager"
+msgstr "persönlicher Ansprechpartner"
+
+#: index.html:feature-2-desc
+msgid "a real person in the uk handles your switch from start to finish. no call centres, no bots — just straight-talking support from someone who knows your account."
+msgstr "eine echte Person in Großbritannien betreut Ihren Wechsel von Anfang bis Ende. Kein Callcenter, keine Bots — direkte und unkomplizierte Betreuung durch jemanden, der Ihr Konto kennt."
+
+#: index.html:feature-3-title
+msgid "plain-english contracts"
+msgstr "transparente Verträge"
+
+#: index.html:feature-3-desc
+msgid "we go through every term before you sign. auto-renewal traps? exit fees? we flag everything before it becomes a problem — not after."
+msgstr "wir gehen jede Klausel mit Ihnen durch, bevor Sie unterschreiben. Automatische Verlängerung? Ausstiegsgebühren? Wir weisen auf alles hin, bevor es zum Problem wird — nicht danach."
+
+#: index.html:feature-4-title
+msgid "green options available"
+msgstr "grüne Optionen verfügbar"
+
+#: index.html:feature-4-desc
+msgid "want 100% renewable? we find genuinely certified green tariffs and verify the rego certificates — no greenwashing, no vague claims."
+msgstr "100% erneuerbare Energie gewünscht? Wir finden zertifizierte Grünstromtarife und überprüfen die REGO-Zertifikate — kein Greenwashing, keine vagen Versprechungen."
+
+#: index.html:feature-5-title
+msgid "renewal reminders"
+msgstr "Verlängerungserinnerungen"
+
+#: index.html:feature-5-desc
+msgid "we track your contract end date and contact you 90, 60, and 30 days before expiry — so you never roll onto an out-of-contract rate by accident."
+msgstr "wir verfolgen Ihr Vertragsende und kontaktieren Sie 90, 60 und 30 Tage vor Ablauf — damit Sie nie versehentlich in einen teuren Standardtarif rutschen."
+
+#: index.html:feature-6-title
+msgid "multi-site portfolios"
+msgstr "Multi-Standort-Portfolios"
+
+#: index.html:feature-6-desc
+msgid "managing multiple meters? we handle the whole portfolio — one contact, consolidated reporting, and a single renewal calendar across all sites."
+msgstr "mehrere Zähler zu verwalten? Wir übernehmen das gesamte Portfolio — ein Ansprechpartner, konsolidierte Berichte und ein einheitlicher Verlängerungskalender für alle Standorte."
+
+# ============================================================
+# PAGE: index.html — Process Section
+# ============================================================
+
+#: index.html:process-tag
+msgid "the process"
+msgstr "der Ablauf"
+
+#: index.html:process-h2
+msgid "a better deal in four steps"
+msgstr "ein besseres Angebot in vier Schritten"
+
+#: index.html:process-lead
+msgid "switching energy supplier shouldn't require a law degree. we've made it straightforward."
+msgstr "den Energieanbieter zu wechseln sollte keinen Anwalt erfordern. Wir haben den Prozess unkompliziert gestaltet."
+
+#: index.html:step-1-title
+msgid "share your details"
+msgstr "teilen Sie Ihre Daten mit"
+
+#: index.html:step-1-desc
+msgid "a quick form or call. we just need your current contract and consumption — takes five minutes."
+msgstr "ein kurzes Formular oder ein Anruf. Wir benötigen nur Ihren aktuellen Vertrag und Verbrauch — dauert fünf Minuten."
+
+#: index.html:step-2-title
+msgid "we search the market"
+msgstr "wir durchsuchen den Markt"
+
+#: index.html:step-2-desc
+msgid "we approach every major supplier and negotiate rates on your behalf. no shortcuts, no preferred panels."
+msgstr "wir kontaktieren jeden großen Anbieter und verhandeln Tarife in Ihrem Namen. Keine Abkürzungen, keine bevorzugten Panels."
+
+#: index.html:step-3-title
+msgid "review your options"
+msgstr "prüfen Sie Ihre Optionen"
+
+#: index.html:step-3-desc
+msgid "we present the best deals clearly, side by side. no pressure, no jargon. take as long as you need."
+msgstr "wir präsentieren Ihnen die besten Angebote klar und übersichtlich im direkten Vergleich. Kein Druck, kein Fachjargon. Nehmen Sie sich so viel Zeit, wie Sie brauchen."
+
+#: index.html:step-4-title
+msgid "we handle the switch"
+msgstr "wir erledigen den Wechsel"
+
+#: index.html:step-4-desc
+msgid "all the paperwork, supplier notifications, and metering admin — done by us. you'll see it on your first bill."
+msgstr "der gesamte Papierkram, Anbietermitteilungen und Zähleradministration — alles von uns erledigt. Sie sehen es auf Ihrer ersten Rechnung."
+
+#: index.html:process-visual
+msgid "what we cover"
+msgstr "was wir abdecken"
+
+#: index.html:process-stat-1
+msgid "customer satisfaction across all accounts in 2025"
+msgstr "Kundenzufriedenheit über alle Konten in 2025"
+
+#: index.html:process-stat-2
+msgid "supplier relationships — full uk market coverage"
+msgstr "Anbieterbeziehungen — vollständige UK-Marktabdeckung"
+
+#: index.html:process-stat-3
+msgid "average time from enquiry to full quote comparison"
+msgstr "durchschnittliche Zeit von der Anfrage bis zum vollständigen Angebotsvergleich"
+
+#: index.html:process-stat-4
+msgid "cost to you — we earn from the supplier you choose"
+msgstr "Kosten für Sie — wir verdienen über den Anbieter, den Sie wählen"
+
+# ============================================================
+# PAGE: index.html — About Section
+# ============================================================
+
+#: index.html:about-tag
+msgid "about us"
+msgstr "über uns"
+
+#: index.html:about-h2
+msgid "we started because we were tired of the tricks"
+msgstr "wir haben angefangen, weil wir die Tricks satt hatten"
+
+#: index.html:about-p1
+msgid "founded in london by former energy industry professionals who'd seen enough. inflated rates, opaque pricing, suppliers rewarding brokers for steering clients the wrong way. so we left and built something better."
+msgstr "gegründet in London von ehemaligen Energiebranche-Profis, die genug gesehen hatten. Überhöhte Tarife, intransparente Preisgestaltung, Anbieter, die Makler dafür belohnten, Kunden in die falsche Richtung zu lenken. Also gingen wir und bauten etwas Besseres."
+
+#: index.html:about-p2
+msgid "the energy market moves constantly — rates shift, supplier positions change, new products appear. most businesses only look at it at renewal. we look at it every day. that's the edge we bring."
+msgstr "der Energiemarkt bewegt sich ständig — Tarife ändern sich, Anbieterpositionen verschieben sich, neue Produkte erscheinen. Die meisten Unternehmen schauen erst bei der Vertragsverlängerung hin. Wir schauen jeden Tag hin. Das ist der Vorsprung, den wir Ihnen bringen."
+
+#: index.html:about-list-1
+msgid "we compare the same tariffs your direct supplier would offer you"
+msgstr "wir vergleichen dieselben Tarife, die Ihnen Ihr direkter Anbieter auch anbieten würde"
+
+#: index.html:about-list-2
+msgid "we serve smes, charities, schools, landlords, and multi-site businesses across the uk"
+msgstr "wir betreuen KMU, gemeinnützige Organisationen, Schulen, Vermieter und Multi-Standort-Unternehmen in ganz Großbritannien"
+
+#: index.html:about-list-3
+msgid "a dedicated account manager handles your account from day one"
+msgstr "ein persönlicher Ansprechpartner betreut Ihr Konto vom ersten Tag an"
+
+#: index.html:about-list-4
+msgid "we track your renewal and come back before auto-renewal locks you in"
+msgstr "wir verfolgen Ihre Verlängerung und melden uns, bevor eine automatische Verlängerung Sie bindet"
+
+#: index.html:about-stat
+msgid "customer satisfaction — and we don't lock anyone in to achieve it. clients stay because the service is worth it."
+msgstr "Kundenzufriedenheit — und wir binden niemanden vertraglich, um das zu erreichen. Kunden bleiben, weil der Service es wert ist."
+
+#: index.html:about-badge-1-title
+msgid "electricity & gas"
+msgstr "Strom & Gas"
+
+#: index.html:about-badge-1-desc
+msgid "sme & i&c · all meter types · 1–5 year contracts"
+msgstr "KMU & I&C · alle Zählertypen · 1–5-Jahres-Verträge"
+
+#: index.html:about-badge-2-title
+msgid "green energy"
+msgstr "grüne Energie"
+
+#: index.html:about-badge-2-desc
+msgid "rego-certified renewables · verified, not greenwashed"
+msgstr "REGO-zertifizierte Erneuerbare · verifiziert, kein Greenwashing"
+
+#: index.html:about-badge-3-title
+msgid "multi-site"
+msgstr "Multi-Standort"
+
+#: index.html:about-badge-3-desc
+msgid "portfolio management · consolidated renewals"
+msgstr "Portfoliomanagement · konsolidierte Verlängerungen"
+
+# ============================================================
+# PAGE: index.html — Reviews Section
+# ============================================================
+
+#: index.html:reviews-tag
+msgid "real customers"
+msgstr "echte Kunden"
+
+#: index.html:reviews-h2
+msgid "don't just take our word for it"
+msgstr "nehmen Sie nicht nur unser Wort dafür"
+
+#: index.html:reviews-lead
+msgid "what businesses we've worked with have actually said."
+msgstr "was Unternehmen, mit denen wir zusammengearbeitet haben, tatsächlich gesagt haben."
+
+#: index.html:review-1
+msgid "we'd been rolling over with the same supplier for four years. edge energy found us a significantly better rate in a week. wish we'd done it sooner."
+msgstr "Wir hatten vier Jahre lang denselben Vertrag automatisch verlängert. edge energy hat uns innerhalb einer Woche einen deutlich besseren Tarif gefunden. Hätten wir das mal früher gemacht."
+
+#: index.html:review-1-author
+msgid "sarah p."
+msgstr "sarah p."
+
+#: index.html:review-1-role
+msgid "owner, independent café, leeds"
+msgstr "Inhaberin, unabhängiges Café, Leeds"
+
+#: index.html:review-2
+msgid "finally, an energy broker that explains everything clearly. straightforward comparison, no jargon, and they handled the entire switch without us lifting a finger."
+msgstr "Endlich ein Energiemakler, der alles verständlich erklärt. Klarer Vergleich, kein Fachjargon, und der komplette Wechsel wurde abgewickelt, ohne dass wir einen Finger rühren mussten."
+
+#: index.html:review-2-author
+msgid "marcus r."
+msgstr "marcus r."
+
+#: index.html:review-2-role
+msgid "operations director, logistics firm, birmingham"
+msgstr "Betriebsleiter, Logistikunternehmen, Birmingham"
+
+#: index.html:review-3
+msgid "we manage 12 properties and edge energy handles all our energy contracts. one call, everything sorted. they've saved us thousands and i don't have to think about it."
+msgstr "Wir verwalten 12 Objekte und edge energy kümmert sich um alle unsere Energieverträge. Ein Anruf, alles erledigt. Sie haben uns Tausende gespart und ich muss mir keine Gedanken mehr machen."
+
+#: index.html:review-3-author
+msgid "janet h."
+msgstr "janet h."
+
+#: index.html:review-3-role
+msgid "property manager, london"
+msgstr "Hausverwalterin, London"
+
+# ============================================================
+# PAGE: index.html — Get Started Section
+# ============================================================
+
+#: index.html:get-started-h2
+msgid "ready for a better energy deal?"
+msgstr "bereit für ein besseres Energieangebot?"
+
+#: index.html:get-started-lead
+msgid "create your personal deal room in 2 minutes. sign your letter of authority, review quotes from across the market, and confirm your switch — all in one place."
+msgstr "erstellen Sie Ihren persönlichen Deal Room in 2 Minuten. Unterschreiben Sie Ihre Letter of Authority (LOA), prüfen Sie Angebote aus dem gesamten Markt und bestätigen Sie Ihren Wechsel — alles an einem Ort."
+
+#: index.html:get-started-btn
+msgid "create my deal room →"
+msgstr "meinen Deal Room erstellen →"
+
+# ============================================================
+# PAGE: index.html — Contact Section
+# ============================================================
+
+#: index.html:contact-h2
+msgid "got a question?"
+msgstr "haben Sie eine Frage?"
+
+#: index.html:contact-lead
+msgid "not ready to get started yet? send us a message and one of our advisers will be in touch within one business day."
+msgstr "noch nicht bereit loszulegen? Senden Sie uns eine Nachricht und einer unserer Berater meldet sich innerhalb eines Werktages bei Ihnen."
+
+#: index.html:contact-form
+msgid "your name"
+msgstr "Ihr Name"
+
+#: index.html:contact-form
+msgid "your@email.com"
+msgstr "ihre@email.com"
+
+#: index.html:contact-form
+msgid "company name"
+msgstr "Firmenname"
+
+#: index.html:contact-form
+msgid "phone number"
+msgstr "Telefonnummer"
+
+#: index.html:contact-form
+msgid "your message"
+msgstr "Ihre Nachricht"
+
+#: index.html:contact-form
+msgid "send message →"
+msgstr "nachricht senden →"
+
+# ============================================================
+# PAGE: index.html — Footer
+# ============================================================
+
+#: index.html:footer
+msgid "independent business energy broker. london, england."
+msgstr "unabhängiger Geschäftsenergiemakler. London, England."
+
+#: index.html:footer
+msgid "services"
+msgstr "Leistungen"
+
+#: index.html:footer
+msgid "electricity"
+msgstr "Strom"
+
+#: index.html:footer
+msgid "gas"
+msgstr "Gas"
+
+#: index.html:footer
+msgid "multi-site"
+msgstr "Multi-Standort"
+
+#: index.html:footer
+msgid "company"
+msgstr "Unternehmen"
+
+#: index.html:footer
+msgid "contact"
+msgstr "Kontakt"
+
+#: index.html:footer
+msgid "legal"
+msgstr "Rechtliches"
+
+#: index.html:footer
+msgid "privacy policy"
+msgstr "Datenschutz"
+
+#: index.html:footer
+msgid "terms of service"
+msgstr "Nutzungsbedingungen"
+
+#: index.html:footer-bottom
+msgid "© 2026 edge energy ltd · registered in england and wales · independent business energy broker"
+msgstr "© 2026 edge energy ltd · registriert in England und Wales · unabhängiger Geschäftsenergiemakler"
+
+# ============================================================
+# PAGE: index.html — JavaScript strings
+# ============================================================
+
+#: index.html:js
+msgid "sending..."
+msgstr "wird gesendet..."
+
+#: index.html:js
+msgid "✓ we'll be in touch"
+msgstr "✓ wir melden uns bei Ihnen"
+
+# ============================================================
+# PAGE: get-started.html — Meta & Nav
+# ============================================================
+
+#: get-started.html:title
+msgid "Get Started — Edge Energy"
+msgstr "Jetzt starten — Edge Energy"
+
+#: get-started.html:nav
+msgid "Secure · SSL Encrypted"
+msgstr "Sicher · SSL-verschlüsselt"
+
+# ============================================================
+# PAGE: get-started.html — Loading State
+# ============================================================
+
+#: get-started.html:loading-h1
+msgid "One moment…"
+msgstr "Einen Moment…"
+
+#: get-started.html:loading-lead
+msgid "We're preparing your personalised quote request."
+msgstr "Wir bereiten Ihre persönliche Angebotsanfrage vor."
+
+# ============================================================
+# PAGE: get-started.html — Confirm State
+# ============================================================
+
+#: get-started.html:confirm-h1
+msgid "one step to better energy."
+msgstr "Ein Schritt zu besserer Energie."
+
+#: get-started.html:confirm-lead
+msgid "We'll start by sending you a Letter of Authority — a quick digital signature that lets us approach suppliers on your behalf."
+msgstr "Wir senden Ihnen zunächst eine Letter of Authority (Vollmacht) — eine schnelle digitale Unterschrift, die es uns ermöglicht, in Ihrem Namen Angebote bei Anbietern einzuholen."
+
+#: get-started.html:step-1-title
+msgid "Sign your Letter of Authority"
+msgstr "Unterschreiben Sie Ihre Letter of Authority"
+
+#: get-started.html:step-1-desc
+msgid "Takes 2 minutes. DocuSign will send it to your email right now."
+msgstr "Dauert 2 Minuten. DocuSign sendet sie sofort an Ihre E-Mail-Adresse."
+
+#: get-started.html:step-2-title
+msgid "We go to market"
+msgstr "Wir gehen auf den Markt"
+
+#: get-started.html:step-2-desc
+msgid "We approach every major UK supplier and request quotes on your behalf."
+msgstr "Wir kontaktieren alle großen britischen Anbieter und holen Angebote in Ihrem Namen ein."
+
+#: get-started.html:step-3-title
+msgid "You choose the best deal"
+msgstr "Sie wählen das beste Angebot"
+
+#: get-started.html:step-3-desc
+msgid "We send you a clear comparison. You pick the winner. We handle the switch."
+msgstr "Wir senden Ihnen einen übersichtlichen Vergleich. Sie wählen den Gewinner. Wir kümmern uns um den Wechsel."
+
+#: get-started.html:card
+msgid "Name"
+msgstr "Name"
+
+#: get-started.html:card
+msgid "Email"
+msgstr "E-Mail"
+
+#: get-started.html:card
+msgid "Company"
+msgstr "Unternehmen"
+
+#: get-started.html:btn
+msgid "send my letter of authority →"
+msgstr "Letter of Authority senden →"
+
+#: get-started.html:confirm
+msgid "Not you? Go back to edge-energy.uk"
+msgstr "Nicht Sie? Zurück zu edge-energy.uk"
+
+# ============================================================
+# PAGE: get-started.html — Sending State
+# ============================================================
+
+#: get-started.html:sending-h1
+msgid "sending your letter of authority…"
+msgstr "Ihre Letter of Authority wird gesendet…"
+
+#: get-started.html:sending-lead
+msgid "we're preparing your letter of authority and sending it to docusign. you'll receive an email to sign in just a moment."
+msgstr "Wir bereiten Ihre Letter of Authority vor und senden sie an DocuSign. Sie erhalten in Kürze eine E-Mail zur Unterschrift."
+
+# ============================================================
+# PAGE: get-started.html — Success State
+# ============================================================
+
+#: get-started.html:success-h1
+msgid "check your inbox"
+msgstr "Prüfen Sie Ihren Posteingang"
+
+#: get-started.html:success-lead
+msgid "we've sent your letter of authority via docusign. open the email, sign digitally, and we'll go straight to market for you."
+msgstr "Wir haben Ihre Letter of Authority über DocuSign gesendet. Öffnen Sie die E-Mail, unterschreiben Sie digital, und wir holen umgehend Angebote für Sie ein."
+
+#: get-started.html:success-card
+msgid "Sent to"
+msgstr "Gesendet an"
+
+#: get-started.html:success-card
+msgid "From"
+msgstr "Von"
+
+#: get-started.html:success-card
+msgid "What's next"
+msgstr "Nächste Schritte"
+
+#: get-started.html:success-card
+msgid "Sign the LOA → We get quotes"
+msgstr "LOA unterschreiben → Wir holen Angebote ein"
+
+#: get-started.html:success
+msgid "Can't find the email? Check your spam folder or contact us and we'll resend it."
+msgstr "E-Mail nicht gefunden? Prüfen Sie Ihren Spam-Ordner oder kontaktieren Sie uns, und wir senden sie erneut."
+
+# ============================================================
+# PAGE: get-started.html — Error State
+# ============================================================
+
+#: get-started.html:error-h1
+msgid "Something went wrong"
+msgstr "Etwas ist schiefgelaufen"
+
+#: get-started.html:error-lead
+msgid "We couldn't send your LOA automatically. Please get in touch and we'll sort it straight away."
+msgstr "Wir konnten Ihre LOA nicht automatisch senden. Bitte kontaktieren Sie uns, und wir kümmern uns umgehend darum."
+
+#: get-started.html:error-btn
+msgid "Email us directly"
+msgstr "Schreiben Sie uns direkt"
+
+#: get-started.html:error-btn
+msgid "Back to website"
+msgstr "Zurück zur Website"
+
+# ============================================================
+# PAGE: get-started.html — Footer
+# ============================================================
+
+#: get-started.html:footer
+msgid "Edge Energy Ltd · Independent Business Energy Broker · London"
+msgstr "Edge Energy Ltd · Unabhängiger Energiemakler für Unternehmen · London"
+
+# ============================================================
+# PAGE: get-started.html — JavaScript strings
+# ============================================================
+
+#: get-started.html:js
+msgid "Not provided"
+msgstr "Nicht angegeben"
+
+#: get-started.html:js
+msgid "your email"
+msgstr "Ihre E-Mail"
+
+#: get-started.html:js
+msgid "Sending…"
+msgstr "Wird gesendet…"
+
+# ============================================================
+# PAGE: quote.html — Meta & Nav
+# ============================================================
+
+#: quote.html:title
+msgid "Your Energy Quotes — Edge Energy"
+msgstr "Ihre Energieangebote — Edge Energy"
+
+#: quote.html:nav-badge
+msgid "Your personal quote page"
+msgstr "Ihre persönliche Angebotsseite"
+
+# ============================================================
+# PAGE: quote.html — Hero
+# ============================================================
+
+#: quote.html:hero-tag
+msgid "Your energy comparison"
+msgstr "Ihr Energievergleich"
+
+#: quote.html:hero-h1
+msgid "Your quotes are ready"
+msgstr "Ihre Angebote sind bereit"
+
+#: quote.html:hero-sub
+msgid "We've collected quotes from across the market. Review your options below and click to proceed with your chosen supplier."
+msgstr "Wir haben Angebote aus dem gesamten Markt für Sie zusammengestellt. Prüfen Sie Ihre Optionen und wählen Sie Ihren bevorzugten Anbieter."
+
+# ============================================================
+# PAGE: quote.html — Meta Bar
+# ============================================================
+
+#: quote.html:meta-bar
+msgid "Annual Usage"
+msgstr "Jahresverbrauch"
+
+#: quote.html:meta-bar
+msgid "Current Supplier"
+msgstr "Aktueller Anbieter"
+
+#: quote.html:meta-bar
+msgid "Contract End"
+msgstr "Vertragsende"
+
+#: quote.html:meta-bar
+msgid "Quotes"
+msgstr "Angebote"
+
+# ============================================================
+# PAGE: quote.html — Quotes Section
+# ============================================================
+
+#: quote.html:section-tag
+msgid "Supplier quotes"
+msgstr "Anbieterangebote"
+
+#: quote.html:section-h2
+msgid "Choose your best deal"
+msgstr "Wählen Sie Ihr bestes Angebot"
+
+#: quote.html:section-lead
+msgid "All quotes are for your exact consumption profile. Estimated annual cost includes unit rate and standing charge. Click a supplier to proceed — we'll send the contract via DocuSign."
+msgstr "Alle Angebote basieren auf Ihrem genauen Verbrauchsprofil. Die geschätzten Jahreskosten umfassen Einheitspreis und Grundgebühr. Wählen Sie einen Anbieter aus — wir senden Ihnen den Vertrag über DocuSign zu."
+
+#: quote.html:error
+msgid "We couldn't load your quotes. Please contact us and we'll send them directly."
+msgstr "Ihre Angebote konnten nicht geladen werden. Bitte kontaktieren Sie uns und wir senden Ihnen die Angebote direkt zu."
+
+#: quote.html:how-it-works
+msgid "How this works:"
+msgstr "So funktioniert es:"
+
+#: quote.html:how-it-works-desc
+msgid "Once you click your chosen supplier, Edge Energy will send you a contract via DocuSign. You review, sign digitally, and we handle everything from there — supplier notification, meter transfer, and switch confirmation. You'll see the improvement on your first bill."
+msgstr "Sobald Sie Ihren bevorzugten Anbieter ausgewählt haben, sendet Ihnen Edge Energy einen Vertrag über DocuSign. Sie prüfen und unterschreiben digital — wir kümmern uns um alles Weitere: Anbieterbenachrichtigung, Zählerübertragung und Wechselbestätigung. Die Verbesserung sehen Sie bereits auf Ihrer ersten Rechnung."
+
+# ============================================================
+# PAGE: quote.html — Confirm Modal
+# ============================================================
+
+#: quote.html:modal-h3
+msgid "Confirm your choice"
+msgstr "Ihre Auswahl bestätigen"
+
+#: quote.html:modal-desc
+msgid "You're selecting the following supplier. We'll send you a contract via DocuSign to review and sign."
+msgstr "Sie haben den folgenden Anbieter ausgewählt. Wir senden Ihnen einen Vertrag über DocuSign zur Prüfung und Unterschrift."
+
+#: quote.html:modal
+msgid "Rate:"
+msgstr "Tarif:"
+
+#: quote.html:modal
+msgid "Est. annual cost:"
+msgstr "Geschätzte Jahreskosten:"
+
+#: quote.html:modal-btn
+msgid "Yes, send me the contract →"
+msgstr "Ja, Vertrag zusenden →"
+
+#: quote.html:modal-cancel
+msgid "Go back and review options"
+msgstr "Zurück zu den Optionen"
+
+# ============================================================
+# PAGE: quote.html — Success Modal
+# ============================================================
+
+#: quote.html:success-h3
+msgid "Contract sent!"
+msgstr "Vertrag gesendet!"
+
+#: quote.html:success-desc
+msgid "Check your email for a DocuSign contract from Edge Energy. Once signed, we'll handle everything — supplier notification and switch coordination."
+msgstr "Prüfen Sie Ihr E-Mail-Postfach auf einen DocuSign-Vertrag von Edge Energy. Nach Ihrer Unterschrift kümmern wir uns um alles — Anbieterbenachrichtigung und Koordination des Wechsels."
+
+# ============================================================
+# PAGE: quote.html — Footer
+# ============================================================
+
+#: quote.html:footer
+msgid "This quote page is personal to you and expires 30 days after issue."
+msgstr "Diese Angebotsseite ist persönlich für Sie erstellt und läuft 30 Tage nach Ausstellung ab."
+
+# ============================================================
+# PAGE: quote.html — JavaScript strings
+# ============================================================
+
+#: quote.html:js
+msgid "Loading your quotes…"
+msgstr "Ihre Angebote werden geladen…"
+
+#: quote.html:js
+msgid "Best rate"
+msgstr "Bestes Angebot"
+
+#: quote.html:js
+msgid "Unit Rate"
+msgstr "Einheitspreis"
+
+#: quote.html:js
+msgid "Standing Charge"
+msgstr "Grundgebühr"
+
+#: quote.html:js
+msgid "Contract Length"
+msgstr "Vertragslaufzeit"
+
+#: quote.html:js
+msgid "Est. annual cost"
+msgstr "Geschätzte Jahreskosten"
+
+#: quote.html:js
+msgid "Choose this deal →"
+msgstr "Dieses Angebot wählen →"
+
+#: quote.html:js
+msgid "Select →"
+msgstr "Auswählen →"
+
+#: quote.html:js
+msgid "Sending contract…"
+msgstr "Vertrag wird gesendet…"
+
+#: quote.html:js
+msgid "Try again"
+msgstr "Erneut versuchen"
+
+#: quote.html:js
+msgid "suppliers"
+msgstr "Anbieter"
+
+#: quote.html:js
+msgid "months"
+msgstr "Monate"
+
+#: quote.html:js
+msgid "Questions?"
+msgstr "Fragen?"
+
+#: quote.html:js
+msgid "per day"
+msgstr "pro Tag"
+
+#: quote.html:js
+msgid "Ref"
+msgstr "Ref."
