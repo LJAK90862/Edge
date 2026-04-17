@@ -71,14 +71,10 @@ async function getAccessToken() {
 
   // Client credentials fallback (integration key + secret key)
   if (process.env.DOCUSIGN_SECRET_KEY) {
-    const credentials = Buffer.from(`${INTEGRATION_KEY}:${process.env.DOCUSIGN_SECRET_KEY}`).toString('base64');
     const res = await fetch(`${AUTH_BASE}/oauth/token`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': `Basic ${credentials}`
-      },
-      body: 'grant_type=client_credentials&scope=signature'
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `grant_type=client_credentials&client_id=${INTEGRATION_KEY}&client_secret=${process.env.DOCUSIGN_SECRET_KEY}&scope=signature`
     });
 
     if (!res.ok) {
