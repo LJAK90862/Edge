@@ -59,6 +59,7 @@ export default async function handler(req, res) {
 
   } catch (error) {
     console.error('LOA error:', error);
-    return res.redirect(302, `${APP_URL}/${dealId}?token=${token}&loa=error`);
+    // Return error details for debugging (change to redirect in production)
+    return res.status(500).json({ error: error.message, stack: error.stack });
   }
 }
