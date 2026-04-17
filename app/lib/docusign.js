@@ -1,12 +1,12 @@
 // lib/docusign.js
-// DocuSign eSignature helper — uses JWT grant for auth
+// DocuSign eSignature helper — supports JWT grant, client credentials, or static token
+
+import crypto from 'crypto';
 
 const DOCUSIGN_BASE = process.env.DOCUSIGN_BASE_URL || 'https://demo.docusign.net/restapi';
 const ACCOUNT_ID = process.env.DOCUSIGN_ACCOUNT_ID;
 const INTEGRATION_KEY = process.env.DOCUSIGN_INTEGRATION_KEY;
-const SECRET_KEY = process.env.DOCUSIGN_SECRET_KEY;
 
-// For demo/sandbox, auth endpoint is account-d.docusign.com
 const AUTH_BASE = DOCUSIGN_BASE.includes('demo')
   ? 'https://account-d.docusign.com'
   : 'https://account.docusign.com';
@@ -14,39 +14,86 @@ const AUTH_BASE = DOCUSIGN_BASE.includes('demo')
 let cachedToken = null;
 let tokenExpiry = 0;
 
+function base64url(str) {
+  return Buffer.from(str).toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+
+function createJWT() {
+  const now = Math.floor(Date.now() / 1000);
+  const header = base64url(JSON.stringify({ alg: 'RS256', typ: 'JWT' }));
+  const payload = base64url(JSON.stringify({
+    iss: INTEGRATION_KEY,
+    sub: process.env.DOCUSIGN_USER_ID,
+    aud: AUTH_BASE.replace('https://', ''),
+    iat: now,
+    exp: now + 3600,
+    scope: 'signature'
+  }));
+
+  const privateKey = process.env.DOCUSIGN_PRIVATE_KEY.replace(/\\n/g, '\n');
+  const sign = crypto.createSign('RSA-SHA256');
+  sign.update(`${header}.${payload}`);
+  const signature = sign.sign(privateKey, 'base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+
+  return `${header}.${payload}.${signature}`;
+}
+
 async function getAccessToken() {
-  // Return cached token if still valid (with 5min buffer)
   if (cachedToken && Date.now() < tokenExpiry - 300000) return cachedToken;
 
-  // Use static token if provided
+  // Static token override
   if (process.env.DOCUSIGN_ACCESS_TOKEN) {
     cachedToken = process.env.DOCUSIGN_ACCESS_TOKEN;
     tokenExpiry = Date.now() + 3600000;
     return cachedToken;
   }
 
-  // Otherwise use client credentials (integration key + secret key)
-  const credentials = Buffer.from(`${INTEGRATION_KEY}:${SECRET_KEY}`).toString('base64');
+  // JWT grant (preferred — uses private key + user ID)
+  if (process.env.DOCUSIGN_PRIVATE_KEY && process.env.DOCUSIGN_USER_ID) {
+    const jwt = createJWT();
+    const res = await fetch(`${AUTH_BASE}/oauth/token`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&assertion=${jwt}`
+    });
 
-  const res = await fetch(`${AUTH_BASE}/oauth/token`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': `Basic ${credentials}`
-    },
-    body: 'grant_type=client_credentials&scope=signature'
-  });
+    if (!res.ok) {
+      const err = await res.text();
+      console.error('DocuSign JWT auth error:', err);
+      throw new Error(`DocuSign JWT auth failed: ${res.status}`);
+    }
 
-  if (!res.ok) {
-    const err = await res.text();
-    console.error('DocuSign auth error:', err);
-    throw new Error(`DocuSign auth failed: ${res.status}`);
+    const data = await res.json();
+    cachedToken = data.access_token;
+    tokenExpiry = Date.now() + (data.expires_in * 1000);
+    return cachedToken;
   }
 
-  const data = await res.json();
-  cachedToken = data.access_token;
-  tokenExpiry = Date.now() + (data.expires_in * 1000);
-  return cachedToken;
+  // Client credentials fallback (integration key + secret key)
+  if (process.env.DOCUSIGN_SECRET_KEY) {
+    const credentials = Buffer.from(`${INTEGRATION_KEY}:${process.env.DOCUSIGN_SECRET_KEY}`).toString('base64');
+    const res = await fetch(`${AUTH_BASE}/oauth/token`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': `Basic ${credentials}`
+      },
+      body: 'grant_type=client_credentials&scope=signature'
+    });
+
+    if (!res.ok) {
+      const err = await res.text();
+      console.error('DocuSign client credentials error:', err);
+      throw new Error(`DocuSign auth failed: ${res.status}`);
+    }
+
+    const data = await res.json();
+    cachedToken = data.access_token;
+    tokenExpiry = Date.now() + (data.expires_in * 1000);
+    return cachedToken;
+  }
+
+  throw new Error('No DocuSign authentication method configured');
 }
 
 export async function sendEnvelope({ templateId, signerEmail, signerName, emailSubject, templateRoles }) {
