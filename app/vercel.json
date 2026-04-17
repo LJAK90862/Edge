@@ -9,5 +9,8 @@
     { "src": "/broker", "dest": "/broker.html" },
     { "src": "/([a-f0-9-]{36})", "dest": "/portal.html" },
     { "src": "/", "dest": "/portal.html" }
-  ]
+  ],
+  "deploymentProtection": {
+    "standard": "none"
+  }
 }
