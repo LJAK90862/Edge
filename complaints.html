@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>complaints procedure – edge energy</title>
+<link rel="icon" type="image/svg+xml" href="logo-icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  /* greens */
+  --g900: #1B4332;
+  --g700: #2D6A4F;
+  --g500: #40916C;
+  --g300: #52B788;
+  --g100: #95D5B2;
+  --g50:  #D8F3DC;
+  /* blues */
+  --b900: #0F2340;
+  --b700: #1A3A5C;
+  --b500: #1E5B8A;
+  --b300: #2E86C1;
+  --b100: #7FB3D3;
+  --b50:  #D6EAF8;
+  /* neutrals */
+  --slate: #0D1B2A;
+  --mid:   #4A5568;
+  --soft:  #8896A6;
+  --cream: #F8F9FA;
+  --warm:  #F0F4F8;
+  --border: #E2E8F0;
+  --white: #FFFFFF;
+  /* typography */
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans:  'DM Sans', system-ui, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); background: var(--cream); color: var(--slate); overflow-x: hidden; font-weight: 300; line-height: 1.7; }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1rem 5vw;
+  background: rgba(248,249,250,0.96);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.nav-logo-text { font-family: var(--sans); font-size: 1.1rem; font-weight: 600; color: var(--slate); letter-spacing: -0.02em; }
+.nav-logo-text span { color: var(--g700); }
+.nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+.nav-links a { color: var(--mid); text-decoration: none; font-size: 0.875rem; font-weight: 400; transition: color 0.2s; }
+.nav-links a:hover { color: var(--slate); }
+.nav-cta {
+  background: var(--b700) !important; color: #fff !important;
+  padding: 0.5rem 1.2rem !important; border-radius: 6px;
+  font-weight: 500 !important; font-size: 0.85rem !important;
+  transition: background 0.2s !important;
+}
+.nav-cta:hover { background: var(--b500) !important; }
+
+/* ── SECTION BASE ── */
+.section { padding: 80px 5vw; }
+.section-inner { max-width: 1200px; margin: 0 auto; }
+.section-tag { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--g500); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 10px; }
+.section-tag::before { content: ''; width: 20px; height: 1.5px; background: var(--g500); display: block; }
+.section-tag.blue { color: var(--b300); }
+.section-tag.blue::before { background: var(--b300); }
+h2 { font-family: var(--serif); font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 900; color: var(--slate); line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 1rem; }
+h2 em { font-style: italic; color: var(--g700); }
+.section-lead { font-size: 1rem; color: var(--mid); max-width: 520px; line-height: 1.8; margin-bottom: 3rem; }
+
+/* ── PROCESS / STEPS ── */
+.steps-list { display: flex; flex-direction: column; }
+.step-item { display: flex; gap: 1.4rem; padding: 1.4rem 0; border-bottom: 1px solid var(--border); }
+.step-item:first-child { padding-top: 0; }
+.step-item:last-child { border-bottom: none; }
+.step-num { font-family: var(--serif); font-size: 2rem; font-weight: 900; color: rgba(30,91,138,0.15); line-height: 1; min-width: 42px; padding-top: 2px; }
+.step-item h3 { font-family: var(--serif); font-size: 1.05rem; font-weight: 700; color: var(--slate); margin-bottom: 0.4rem; }
+.step-item p { font-size: 0.875rem; color: var(--mid); line-height: 1.75; }
+
+/* ── BUTTONS ── */
+.btn-primary { background: var(--g700); color: #fff; border: none; padding: 0.85rem 1.8rem; font-family: var(--sans); font-size: 0.9rem; font-weight: 500; border-radius: 6px; text-decoration: none; cursor: pointer; transition: background 0.2s, transform 0.15s; display: inline-block; }
+.btn-primary:hover { background: var(--g500); transform: translateY(-1px); }
+
+/* ── GOVERNANCE BOX ── */
+.governance-box { margin-top: 2.5rem; padding: 1.4rem; background: var(--warm); border: 1px solid var(--border); border-radius: 10px; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.governance-box-text { flex: 1; min-width: 200px; }
+.governance-box-text strong { font-size: 0.875rem; color: var(--slate); }
+.governance-box-text p { font-size: 0.8rem; color: var(--mid); margin-top: 2px; }
+
+/* ── CONTACT BOX ── */
+.contact-box { margin-top: 3rem; padding: 2rem; background: var(--white); border: 1px solid var(--border); border-radius: 10px; text-align: center; }
+.contact-box h3 { font-family: var(--serif); font-size: 1.3rem; font-weight: 700; color: var(--slate); margin-bottom: 0.6rem; }
+.contact-box p { font-size: 0.875rem; color: var(--mid); line-height: 1.75; margin-bottom: 0.4rem; }
+.contact-box a { color: var(--g700); text-decoration: none; font-weight: 500; }
+.contact-box a:hover { text-decoration: underline; }
+.contact-box .company-details { margin-top: 1.2rem; padding-top: 1.2rem; border-top: 1px solid var(--border); font-size: 0.78rem; color: var(--soft); line-height: 1.8; }
+
+/* ── FOOTER ── */
+footer { background: var(--slate); padding: 3rem 5vw 2rem; }
+.footer-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 3rem; padding-bottom: 2.5rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
+.footer-brand p { font-size: 0.8rem; color: rgba(255,255,255,0.35); line-height: 1.8; margin-top: 0.8rem; max-width: 220px; }
+.footer-logo-text { font-family: var(--sans); font-size: 1.1rem; font-weight: 600; color: #fff; }
+.footer-logo-text span { color: var(--g300); }
+.footer-col h4 { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 1rem; }
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+.footer-col a { font-size: 0.82rem; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.2s; }
+.footer-col a:hover { color: rgba(255,255,255,0.8); }
+.footer-bottom { max-width: 1200px; margin: 0 auto; padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.8rem; }
+.footer-bottom p { font-size: 0.75rem; color: rgba(255,255,255,0.25); }
+
+/* ── PAGE HEADER ── */
+.page-header {
+  padding: 140px 5vw 60px;
+  background: linear-gradient(135deg, var(--b900) 0%, var(--b700) 45%, var(--g900) 100%);
+  position: relative; overflow: hidden;
+}
+.page-header::before {
+  content: ''; position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 70% 50%, rgba(46,134,193,0.15) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 60% at 20% 80%, rgba(45,106,79,0.2) 0%, transparent 70%);
+  pointer-events: none;
+}
+.page-header-inner { max-width: 700px; margin: 0 auto; position: relative; z-index: 1; }
+.page-header .section-tag { color: var(--g300); }
+.page-header .section-tag::before { background: var(--g300); }
+.page-header h1 { font-family: var(--serif); font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 900; color: #fff; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 1rem; }
+.page-header h1 em { font-style: italic; color: var(--g300); }
+.page-header p { font-size: 1rem; color: rgba(255,255,255,0.55); line-height: 1.8; max-width: 520px; }
+
+@media (max-width: 900px) {
+  nav .nav-links { display: none; }
+  .footer-inner { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <svg width="28" height="32" viewBox="0 0 40 46" fill="none">
+      <defs>
+        <linearGradient id="nla" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#52B788"/><stop offset="100%" stop-color="#2D6A4F"/></linearGradient>
+        <linearGradient id="nlb" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#74C69D"/><stop offset="100%" stop-color="#40916C"/></linearGradient>
+        <linearGradient id="nlc" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#95D5B2"/><stop offset="100%" stop-color="#74C69D"/></linearGradient>
+      </defs>
+      <path d="M2 36 L10 18 L15 18 L9 33 L22 33 L14 44 L9 44 L16 34 Z" fill="url(#nla)" opacity="0.55"/>
+      <path d="M6 27 L14 9 L19 9 L13 24 L26 24 L18 43 L13 43 L20 26 Z" fill="url(#nlb)" opacity="0.8"/>
+      <path d="M10 18 L18 2 L23 2 L17 15 L30 15 L22 34 L17 34 L24 17 Z" fill="url(#nlc)"/>
+    </svg>
+    <span class="nav-logo-text">edge<span>.</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#why">why us</a></li>
+    <li><a href="index.html#how">how it works</a></li>
+    <li><a href="index.html#about">about</a></li>
+    <li><a href="index.html#reviews">reviews</a></li>
+    <li><a href="https://app.edge-energy.uk" class="nav-cta">get quotes</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HEADER -->
+<section class="page-header">
+  <div class="page-header-inner">
+    <div class="section-tag">transparency</div>
+    <h1>complaints <em>procedure</em></h1>
+    <p>we take all complaints seriously. if you're unhappy with any aspect of our service, here's how we'll resolve it.</p>
+  </div>
+</section>
+
+<!-- COMPLAINTS PROCESS -->
+<section class="section">
+  <div class="section-inner" style="max-width:700px;margin:0 auto;">
+    <div class="steps-list">
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div>
+          <h3>get in touch</h3>
+          <p>email us at <a href="mailto:info@edge-energy.uk" style="color:var(--g700);font-weight:500">info@edge-energy.uk</a> or write to us at 3 River Court, Richmond, TW10 6QY. we'll acknowledge your complaint within <strong>3 business days</strong>.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div>
+          <h3>investigation & response</h3>
+          <p>we'll investigate thoroughly and aim to provide a full response within <strong>15 business days</strong>. for complex matters, this may take up to 8 weeks — we'll keep you informed of progress throughout.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div>
+          <h3>escalation</h3>
+          <p>if you're not satisfied with our response, you can escalate your complaint to the <strong>Energy Ombudsman</strong> — an independent body that resolves disputes between energy consumers and providers.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- GOVERNANCE PACK -->
+    <div class="governance-box">
+      <div class="governance-box-text">
+        <strong>governance & compliance pack</strong>
+        <p>our full privacy policy, terms of business, commission disclosure, data protection, and complaints procedure.</p>
+      </div>
+      <a href="https://docs.google.com/document/d/1PSFdTgm0f5AXoZ5kOrURB3j1QJUdGU3z/edit?rtpof=true&tab=t.0" target="_blank" class="btn-primary" style="font-size:0.82rem;padding:10px 20px;white-space:nowrap;">view governance pack →</a>
+    </div>
+
+    <!-- CONTACT BOX -->
+    <div class="contact-box">
+      <h3>still need help?</h3>
+      <p>if you have any questions or need further assistance, don't hesitate to reach out.</p>
+      <p><a href="mailto:info@edge-energy.uk">info@edge-energy.uk</a></p>
+      <div class="company-details">
+        Edge Energy Consulting Ltd · Company No: 17125035<br>
+        3 River Court, Richmond, TW10 6QY
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+        <svg width="24" height="28" viewBox="0 0 40 46" fill="none">
+          <defs>
+            <linearGradient id="fla" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#52B788"/><stop offset="100%" stop-color="#2D6A4F"/></linearGradient>
+            <linearGradient id="flb" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#74C69D"/><stop offset="100%" stop-color="#40916C"/></linearGradient>
+            <linearGradient id="flc" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#95D5B2"/><stop offset="100%" stop-color="#74C69D"/></linearGradient>
+          </defs>
+          <path d="M2 36 L10 18 L15 18 L9 33 L22 33 L14 44 L9 44 L16 34 Z" fill="url(#fla)" opacity="0.55"/>
+          <path d="M6 27 L14 9 L19 9 L13 24 L26 24 L18 43 L13 43 L20 26 Z" fill="url(#flb)" opacity="0.8"/>
+          <path d="M10 18 L18 2 L23 2 L17 15 L30 15 L22 34 L17 34 L24 17 Z" fill="url(#flc)"/>
+        </svg>
+        <span class="footer-logo-text">edge<span style="color:var(--g300)">.</span></span>
+      </div>
+      <p>independent business energy broker. london, england.</p>
+    </div>
+    <div class="footer-col">
+      <h4>services</h4>
+      <ul>
+        <li><a href="index.html">electricity</a></li>
+        <li><a href="index.html">gas</a></li>
+        <li><a href="index.html">green energy</a></li>
+        <li><a href="index.html">multi-site</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>company</h4>
+      <ul>
+        <li><a href="index.html#about">about us</a></li>
+        <li><a href="index.html#reviews">reviews</a></li>
+        <li><a href="index.html#contact-us">contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>legal</h4>
+      <ul>
+        <li><a href="https://docs.google.com/document/d/1PSFdTgm0f5AXoZ5kOrURB3j1QJUdGU3z/edit?rtpof=true&tab=t.0" target="_blank">governance pack</a></li>
+        <li><a href="complaints.html">complaints procedure</a></li>
+        <li><a href="mailto:info@edge-energy.uk">info@edge-energy.uk</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2026 edge energy consulting ltd &middot; company no. 17125035 &middot; registered in england and wales &middot; 3 river court, richmond, TW10 6QY</p>
+    <p>the edge in business energy</p>
+  </div>
+</footer>
+
+</body>
+</html>
