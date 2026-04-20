@@ -55,7 +55,7 @@ export default async function handler(req, res) {
 
   if (req.method === 'PATCH') {
     const id = req.query.id;
-    const { status, mpan, annual_kwh, current_unit_rate, profile_class, contract_end_date, current_supplier_email } = req.body;
+    const { status, mpan, annual_kwh, current_unit_rate, profile_class, contract_end_date, current_supplier_email, tpi_emails } = req.body;
 
     const updates = {};
     if (status) updates.status = status;
@@ -65,6 +65,7 @@ export default async function handler(req, res) {
     if (profile_class) updates.profile_class = profile_class;
     if (contract_end_date) updates.contract_end_date = contract_end_date;
     if (current_supplier_email) updates.current_supplier_email = current_supplier_email;
+    if (tpi_emails !== undefined) updates.tpi_emails = tpi_emails;
 
     const { data, error } = await supabase
       .from('deals')

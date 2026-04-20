@@ -42,11 +42,11 @@ nav{background:var(--slate);padding:1rem 5vw;display:flex;justify-content:space-
 .deal-meta{font-size:0.72rem;color:var(--soft);display:flex;align-items:center;gap:6px;}
 .deal-unread{display:inline-block;background:var(--g700);color:#fff;border-radius:10px;padding:1px 7px;font-size:0.65rem;font-weight:600;}
 .status-badge{display:inline-block;font-size:0.65rem;font-weight:600;padding:2px 8px;border-radius:10px;text-transform:uppercase;letter-spacing:0.03em;}
-.badge-pending{background:var(--amber-light);color:#92400E;}
-.badge-loa_sent{background:#DBEAFE;color:#1E40AF;}
+.badge-new_enquiry{background:var(--amber-light);color:#92400E;}
+.badge-loa_requested{background:#DBEAFE;color:#1E40AF;}
 .badge-loa_signed{background:#DBEAFE;color:#1E40AF;}
-.badge-quotes_requested{background:#E0E7FF;color:#3730A3;}
-.badge-quotes_presented{background:#D1FAE5;color:#065F46;}
+.badge-supplier_info_requested{background:#E0E7FF;color:#3730A3;}
+.badge-quoting{background:#D1FAE5;color:#065F46;}
 .badge-contract_sent{background:#D1FAE5;color:#065F46;}
 .badge-won{background:#D1FAE5;color:var(--g700);}
 .badge-lost{background:var(--red-light);color:var(--red);}
@@ -411,7 +411,7 @@ function renderDealDetail(deal, messages) {
         <div style="margin-bottom:16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
           <span style="font-size:0.82rem;color:var(--mid);">status:</span>
           <select class="status-select" onchange="updateDeal('${deal.id}', { status: this.value })">
-            ${['pending','loa_sent','loa_signed','quotes_requested','quotes_presented','contract_sent','won','lost'].map(s =>
+            ${['new_enquiry','loa_requested','loa_signed','supplier_info_requested','quoting','contract_sent','won','lost'].map(s =>
               `<option value="${s}" ${deal.status===s?'selected':''}>${s.replace(/_/g,' ')}</option>`
             ).join('')}
           </select>
@@ -424,6 +424,16 @@ function renderDealDetail(deal, messages) {
             <div style="display:flex;gap:8px;align-items:center;">
               <input type="email" id="supplier-email-input" value="${escHtml(deal.current_supplier_email || '')}" placeholder="supplier@example.com" style="flex:1;background:var(--white);border:1px solid var(--border);padding:8px 12px;font-family:var(--sans);font-size:0.82rem;border-radius:6px;outline:none;" onfocus="this.style.borderColor='var(--g700)'" onblur="this.style.borderColor='var(--border)'" />
               <button class="btn btn-primary" onclick="saveSupplierEmail('${deal.id}')">save</button>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-bottom:16px;">
+          <div class="info-editable">
+            <label style="font-size:0.72rem;font-weight:500;color:var(--mid);">TPI emails (comma-separated)</label>
+            <div style="display:flex;gap:8px;align-items:center;">
+              <textarea id="tpi-emails-input" placeholder="tpi1@example.com, tpi2@example.com" style="flex:1;background:var(--white);border:1px solid var(--border);padding:8px 12px;font-family:var(--sans);font-size:0.82rem;border-radius:6px;outline:none;resize:vertical;min-height:36px;" onfocus="this.style.borderColor='var(--g700)'" onblur="this.style.borderColor='var(--border)'">${escHtml(deal.tpi_emails || '')}</textarea>
+              <button class="btn btn-primary" onclick="saveTpiEmails('${deal.id}')">save</button>
             </div>
           </div>
         </div>
@@ -463,6 +473,9 @@ function renderQuotesTab(dealId) {
   const approved = currentDealQuotes.approved;
 
   pane.innerHTML = `
+    <!-- SEND RFQ TO TPIs -->
+    <button class="btn btn-blue" style="width:100%;padding:12px;font-size:0.88rem;font-weight:600;margin-bottom:20px;" onclick="sendRfqToTpis('${dealId}')">Send RFQ to TPIs &rarr;</button>
+
     <!-- STAGING AREA -->
     <div class="section-header">
       <span class="section-title">Staging Area</span>
@@ -654,6 +667,29 @@ async function updateDeal(dealId, fields) {
 async function saveSupplierEmail(dealId) {
   const email = document.getElementById('supplier-email-input').value.trim();
   await updateDeal(dealId, { current_supplier_email: email });
+}
+
+async function saveTpiEmails(dealId) {
+  const emails = document.getElementById('tpi-emails-input').value.trim();
+  await updateDeal(dealId, { tpi_emails: emails });
+}
+
+async function sendRfqToTpis(dealId) {
+  if (!confirm('Send RFQ emails to all TPIs listed on this deal?')) return;
+  try {
+    const res = await fetch(`${API_BASE}/api/broker/rfq`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-broker-key': brokerKey },
+      body: JSON.stringify({ dealId })
+    });
+    const data = await res.json();
+    if (!res.ok) { showToast(data.error || 'Failed to send RFQ'); return; }
+    showToast(`RFQ sent to ${data.sent} TPI(s)`);
+    loadDeals();
+  } catch(e) {
+    showToast('Failed to send RFQ');
+    console.error('sendRfqToTpis:', e);
+  }
 }
 </script>
 </body>

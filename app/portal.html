@@ -362,14 +362,14 @@ let quotesData = [];
 let selectedQuote = null;
 
 const STEPS = [
-  { key: 'pending',            label: 'signed up' },
-  { key: 'loa_signed',         label: 'loa signed' },
-  { key: 'quotes_presented',   label: 'quotes ready' },
-  { key: 'contract_sent',      label: 'contract sent' },
-  { key: 'won',                label: 'switched' },
+  { key: 'new_enquiry',             label: 'signed up' },
+  { key: 'loa_signed',              label: 'loa signed' },
+  { key: 'quoting',                 label: 'quotes ready' },
+  { key: 'contract_sent',           label: 'contract sent' },
+  { key: 'won',                     label: 'switched' },
 ];
 
-const STATUS_ORDER = ['pending','loa_sent','loa_signed','quotes_requested','quotes_presented','contract_sent','won'];
+const STATUS_ORDER = ['new_enquiry','loa_requested','loa_signed','supplier_info_requested','quoting','contract_sent','won'];
 
 function getStepIndex(status) {
   return STATUS_ORDER.indexOf(status);
@@ -451,11 +451,11 @@ function renderRenewal(deal) {
 function updateStatus(status) {
   const pill = document.getElementById('status-pill');
   const labels = {
-    pending: 'signed up',
-    loa_sent: 'loa sent',
+    new_enquiry: 'signed up',
+    loa_requested: 'loa requested',
     loa_signed: 'loa signed',
-    quotes_requested: 'getting quotes',
-    quotes_presented: 'quotes ready',
+    supplier_info_requested: 'gathering info',
+    quoting: 'quotes ready',
     contract_sent: 'contract sent',
     won: 'switched ✓',
     lost: 'closed'
@@ -464,12 +464,12 @@ function updateStatus(status) {
   if (status === 'won') pill.classList.add('active');
 
   // LOA card
-  if (['loa_sent','loa_signed','quotes_requested','quotes_presented','contract_sent','won'].includes(status)) {
+  if (['loa_requested','loa_signed','supplier_info_requested','quoting','contract_sent','won'].includes(status)) {
     document.getElementById('loa-unsigned').style.display = 'none';
     document.getElementById('loa-signed-state').style.display = 'block';
-    document.getElementById('loa-tag').textContent = status === 'loa_sent' ? 'sent — check email' : 'signed';
+    document.getElementById('loa-tag').textContent = status === 'loa_requested' ? 'sent — check email' : 'signed';
     document.getElementById('loa-tag').className = 'card-tag tag-done';
-    if (status === 'loa_sent') {
+    if (status === 'loa_requested') {
       document.querySelector('#loa-signed-state .loa-signed-text').textContent = 'letter of authority sent — check your email to sign via DocuSign.';
     }
   }

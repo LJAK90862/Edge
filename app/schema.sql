@@ -26,8 +26,11 @@ create table deals (
   current_unit_rate numeric,
   
   -- Deal status
-  status text default 'pending' check (status in ('pending', 'loa_sent', 'loa_signed', 'quotes_requested', 'quotes_presented', 'contract_sent', 'won', 'lost')),
+  status text default 'new_enquiry' check (status in ('new_enquiry', 'loa_requested', 'loa_signed', 'supplier_info_requested', 'quoting', 'contract_sent', 'won', 'lost')),
   
+  -- TPI
+  tpi_emails text,
+
   -- HubSpot sync
   hubspot_contact_id text,
   hubspot_deal_id text,

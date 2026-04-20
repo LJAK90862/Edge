@@ -23,7 +23,7 @@ export default async function handler(req, res) {
       annual_kwh: annualKwh ? parseFloat(annualKwh) : null,
       current_supplier: currentSupplier,
       contract_end_date: contractEndDate || null,
-      status: 'pending'
+      status: 'new_enquiry'
     }).select().single();
 
     if (error) throw error;

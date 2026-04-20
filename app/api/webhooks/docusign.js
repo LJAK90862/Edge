@@ -33,15 +33,15 @@ export default async function handler(req, res) {
       .eq('hellosign_signature_id', envelopeId)
       .single();
 
-    if (loaDeal && ['pending', 'loa_sent'].includes(loaDeal.status)) {
-      // LOA has been signed
+    if (loaDeal && ['new_enquiry', 'loa_requested'].includes(loaDeal.status)) {
+      // LOA has been signed — advance to supplier_info_requested
       await supabase.from('deals').update({
-        status: 'loa_signed',
+        status: 'supplier_info_requested',
         loa_signed_at: new Date().toISOString()
       }).eq('id', loaDeal.id);
 
-      // Sync HubSpot
-      await updateDealStage(loaDeal.hubspot_deal_id, 'loa_signed', {
+      // Sync HubSpot to supplier_info_requested (the actual resulting state)
+      await updateDealStage(loaDeal.hubspot_deal_id, 'supplier_info_requested', {
         loa_signed_date: new Date().toISOString()
       });
 
@@ -58,7 +58,7 @@ export default async function handler(req, res) {
         </div>`
       });
 
-      // Email current supplier if we have their email
+      // Email current supplier requesting consumption data if we have their email
       if (loaDeal.current_supplier_email) {
         try {
           await sendEmail({
@@ -68,7 +68,13 @@ export default async function handler(req, res) {
               <p>Dear Sir/Madam,</p>
               <p style="color:#4A5568;line-height:1.7;">We are writing to inform you that <strong>${loaDeal.company}</strong> has signed a Letter of Authority authorising Edge Energy to act on their behalf in relation to their energy supply.</p>
               <p style="color:#4A5568;line-height:1.7;">As their appointed energy broker, we are authorised to approach suppliers, obtain pricing, and manage the procurement process for their energy contracts.</p>
-              <p style="color:#4A5568;line-height:1.7;">We may be in touch shortly to request contract and consumption data for the above customer. Please do not hesitate to contact us if you require any further information.</p>
+              <p style="color:#4A5568;line-height:1.7;">We kindly request the following information for the above customer at your earliest convenience:</p>
+              <ul style="color:#4A5568;line-height:1.7;margin:8px 0 8px 20px;">
+                <li>Current consumption data (historical usage)</li>
+                <li>Meter details (MPAN / meter serial number)</li>
+                <li>Current contract terms and end date</li>
+              </ul>
+              <p style="color:#4A5568;line-height:1.7;">Please do not hesitate to contact us if you require any further information.</p>
               <p style="color:#4A5568;line-height:1.7;">Kind regards,<br>Edge Energy</p>
               <p style="color:#8896A6;font-size:0.82rem;">edge energy · hello@edgeenergy.co.uk</p>
             </div>`
@@ -79,11 +85,12 @@ export default async function handler(req, res) {
       // Email broker
       await sendEmail({
         to: BROKER_EMAIL,
-        subject: `✅ LOA signed: ${loaDeal.company} — ready for RFQs`,
+        subject: `✅ LOA signed: ${loaDeal.company} — supplier info requested`,
         html: `<div style="font-family:sans-serif;max-width:520px;margin:0 auto;padding:40px 20px;">
           <p><strong>${loaDeal.company}</strong> has signed their LOA.</p>
           <p>Name: ${loaDeal.name}<br>Email: ${loaDeal.email}<br>kWh: ${loaDeal.annual_kwh || '—'}<br>Current supplier: ${loaDeal.current_supplier || '—'}<br>MPAN: ${loaDeal.mpan || '—'}</p>
-          <p><strong>Next step:</strong> send RFQ emails to suppliers and add quotes to the deal room.</p>
+          <p><strong>Status:</strong> supplier info requested${loaDeal.current_supplier_email ? ' — email sent to current supplier.' : ' — no supplier email on file, add one in the broker portal.'}</p>
+          <p><strong>Next step:</strong> once supplier info is received, send RFQ emails to TPIs and add quotes to the deal room.</p>
           <a href="${APP_URL}/broker" style="display:inline-block;background:#1A3A5C;color:#fff;padding:12px 24px;border-radius:6px;text-decoration:none;">open broker portal →</a>
         </div>`
       });

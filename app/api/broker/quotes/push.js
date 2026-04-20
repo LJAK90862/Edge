@@ -36,10 +36,10 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'No staged quotes to push for this deal' });
   }
 
-  // Update deal status to quotes_presented
+  // Update deal status to quoting
   const { error: dealError } = await supabase
     .from('deals')
-    .update({ status: 'quotes_presented' })
+    .update({ status: 'quoting' })
     .eq('id', dealId);
 
   if (dealError) return res.status(500).json({ error: dealError.message });
@@ -48,7 +48,7 @@ export default async function handler(req, res) {
   const { data: deal } = await supabase.from('deals').select('*').eq('id', dealId).single();
 
   // Sync HubSpot
-  if (deal) await updateDealStage(deal.hubspot_deal_id, 'quotes_presented');
+  if (deal) await updateDealStage(deal.hubspot_deal_id, 'quoting');
 
   if (deal) {
     // Email customer
@@ -74,7 +74,7 @@ export default async function handler(req, res) {
           html: `<div style="font-family:sans-serif;max-width:520px;margin:0 auto;padding:40px 20px;">
             <p><strong>${approvedQuotes.length}</strong> quote${approvedQuotes.length !== 1 ? 's' : ''} pushed to <strong>${deal.company}</strong>.</p>
             <p>Customer: ${deal.name} (${deal.email})</p>
-            <p>Deal status updated to <strong>quotes_presented</strong>.</p>
+            <p>Deal status updated to <strong>quoting</strong>.</p>
             <a href="${APP_URL}/broker" style="display:inline-block;background:#1A3A5C;color:#fff;padding:12px 24px;border-radius:6px;text-decoration:none;">open broker portal →</a>
             <p style="color:#8896A6;font-size:0.82rem;margin-top:16px;">edge energy · hello@edgeenergy.co.uk</p>
           </div>`

@@ -6,14 +6,14 @@ const HS_API = 'https://api.hubapi.com';
 
 // Map internal status to HubSpot deal stage IDs
 const STAGE_MAP = {
-  pending:            'appointmentscheduled',  // LOA Sent
-  loa_sent:           'appointmentscheduled',
-  loa_signed:         'qualifiedtobuy',        // Quotes Requested
-  quotes_requested:   'qualifiedtobuy',
-  quotes_presented:   'presentationscheduled',  // Quotes Presented
-  contract_sent:      'decisionmakerboughtin',  // Contract Sent
-  won:                'contractsent',           // Closed Won
-  lost:               'closedlost',             // Closed Lost
+  new_enquiry:              'appointmentscheduled',
+  loa_requested:            'qualifiedtobuy',
+  loa_signed:               'presentationscheduled',
+  supplier_info_requested:  'decisionmakerboughtin',
+  quoting:                  '5215571147',
+  contract_sent:            'contractsent',
+  won:                      '5215432942',
+  lost:                     'closedlost',
 };
 
 async function hsRequest(method, path, body) {
