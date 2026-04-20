@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>about – edge energy</title>
+<link rel="icon" type="image/svg+xml" href="logo-icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  /* greens */
+  --g900: #1B4332;
+  --g700: #2D6A4F;
+  --g500: #40916C;
+  --g300: #52B788;
+  --g100: #95D5B2;
+  --g50:  #D8F3DC;
+  /* blues */
+  --b900: #0F2340;
+  --b700: #1A3A5C;
+  --b500: #1E5B8A;
+  --b300: #2E86C1;
+  --b100: #7FB3D3;
+  --b50:  #D6EAF8;
+  /* neutrals */
+  --slate: #0D1B2A;
+  --mid:   #4A5568;
+  --soft:  #8896A6;
+  --cream: #F8F9FA;
+  --warm:  #F0F4F8;
+  --border: #E2E8F0;
+  --white: #FFFFFF;
+  /* typography */
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans:  'DM Sans', system-ui, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); background: var(--cream); color: var(--slate); overflow-x: hidden; font-weight: 300; line-height: 1.7; }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1rem 5vw;
+  background: rgba(248,249,250,0.96);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.nav-logo-text { font-family: var(--sans); font-size: 1.1rem; font-weight: 600; color: var(--slate); letter-spacing: -0.02em; }
+.nav-logo-text span { color: var(--g700); }
+.nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+.nav-links a { color: var(--mid); text-decoration: none; font-size: 0.875rem; font-weight: 400; transition: color 0.2s; }
+.nav-links a:hover { color: var(--slate); }
+.nav-links a.active { color: var(--slate); font-weight: 500; }
+.nav-cta {
+  background: var(--b700) !important; color: #fff !important;
+  padding: 0.5rem 1.2rem !important; border-radius: 6px;
+  font-weight: 500 !important; font-size: 0.85rem !important;
+  transition: background 0.2s !important;
+}
+.nav-cta:hover { background: var(--b500) !important; }
+
+/* ── SECTION BASE ── */
+.section { padding: 80px 5vw; }
+.section-inner { max-width: 1200px; margin: 0 auto; }
+.section-tag { font-size: 0.68rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--g500); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 10px; }
+.section-tag::before { content: ''; width: 20px; height: 1.5px; background: var(--g500); display: block; }
+h2 { font-family: var(--serif); font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 900; color: var(--slate); line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 1rem; }
+h2 em { font-style: italic; color: var(--g700); }
+
+/* ── ABOUT ── */
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6vw; align-items: start; }
+.about-text p { font-size: 0.9rem; color: var(--mid); line-height: 1.8; margin-bottom: 1rem; }
+.about-list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; margin: 1.5rem 0 2rem; }
+.about-list li { display: flex; align-items: flex-start; gap: 0.7rem; font-size: 0.875rem; color: var(--mid); line-height: 1.6; }
+.about-list li::before { content: '✓'; color: var(--g700); font-weight: 600; flex-shrink: 0; margin-top: 1px; }
+.about-right { display: flex; flex-direction: column; gap: 1.2rem; }
+.about-stat-card { background: linear-gradient(135deg, var(--b900), var(--b700)); border-radius: 10px; padding: 1.8rem; }
+.about-stat-num { font-family: var(--serif); font-size: 2.8rem; font-weight: 900; color: var(--g300); line-height: 1; margin-bottom: 0.5rem; }
+.about-stat-label { font-size: 0.875rem; color: rgba(255,255,255,0.5); line-height: 1.6; }
+.about-badge { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 1.4rem; display: flex; align-items: center; gap: 1rem; }
+.about-badge-icon { width: 44px; height: 44px; background: var(--b50); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+.about-badge-text strong { display: block; font-size: 0.875rem; font-weight: 600; color: var(--slate); margin-bottom: 2px; }
+.about-badge-text span { font-size: 0.78rem; color: var(--mid); }
+.btn-primary { background: var(--g700); color: #fff; border: none; padding: 0.85rem 1.8rem; font-family: var(--sans); font-size: 0.9rem; font-weight: 500; border-radius: 6px; text-decoration: none; cursor: pointer; transition: background 0.2s, transform 0.15s; display: inline-block; }
+.btn-primary:hover { background: var(--g500); transform: translateY(-1px); }
+
+/* ── FOOTER ── */
+footer { background: var(--slate); padding: 3rem 5vw 2rem; }
+.footer-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 3rem; padding-bottom: 2.5rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
+.footer-brand p { font-size: 0.8rem; color: rgba(255,255,255,0.35); line-height: 1.8; margin-top: 0.8rem; max-width: 220px; }
+.footer-logo-text { font-family: var(--sans); font-size: 1.1rem; font-weight: 600; color: #fff; }
+.footer-logo-text span { color: var(--g300); }
+.footer-col h4 { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 1rem; }
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+.footer-col a { font-size: 0.82rem; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.2s; }
+.footer-col a:hover { color: rgba(255,255,255,0.8); }
+.footer-bottom { max-width: 1200px; margin: 0 auto; padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.8rem; }
+.footer-bottom p { font-size: 0.75rem; color: rgba(255,255,255,0.25); }
+
+@media (max-width: 900px) {
+  nav .nav-links { display: none; }
+  .about-grid { grid-template-columns: 1fr; }
+  .footer-inner { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <svg width="28" height="32" viewBox="0 0 40 46" fill="none">
+      <defs>
+        <linearGradient id="nla" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#52B788"/><stop offset="100%" stop-color="#2D6A4F"/></linearGradient>
+        <linearGradient id="nlb" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#74C69D"/><stop offset="100%" stop-color="#40916C"/></linearGradient>
+        <linearGradient id="nlc" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#95D5B2"/><stop offset="100%" stop-color="#74C69D"/></linearGradient>
+      </defs>
+      <path d="M2 36 L10 18 L15 18 L9 33 L22 33 L14 44 L9 44 L16 34 Z" fill="url(#nla)" opacity="0.55"/>
+      <path d="M6 27 L14 9 L19 9 L13 24 L26 24 L18 43 L13 43 L20 26 Z" fill="url(#nlb)" opacity="0.8"/>
+      <path d="M10 18 L18 2 L23 2 L17 15 L30 15 L22 34 L17 34 L24 17 Z" fill="url(#nlc)"/>
+    </svg>
+    <span class="nav-logo-text">edge<span>.</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#how">how it works</a></li>
+    <li><a href="index.html#why">why us</a></li>
+    <li><a href="about.html" class="active">about</a></li>
+    <li><a href="index.html#reviews">reviews</a></li>
+    <li><a href="https://app.edge-energy.uk" class="nav-cta">get quotes</a></li>
+  </ul>
+</nav>
+
+<!-- ABOUT -->
+<section class="section" style="padding-top:120px;">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-text">
+        <div class="section-tag">about us</div>
+        <h2>we started because we were<br><em>tired of the tricks</em></h2>
+        <p>founded in london by former energy industry professionals who'd seen enough. inflated rates, opaque pricing, suppliers rewarding brokers for steering clients the wrong way. we knew technology could fix it — so we built edge energy.</p>
+        <p>the energy market moves constantly — rates shift, supplier positions change, new products appear. most businesses only look at it at renewal. our platform monitors it every day, using data and intelligent automation to keep our clients ahead.</p>
+        <p>we built our own deal room platform because the industry still runs on spreadsheets and phone calls. from digital letter of authority to automated supplier comparison to in-app contract signing — we've digitised the entire switching process.</p>
+        <ul class="about-list">
+          <li>we compare the same tariffs your direct supplier would offer you</li>
+          <li>our software monitors 50+ suppliers and analyses rates in real time</li>
+          <li>a dedicated account manager handles your account from day one</li>
+          <li>automated renewal tracking ensures you never overpay again</li>
+        </ul>
+        <a href="https://app.edge-energy.uk" class="btn-primary">get quotes →</a>
+      </div>
+      <div class="about-right">
+        <div class="about-stat-card">
+          <div class="about-stat-num">98%</div>
+          <div class="about-stat-label">customer satisfaction — and we don't lock anyone in to achieve it. clients stay because the service is worth it.</div>
+        </div>
+        <div class="about-badge">
+          <div class="about-badge-icon">⚡</div>
+          <div class="about-badge-text"><strong>electricity & gas</strong><span>sme & i&c · all meter types · 1–5 year contracts</span></div>
+        </div>
+        <div class="about-badge">
+          <div class="about-badge-icon" style="background:var(--g50)">🌿</div>
+          <div class="about-badge-text"><strong>green energy</strong><span>rego-certified renewables · verified, not greenwashed</span></div>
+        </div>
+        <div class="about-badge">
+          <div class="about-badge-icon">🏢</div>
+          <div class="about-badge-text"><strong>multi-site</strong><span>portfolio management · consolidated renewals</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+        <svg width="24" height="28" viewBox="0 0 40 46" fill="none">
+          <defs>
+            <linearGradient id="fla" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#52B788"/><stop offset="100%" stop-color="#2D6A4F"/></linearGradient>
+            <linearGradient id="flb" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#74C69D"/><stop offset="100%" stop-color="#40916C"/></linearGradient>
+            <linearGradient id="flc" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#95D5B2"/><stop offset="100%" stop-color="#74C69D"/></linearGradient>
+          </defs>
+          <path d="M2 36 L10 18 L15 18 L9 33 L22 33 L14 44 L9 44 L16 34 Z" fill="url(#fla)" opacity="0.55"/>
+          <path d="M6 27 L14 9 L19 9 L13 24 L26 24 L18 43 L13 43 L20 26 Z" fill="url(#flb)" opacity="0.8"/>
+          <path d="M10 18 L18 2 L23 2 L17 15 L30 15 L22 34 L17 34 L24 17 Z" fill="url(#flc)"/>
+        </svg>
+        <span class="footer-logo-text">edge<span style="color:var(--g300)">.</span></span>
+      </div>
+      <p>ai-powered independent energy broker. london, england.</p>
+    </div>
+    <div class="footer-col">
+      <h4>services</h4>
+      <ul>
+        <li><a href="#">electricity</a></li>
+        <li><a href="#">gas</a></li>
+        <li><a href="#">green energy</a></li>
+        <li><a href="#">multi-site</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>company</h4>
+      <ul>
+        <li><a href="about.html">about us</a></li>
+        <li><a href="index.html#reviews">reviews</a></li>
+        <li><a href="index.html#contact-us">contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>legal</h4>
+      <ul>
+        <li><a href="https://docs.google.com/document/d/1PSFdTgm0f5AXoZ5kOrURB3j1QJUdGU3z/edit?rtpof=true&tab=t.0" target="_blank">governance pack</a></li>
+        <li><a href="complaints.html">complaints procedure</a></li>
+        <li><a href="mailto:info@edge-energy.uk">info@edge-energy.uk</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 edge energy consulting ltd · company no. 17125035 · registered in england and wales · 3 river court, richmond, TW10 6QY</p>
+  </div>
+</footer>
+
+</body>
+</html>
