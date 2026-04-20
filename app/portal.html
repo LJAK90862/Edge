@@ -245,14 +245,38 @@ nav{background:var(--white);border-bottom:1px solid var(--border);padding:1rem 5
         <span class="card-tag tag-required" id="loa-tag">action required</span>
       </div>
       <div id="loa-unsigned">
-        <p>to get quotes from across the market, we need a letter of authority — this simply allows us to speak to suppliers on your behalf. it takes under 2 minutes to sign digitally.</p>
-        <button class="btn btn-primary btn-lg" onclick="signLOA()">sign my letter of authority →</button>
+        <p>to get quotes from across the market, we need a letter of authority — this simply allows us to speak to suppliers on your behalf. read and sign below.</p>
+        <button class="btn btn-blue" onclick="showLOA()" id="btn-read-loa">read & sign letter of authority →</button>
+      </div>
+      <div id="loa-document" style="display:none;">
+        <div style="background:var(--warm);border:1px solid var(--border);border-radius:10px;padding:24px;margin-bottom:16px;font-size:0.84rem;color:var(--slate);line-height:1.85;">
+          <h3 style="font-family:var(--serif);font-size:1.1rem;font-weight:700;margin-bottom:12px;">Letter of Authority</h3>
+          <p>I, <strong id="loa-signer-name">—</strong>, on behalf of <strong id="loa-company-name">—</strong>, hereby authorise <strong>Edge Energy Ltd</strong> to act as my agent for the purpose of:</p>
+          <ul style="margin:12px 0 12px 20px;">
+            <li>Approaching energy suppliers on my behalf</li>
+            <li>Obtaining energy supply quotations for my business</li>
+            <li>Accessing my current energy supply data and consumption information from my existing supplier(s)</li>
+            <li>Negotiating energy contracts and tariffs on my behalf</li>
+          </ul>
+          <p>This authority remains valid for a period of <strong>12 months</strong> from the date of signing and may be revoked by me at any time by written notice to Edge Energy Ltd.</p>
+          <p>I confirm that I am authorised to act on behalf of the above-named company in relation to its energy supply arrangements.</p>
+          <p style="margin-top:16px;color:var(--soft);font-size:0.78rem;">Edge Energy Ltd · Registered in England and Wales · hello@edgeenergy.co.uk</p>
+        </div>
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:10px;padding:20px;">
+          <p style="font-size:0.84rem;color:var(--mid);margin-bottom:12px;">by clicking below, you confirm that you have read and agree to the above letter of authority.</p>
+          <div style="display:flex;gap:10px;align-items:center;margin-bottom:16px;">
+            <input type="text" id="loa-typed-name" placeholder="type your full name to sign" style="flex:1;background:var(--warm);border:1px solid var(--border);color:var(--slate);padding:12px 14px;font-family:var(--sans);font-size:0.9rem;border-radius:8px;outline:none;" />
+          </div>
+          <button class="btn btn-primary btn-lg" onclick="submitLOA()" id="btn-sign-loa" style="width:100%;">i agree — sign letter of authority →</button>
+          <p style="font-size:0.72rem;color:var(--soft);text-align:center;margin-top:8px;">your signature, IP address, and timestamp will be recorded.</p>
+        </div>
       </div>
       <div id="loa-signed-state" style="display:none;">
         <div class="loa-signed">
           <span class="loa-signed-icon">✓</span>
           <span class="loa-signed-text">letter of authority signed — we're now going to market for you.</span>
         </div>
+        <p id="loa-signed-details" style="font-size:0.75rem;color:var(--soft);margin-top:8px;"></p>
       </div>
     </div>
 
@@ -543,8 +567,45 @@ async function confirmSupplier() {
   }
 }
 
-function signLOA() {
-  window.location.href = `${API_BASE}/api/deals/loa?dealId=${dealId}&token=${token}`;
+function showLOA() {
+  document.getElementById('loa-unsigned').style.display = 'none';
+  document.getElementById('loa-document').style.display = 'block';
+  if (dealData) {
+    document.getElementById('loa-signer-name').textContent = dealData.name || '—';
+    document.getElementById('loa-company-name').textContent = dealData.company || '—';
+    document.getElementById('loa-typed-name').value = '';
+  }
+}
+
+async function submitLOA() {
+  const typedName = document.getElementById('loa-typed-name').value.trim();
+  if (!typedName) { alert('please type your full name to sign.'); return; }
+
+  const btn = document.getElementById('btn-sign-loa');
+  btn.textContent = 'signing…';
+  btn.disabled = true;
+
+  try {
+    const res = await fetch(`${API_BASE}/api/deals/loa`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ dealId, token, signedName: typedName })
+    });
+    if (!res.ok) throw new Error();
+    const data = await res.json();
+
+    document.getElementById('loa-document').style.display = 'none';
+    document.getElementById('loa-signed-state').style.display = 'block';
+    document.getElementById('loa-tag').textContent = 'signed';
+    document.getElementById('loa-tag').className = 'card-tag tag-done';
+    document.getElementById('loa-signed-details').textContent = `signed by ${typedName} on ${new Date().toLocaleDateString('en-GB', {day:'numeric',month:'short',year:'numeric'})} at ${new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})}`;
+    renderProgress('supplier_info_requested');
+    updateStatus('supplier_info_requested');
+  } catch(e) {
+    btn.textContent = 'something went wrong — try again';
+    btn.style.background = '#BE123C';
+    btn.disabled = false;
+  }
 }
 
 function startRenewal() {
