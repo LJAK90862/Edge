@@ -1,40 +1,11 @@
 // api/deals/create.js
 import { createClient } from '@supabase/supabase-js';
 import { sendEmail } from '../../lib/email.js';
+import { createContact, createDeal } from '../../lib/hubspot.js';
 
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY);
 const APP_URL = process.env.APP_URL || 'https://app.edge-energy.uk';
 const BROKER_EMAIL = process.env.BROKER_EMAIL;
-const HUBSPOT_TOKEN = process.env.HUBSPOT_API_KEY;
-
-async function createHubSpotContact(data) {
-  const res = await fetch('https://api.hubapi.com/crm/v3/objects/contacts', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${HUBSPOT_TOKEN}` },
-    body: JSON.stringify({ properties: {
-      firstname: data.name.split(' ')[0],
-      lastname: data.name.split(' ').slice(1).join(' ') || 'Unknown',
-      email: data.email, company: data.company, phone: data.phone,
-      lead_source_detail: 'get_started_form'
-    }})
-  });
-  return (await res.json()).id;
-}
-
-async function createHubSpotDeal(data, contactId, dealId) {
-  const res = await fetch('https://api.hubapi.com/crm/v3/objects/deals', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${HUBSPOT_TOKEN}` },
-    body: JSON.stringify({ properties: {
-      dealname: `${data.company} — Energy Contract`,
-      pipeline: 'default', dealstage: 'appointmentscheduled',
-      annual_kwh: data.annualKwh, current_supplier: data.currentSupplier,
-      contract_end_date: data.contractEndDate, contact_email: data.email,
-      quote_page_url: `${APP_URL}/${dealId}`
-    }})
-  });
-  return (await res.json()).id;
-}
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -59,10 +30,18 @@ export default async function handler(req, res) {
 
     const portalUrl = `${APP_URL}/${deal.id}?token=${deal.magic_token}`;
 
+    // HubSpot sync
     try {
-      const contactId = await createHubSpotContact({ name, email, company, phone });
-      const hubspotDealId = await createHubSpotDeal({ name, email, company, annualKwh, currentSupplier, contractEndDate }, contactId, deal.id);
-      await supabase.from('deals').update({ hubspot_contact_id: contactId, hubspot_deal_id: hubspotDealId }).eq('id', deal.id);
+      const contact = await createContact({ name, email, company, phone });
+      const contactId = contact?.id;
+      const hsDeal = await createDeal({ name, email, company, annualKwh, currentSupplier, contractEndDate }, contactId, deal.id, portalUrl);
+      const hubspotDealId = hsDeal?.id;
+      if (contactId || hubspotDealId) {
+        await supabase.from('deals').update({
+          hubspot_contact_id: contactId || null,
+          hubspot_deal_id: hubspotDealId || null
+        }).eq('id', deal.id);
+      }
     } catch(e) { console.error('HubSpot error:', e); }
 
     await sendEmail({

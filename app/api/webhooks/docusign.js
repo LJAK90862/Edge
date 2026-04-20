@@ -4,6 +4,7 @@
 
 import { createClient } from '@supabase/supabase-js';
 import { sendEmail } from '../../lib/email.js';
+import { updateDealStage } from '../../lib/hubspot.js';
 
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY);
 const BROKER_EMAIL = process.env.BROKER_EMAIL;
@@ -38,6 +39,11 @@ export default async function handler(req, res) {
         status: 'loa_signed',
         loa_signed_at: new Date().toISOString()
       }).eq('id', loaDeal.id);
+
+      // Sync HubSpot
+      await updateDealStage(loaDeal.hubspot_deal_id, 'loa_signed', {
+        loa_signed_date: new Date().toISOString()
+      });
 
       // Email client
       await sendEmail({
@@ -98,6 +104,11 @@ export default async function handler(req, res) {
         status: 'won',
         contract_signed_at: new Date().toISOString()
       }).eq('id', contractDeal.id);
+
+      // Sync HubSpot
+      await updateDealStage(contractDeal.hubspot_deal_id, 'won', {
+        closedate: new Date().toISOString()
+      });
 
       // Email client — congratulations
       await sendEmail({

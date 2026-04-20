@@ -4,6 +4,7 @@
 import { createClient } from '@supabase/supabase-js';
 import { sendEnvelope } from '../../lib/docusign.js';
 import { sendEmail } from '../../lib/email.js';
+import { updateDealStage } from '../../lib/hubspot.js';
 
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY);
 const BROKER_EMAIL = process.env.BROKER_EMAIL;
@@ -42,6 +43,9 @@ export default async function handler(req, res) {
       status: 'loa_sent',
       hellosign_signature_id: envelope.envelopeId
     }).eq('id', dealId);
+
+    // Sync HubSpot
+    await updateDealStage(deal.hubspot_deal_id, 'loa_sent');
 
     // Notify broker
     await sendEmail({

@@ -2,6 +2,7 @@
 // POST /api/broker/quotes/push — batch push staged quotes to customer
 import { createClient } from '@supabase/supabase-js';
 import { sendEmail } from '../../../lib/email.js';
+import { updateDealStage } from '../../../lib/hubspot.js';
 
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY);
 const APP_URL = process.env.APP_URL || 'https://app.edge-energy.uk';
@@ -45,6 +46,9 @@ export default async function handler(req, res) {
 
   // Fetch deal for email details
   const { data: deal } = await supabase.from('deals').select('*').eq('id', dealId).single();
+
+  // Sync HubSpot
+  if (deal) await updateDealStage(deal.hubspot_deal_id, 'quotes_presented');
 
   if (deal) {
     // Email customer

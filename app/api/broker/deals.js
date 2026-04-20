@@ -3,6 +3,7 @@
 // PATCH /api/broker/deals/[id]  — update deal status
 
 import { createClient } from '@supabase/supabase-js';
+import { updateDealStage } from '../../lib/hubspot.js';
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
@@ -73,6 +74,12 @@ export default async function handler(req, res) {
       .single();
 
     if (error) return res.status(500).json({ error: error.message });
+
+    // Sync HubSpot when status changes
+    if (status && data.hubspot_deal_id) {
+      await updateDealStage(data.hubspot_deal_id, status);
+    }
+
     return res.status(200).json({ deal: data });
   }
 
