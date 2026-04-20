@@ -24,7 +24,7 @@ nav{background:var(--white);border-bottom:1px solid var(--border);padding:1rem 5
 .nav-badge{font-size:0.68rem;font-weight:500;color:var(--soft);background:var(--warm);border:1px solid var(--border);padding:4px 10px;border-radius:20px;}
 
 /* LAYOUT */
-.container{max-width:780px;margin:0 auto;padding:40px 20px 80px;}
+.container{max-width:900px;margin:0 auto;padding:40px 20px 80px;}
 
 /* LOADING */
 #loading{text-align:center;padding:80px 20px;}
@@ -128,9 +128,37 @@ nav{background:var(--white);border-bottom:1px solid var(--border);padding:1rem 5
 
 /* HELP */
 .help-bar{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;margin-top:24px;}
+.help-bar-inner{display:flex;justify-content:space-between;align-items:center;width:100%;}
 .help-bar p{font-size:0.82rem;color:var(--mid);}
 .help-bar a{color:var(--g700);text-decoration:none;font-weight:500;}
 
+/* TAB LAYOUT */
+.portal-layout{display:grid;grid-template-columns:220px 1fr;gap:0;min-height:60vh;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--white);}
+.tab-sidebar{background:var(--white);border-right:1px solid var(--border);padding-top:8px;}
+.tab-content{background:var(--white);padding:24px;min-height:400px;}
+.tab-item{padding:14px 20px;cursor:pointer;display:flex;align-items:center;gap:10px;font-size:0.85rem;color:var(--mid);border-left:3px solid transparent;transition:all 0.15s;user-select:none;}
+.tab-item:hover{background:var(--warm);}
+.tab-item.active{background:var(--warm);color:var(--g700);border-left-color:var(--g700);font-weight:500;}
+.tab-icon{font-size:1rem;flex-shrink:0;}
+.portal-tab-pane{display:none;}
+.portal-tab-pane.active-pane{display:block;}
+
+/* Tab content resets — remove card wrapper styles inside tabs */
+.tab-content .card{border:none;border-radius:0;padding:0;margin-bottom:0;}
+.tab-content .chat-card{border:none;border-radius:0;margin-bottom:0;overflow:visible;}
+.tab-content .help-bar{border:none;border-radius:0;margin-top:0;padding:0;}
+.tab-content .chat-header{padding:0 0 16px 0;}
+.tab-content .chat-input-row{padding:14px 0;border-radius:0;}
+
+@media(max-width:700px){
+  .portal-layout{grid-template-columns:1fr;border-radius:12px;}
+  .tab-sidebar{border-right:none;border-bottom:1px solid var(--border);padding-top:0;display:flex;overflow-x:auto;gap:0;}
+  .tab-item{border-left:none;border-bottom:3px solid transparent;padding:10px 14px;white-space:nowrap;font-size:0.78rem;justify-content:center;flex:1;min-width:0;}
+  .tab-item.active{border-left-color:transparent;border-bottom-color:var(--g700);}
+  .tab-item:hover{border-left-color:transparent;}
+  .tab-label-text{display:none;}
+  .tab-icon{font-size:1.1rem;}
+}
 
 /* CHAT */
 .chat-card{background:var(--white);border:1px solid var(--border);border-radius:12px;margin-bottom:16px;overflow:hidden;}
@@ -238,93 +266,131 @@ nav{background:var(--white);border-bottom:1px solid var(--border);padding:1rem 5
       <button class="btn btn-primary" onclick="startRenewal()">start renewal process →</button>
     </div>
 
-    <!-- LOA Section -->
-    <div class="card" id="loa-card">
-      <div class="card-header">
-        <div class="card-title">letter of authority</div>
-        <span class="card-tag tag-required" id="loa-tag">action required</span>
-      </div>
-      <div id="loa-unsigned">
-        <p>to get quotes from across the market, we need a letter of authority — this simply allows us to speak to suppliers on your behalf. read and sign below.</p>
-        <button class="btn btn-blue" onclick="showLOA()" id="btn-read-loa">read & sign letter of authority →</button>
-      </div>
-      <div id="loa-document" style="display:none;">
-        <div style="background:var(--warm);border:1px solid var(--border);border-radius:10px;padding:24px;margin-bottom:16px;font-size:0.84rem;color:var(--slate);line-height:1.85;">
-          <h3 style="font-family:var(--serif);font-size:1.1rem;font-weight:700;margin-bottom:12px;">Letter of Authority</h3>
-          <p>I, <strong id="loa-signer-name">—</strong>, on behalf of <strong id="loa-company-name">—</strong>, hereby authorise <strong>Edge Energy Ltd</strong> to act as my agent for the purpose of:</p>
-          <ul style="margin:12px 0 12px 20px;">
-            <li>Approaching energy suppliers on my behalf</li>
-            <li>Obtaining energy supply quotations for my business</li>
-            <li>Accessing my current energy supply data and consumption information from my existing supplier(s)</li>
-            <li>Negotiating energy contracts and tariffs on my behalf</li>
-          </ul>
-          <p>This authority remains valid for a period of <strong>12 months</strong> from the date of signing and may be revoked by me at any time by written notice to Edge Energy Ltd.</p>
-          <p>I confirm that I am authorised to act on behalf of the above-named company in relation to its energy supply arrangements.</p>
-          <p style="margin-top:16px;color:var(--soft);font-size:0.78rem;">Edge Energy Ltd · Registered in England and Wales · hello@edgeenergy.co.uk</p>
+    <!-- Tab layout -->
+    <div class="portal-layout">
+      <!-- Left sidebar tabs -->
+      <div class="tab-sidebar">
+        <div class="tab-item active" data-tab="loa" onclick="switchPortalTab('loa')">
+          <span class="tab-icon">⚡</span><span class="tab-label-text">Letter of Authority</span>
         </div>
-        <div style="background:var(--white);border:1px solid var(--border);border-radius:10px;padding:20px;">
-          <p style="font-size:0.84rem;color:var(--mid);margin-bottom:12px;">by clicking below, you confirm that you have read and agree to the above letter of authority.</p>
-          <div style="display:flex;gap:10px;align-items:center;margin-bottom:16px;">
-            <input type="text" id="loa-typed-name" placeholder="type your full name to sign" style="flex:1;background:var(--warm);border:1px solid var(--border);color:var(--slate);padding:12px 14px;font-family:var(--sans);font-size:0.9rem;border-radius:8px;outline:none;" />
+        <div class="tab-item" data-tab="quotes" onclick="switchPortalTab('quotes')">
+          <span class="tab-icon">📊</span><span class="tab-label-text">Your Quotes</span>
+        </div>
+        <div class="tab-item" data-tab="details" onclick="switchPortalTab('details')">
+          <span class="tab-icon">📋</span><span class="tab-label-text">Your Details</span>
+        </div>
+        <div class="tab-item" data-tab="chat" onclick="switchPortalTab('chat')">
+          <span class="tab-icon">💬</span><span class="tab-label-text">Messages</span>
+        </div>
+        <div class="tab-item" data-tab="help" onclick="switchPortalTab('help')">
+          <span class="tab-icon">❓</span><span class="tab-label-text">Help & Support</span>
+        </div>
+      </div>
+
+      <!-- Right content area -->
+      <div class="tab-content">
+
+        <!-- LOA Tab -->
+        <div class="portal-tab-pane active-pane" id="ptab-loa">
+          <div class="card" id="loa-card">
+            <div class="card-header">
+              <div class="card-title">letter of authority</div>
+              <span class="card-tag tag-required" id="loa-tag">action required</span>
+            </div>
+            <div id="loa-unsigned">
+              <p>to get quotes from across the market, we need a letter of authority — this simply allows us to speak to suppliers on your behalf. read and sign below.</p>
+              <button class="btn btn-blue" onclick="showLOA()" id="btn-read-loa">read & sign letter of authority →</button>
+            </div>
+            <div id="loa-document" style="display:none;">
+              <div style="background:var(--warm);border:1px solid var(--border);border-radius:10px;padding:24px;margin-bottom:16px;font-size:0.84rem;color:var(--slate);line-height:1.85;">
+                <h3 style="font-family:var(--serif);font-size:1.1rem;font-weight:700;margin-bottom:12px;">Letter of Authority</h3>
+                <p>I, <strong id="loa-signer-name">—</strong>, on behalf of <strong id="loa-company-name">—</strong>, hereby authorise <strong>Edge Energy Ltd</strong> to act as my agent for the purpose of:</p>
+                <ul style="margin:12px 0 12px 20px;">
+                  <li>Approaching energy suppliers on my behalf</li>
+                  <li>Obtaining energy supply quotations for my business</li>
+                  <li>Accessing my current energy supply data and consumption information from my existing supplier(s)</li>
+                  <li>Negotiating energy contracts and tariffs on my behalf</li>
+                </ul>
+                <p>This authority remains valid for a period of <strong>12 months</strong> from the date of signing and may be revoked by me at any time by written notice to Edge Energy Ltd.</p>
+                <p>I confirm that I am authorised to act on behalf of the above-named company in relation to its energy supply arrangements.</p>
+                <p style="margin-top:16px;color:var(--soft);font-size:0.78rem;">Edge Energy Ltd · Registered in England and Wales · hello@edgeenergy.co.uk</p>
+              </div>
+              <div style="background:var(--white);border:1px solid var(--border);border-radius:10px;padding:20px;">
+                <p style="font-size:0.84rem;color:var(--mid);margin-bottom:12px;">by clicking below, you confirm that you have read and agree to the above letter of authority.</p>
+                <div style="display:flex;gap:10px;align-items:center;margin-bottom:16px;">
+                  <input type="text" id="loa-typed-name" placeholder="type your full name to sign" style="flex:1;background:var(--warm);border:1px solid var(--border);color:var(--slate);padding:12px 14px;font-family:var(--sans);font-size:0.9rem;border-radius:8px;outline:none;" />
+                </div>
+                <button class="btn btn-primary btn-lg" onclick="submitLOA()" id="btn-sign-loa" style="width:100%;">i agree — sign letter of authority →</button>
+                <p style="font-size:0.72rem;color:var(--soft);text-align:center;margin-top:8px;">your signature, IP address, and timestamp will be recorded.</p>
+              </div>
+            </div>
+            <div id="loa-signed-state" style="display:none;">
+              <div class="loa-signed">
+                <span class="loa-signed-icon">✓</span>
+                <span class="loa-signed-text">letter of authority signed — we're now going to market for you.</span>
+              </div>
+              <p id="loa-signed-details" style="font-size:0.75rem;color:var(--soft);margin-top:8px;"></p>
+            </div>
           </div>
-          <button class="btn btn-primary btn-lg" onclick="submitLOA()" id="btn-sign-loa" style="width:100%;">i agree — sign letter of authority →</button>
-          <p style="font-size:0.72rem;color:var(--soft);text-align:center;margin-top:8px;">your signature, IP address, and timestamp will be recorded.</p>
         </div>
-      </div>
-      <div id="loa-signed-state" style="display:none;">
-        <div class="loa-signed">
-          <span class="loa-signed-icon">✓</span>
-          <span class="loa-signed-text">letter of authority signed — we're now going to market for you.</span>
+
+        <!-- Quotes Tab -->
+        <div class="portal-tab-pane" id="ptab-quotes">
+          <div class="card" id="quotes-card">
+            <div class="card-header">
+              <div class="card-title">your quotes</div>
+              <span class="card-tag tag-pending" id="quotes-tag">waiting for quotes</span>
+            </div>
+            <div id="quotes-container">
+              <div class="quotes-empty">
+                <div style="font-size:2rem;">📊</div>
+                <p>we're collecting quotes from across the market.<br>we'll email you as soon as they're ready.</p>
+              </div>
+            </div>
+          </div>
         </div>
-        <p id="loa-signed-details" style="font-size:0.75rem;color:var(--soft);margin-top:8px;"></p>
-      </div>
-    </div>
 
-    <!-- Quotes Section -->
-    <div class="card" id="quotes-card">
-      <div class="card-header">
-        <div class="card-title">your quotes</div>
-        <span class="card-tag tag-pending" id="quotes-tag">waiting for quotes</span>
-      </div>
-      <div id="quotes-container">
-        <div class="quotes-empty">
-          <div style="font-size:2rem;">📊</div>
-          <p>we're collecting quotes from across the market.<br>we'll email you as soon as they're ready.</p>
+        <!-- Details Tab -->
+        <div class="portal-tab-pane" id="ptab-details">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">your details</div>
+            </div>
+            <div class="details-grid" id="details-grid"></div>
+          </div>
         </div>
-      </div>
-    </div>
 
-    <!-- Your details -->
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">your details</div>
-      </div>
-      <div class="details-grid" id="details-grid"></div>
-    </div>
-
-
-    <!-- Chat -->
-    <div class="chat-card">
-      <div class="chat-header">
-        <div class="chat-title">deal chat</div>
-        <div class="chat-online"><div class="chat-online-dot"></div>edge energy team</div>
-      </div>
-      <div class="chat-messages" id="chat-messages">
-        <div class="chat-empty" id="chat-empty">
-          <div style="font-size:1.8rem;">💬</div>
-          <p>no messages yet. send us a message below<br>and we'll reply within one business day.</p>
+        <!-- Chat Tab -->
+        <div class="portal-tab-pane" id="ptab-chat">
+          <div class="chat-card">
+            <div class="chat-header">
+              <div class="chat-title">deal chat</div>
+              <div class="chat-online"><div class="chat-online-dot"></div>edge energy team</div>
+            </div>
+            <div class="chat-messages" id="chat-messages">
+              <div class="chat-empty" id="chat-empty">
+                <div style="font-size:1.8rem;">💬</div>
+                <p>no messages yet. send us a message below<br>and we'll reply within one business day.</p>
+              </div>
+            </div>
+            <div class="chat-input-row">
+              <textarea class="chat-input" id="chat-input" placeholder="type a message…" rows="1" onkeydown="handleChatKey(event)"></textarea>
+              <button class="chat-send" onclick="sendMessage()" id="chat-send">send</button>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="chat-input-row">
-        <textarea class="chat-input" id="chat-input" placeholder="type a message…" rows="1" onkeydown="handleChatKey(event)"></textarea>
-        <button class="chat-send" onclick="sendMessage()" id="chat-send">send</button>
-      </div>
-    </div>
 
-    <!-- Help -->
-    <div class="help-bar">
-      <p>questions? we're here to help.</p>
-      <a href="mailto:hello@edgeenergy.co.uk">hello@edgeenergy.co.uk →</a>
+        <!-- Help Tab -->
+        <div class="portal-tab-pane" id="ptab-help">
+          <div class="help-bar">
+            <div class="help-bar-inner">
+              <p>questions? we're here to help.</p>
+              <a href="mailto:hello@edgeenergy.co.uk">hello@edgeenergy.co.uk →</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
 
   </div>
@@ -364,7 +430,7 @@ nav{background:var(--white);border-bottom:1px solid var(--border);padding:1rem 5
 <div class="modal-overlay" id="modal">
   <div class="modal">
     <h3>confirm your selection</h3>
-    <p id="modal-text">you're selecting this supplier for your energy contract. we'll send you the contract to sign digitally.</p>
+    <p id="modal-text">you're selecting this supplier for your energy contract. you'll be able to review and sign the contract right here in your deal room.</p>
     <div class="modal-actions">
       <button class="btn btn-outline" onclick="closeModal()">cancel</button>
       <button class="btn btn-primary" onclick="confirmSupplier()">confirm & proceed →</button>
@@ -498,16 +564,53 @@ function updateStatus(status) {
     }
   }
 
-  // Contract sent state
+  // Contract sent state — show in-app contract signing
   if (status === 'contract_sent' && dealData) {
+    const selectedQ = quotesData.find(q => q.is_selected) || {};
+    const standingCharge = selectedQ.standing_charge || '\u2014';
     document.getElementById('quotes-container').innerHTML = `
-      <div style="text-align:center;padding:32px;">
-        <div style="font-size:2.5rem;margin-bottom:12px;">📄</div>
-        <h3 style="font-family:var(--serif);font-size:1.2rem;color:var(--slate);margin-bottom:8px;">contract sent to your email</h3>
-        <p style="color:var(--mid);font-size:0.875rem;line-height:1.7;">we've sent your contract with <strong>${dealData.selected_supplier}</strong> via DocuSign.<br>check your email, review and sign digitally.</p>
+      <div style="padding:4px 0;">
+        <div style="background:var(--warm);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:16px;">
+          <h4 style="font-family:var(--serif);font-size:1rem;font-weight:700;color:var(--slate);margin-bottom:12px;">contract details</h4>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+            <div style="background:var(--white);border-radius:8px;padding:10px 12px;">
+              <div style="font-size:0.68rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--soft);margin-bottom:2px;">supplier</div>
+              <div style="font-size:0.9rem;font-weight:600;color:var(--slate);">${dealData.selected_supplier}</div>
+            </div>
+            <div style="background:var(--white);border-radius:8px;padding:10px 12px;">
+              <div style="font-size:0.68rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--soft);margin-bottom:2px;">unit rate</div>
+              <div style="font-size:0.9rem;font-weight:600;color:var(--g700);">${dealData.selected_unit_rate}p/kWh</div>
+            </div>
+            <div style="background:var(--white);border-radius:8px;padding:10px 12px;">
+              <div style="font-size:0.68rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--soft);margin-bottom:2px;">standing charge</div>
+              <div style="font-size:0.9rem;font-weight:600;color:var(--slate);">${standingCharge}p/day</div>
+            </div>
+            <div style="background:var(--white);border-radius:8px;padding:10px 12px;">
+              <div style="font-size:0.68rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--soft);margin-bottom:2px;">contract length</div>
+              <div style="font-size:0.9rem;font-weight:600;color:var(--slate);">${dealData.selected_contract_length} months</div>
+            </div>
+          </div>
+        </div>
+        <div style="background:var(--warm);border:1px solid var(--border);border-radius:10px;padding:24px;margin-bottom:16px;font-size:0.84rem;color:var(--slate);line-height:1.85;">
+          <h4 style="font-family:var(--serif);font-size:1.1rem;font-weight:700;margin-bottom:12px;">Energy Supply Contract</h4>
+          <p>I, <strong>${dealData.name || '\u2014'}</strong>, on behalf of <strong>${dealData.company || '\u2014'}</strong>, confirm that I wish to proceed with the energy supply contract with <strong>${dealData.selected_supplier}</strong> at <strong>${dealData.selected_unit_rate}p/kWh</strong> for <strong>${dealData.selected_contract_length} months</strong>.</p>
+          <p style="margin-top:10px;">I authorise <strong>Edge Energy Ltd</strong> to facilitate the transfer of my energy supply to the above supplier.</p>
+          <p style="margin-top:10px;">I understand that Edge Energy Ltd acts as an intermediary and that the energy supply contract is between my company and the chosen supplier.</p>
+          <p style="margin-top:16px;color:var(--soft);font-size:0.78rem;">Edge Energy Ltd &middot; Registered in England and Wales &middot; hello@edgeenergy.co.uk</p>
+        </div>
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:10px;padding:20px;">
+          <p style="font-size:0.84rem;color:var(--mid);margin-bottom:12px;">by clicking below, you confirm that you have read and agree to the above energy supply contract.</p>
+          <div style="display:flex;gap:10px;align-items:center;margin-bottom:16px;">
+            <input type="text" id="contract-typed-name" placeholder="type your full name to sign" style="flex:1;background:var(--warm);border:1px solid var(--border);color:var(--slate);padding:12px 14px;font-family:var(--sans);font-size:0.9rem;border-radius:8px;outline:none;" />
+          </div>
+          <button class="btn btn-primary btn-lg" onclick="submitContract()" id="btn-sign-contract" style="width:100%;">i agree &mdash; sign contract &rarr;</button>
+          <p style="font-size:0.72rem;color:var(--soft);text-align:center;margin-top:8px;">your signature, IP address, and timestamp will be recorded.</p>
+        </div>
       </div>`;
-    document.getElementById('quotes-tag').textContent = 'contract sent';
-    document.getElementById('quotes-tag').className = 'card-tag tag-done';
+    document.getElementById('quotes-tag').textContent = 'sign contract';
+    document.getElementById('quotes-tag').className = 'card-tag tag-required';
+    // Auto-switch to quotes tab to show the contract
+    switchPortalTab('quotes');
   }
 
   // Won state — congratulations
@@ -538,7 +641,7 @@ function closeModal() {
 async function confirmSupplier() {
   if (!selectedQuote) return;
   const btn = document.querySelector('#modal .btn-primary');
-  btn.textContent = 'sending contract…';
+  btn.textContent = 'confirming selection…';
   btn.disabled = true;
   try {
     const res = await fetch(`${API_BASE}/api/deals/select`, {
@@ -548,18 +651,41 @@ async function confirmSupplier() {
     });
     if (!res.ok) throw new Error();
     closeModal();
-    // Update UI to show contract sent state
-    updateStatus('contract_sent');
+    // Update dealData so updateStatus can render the contract signing UI
+    dealData.selected_supplier = selectedQuote.supplier;
+    dealData.selected_unit_rate = selectedQuote.rate;
+    dealData.selected_contract_length = selectedQuote.length;
+    dealData.status = 'contract_sent';
+    // Update UI to show in-app contract signing
     renderProgress('contract_sent');
-    document.getElementById('quotes-tag').textContent = 'contract sent';
-    document.getElementById('quotes-tag').className = 'card-tag tag-done';
-    // Show contract sent notice
-    document.getElementById('quotes-container').innerHTML = `
-      <div style="text-align:center;padding:32px;">
-        <div style="font-size:2.5rem;margin-bottom:12px;">📄</div>
-        <h3 style="font-family:var(--serif);font-size:1.2rem;color:var(--slate);margin-bottom:8px;">contract sent to your email</h3>
-        <p style="color:var(--mid);font-size:0.875rem;line-height:1.7;">we've sent your contract with <strong>${selectedQuote.supplier}</strong> at <strong>${selectedQuote.rate}p/kWh</strong> via DocuSign.<br>check your email, review and sign digitally.</p>
-      </div>`;
+    updateStatus('contract_sent');
+  } catch(e) {
+    btn.textContent = 'something went wrong — try again';
+    btn.style.background = '#BE123C';
+    btn.disabled = false;
+  }
+}
+
+async function submitContract() {
+  const typedName = document.getElementById('contract-typed-name').value.trim();
+  if (!typedName) { alert('please type your full name to sign.'); return; }
+
+  const btn = document.getElementById('btn-sign-contract');
+  btn.textContent = 'signing contract…';
+  btn.disabled = true;
+
+  try {
+    const res = await fetch(`${API_BASE}/api/deals/select`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ dealId, token, action: 'sign', signedName: typedName })
+    });
+    if (!res.ok) throw new Error();
+
+    // Update to won state
+    dealData.status = 'won';
+    renderProgress('won');
+    updateStatus('won');
   } catch(e) {
     btn.textContent = 'something went wrong — try again';
     btn.style.background = '#BE123C';
@@ -606,6 +732,15 @@ async function submitLOA() {
     btn.style.background = '#BE123C';
     btn.disabled = false;
   }
+}
+
+function switchPortalTab(tabName) {
+  document.querySelectorAll('.portal-tab-pane').forEach(p => { p.style.display = 'none'; p.classList.remove('active-pane'); });
+  document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+  const pane = document.getElementById('ptab-' + tabName);
+  if (pane) { pane.style.display = 'block'; pane.classList.add('active-pane'); }
+  const tab = document.querySelector('[data-tab="' + tabName + '"]');
+  if (tab) tab.classList.add('active');
 }
 
 function startRenewal() {
