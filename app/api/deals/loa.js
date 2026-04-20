@@ -63,6 +63,10 @@ export default async function handler(req, res) {
 
   } catch (error) {
     console.error('LOA error:', error);
+    // Debug mode: return error as JSON if ?debug=1
+    if (req.query.debug === '1') {
+      return res.status(500).json({ error: error.message, template: process.env.DOCUSIGN_LOA_TEMPLATE_ID, account: process.env.DOCUSIGN_ACCOUNT_ID });
+    }
     return res.redirect(302, `${APP_URL}/${dealId}?token=${token}&loa=error`);
   }
 }
