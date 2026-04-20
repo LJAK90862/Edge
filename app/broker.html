@@ -12,6 +12,7 @@
   --b900:#0F2340;--b700:#1A3A5C;--b300:#2E86C1;
   --slate:#0D1B2A;--mid:#4A5568;--soft:#8896A6;
   --cream:#F8F9FA;--warm:#F0F4F8;--border:#E2E8F0;--white:#fff;
+  --red:#E53E3E;--red-light:#FED7D7;--amber:#F59E0B;--amber-light:#FEF3C7;
   --serif:'Playfair Display',Georgia,serif;--sans:'DM Sans',system-ui,sans-serif;
 }
 body{font-family:var(--sans);background:var(--warm);color:var(--slate);font-weight:300;min-height:100vh;}
@@ -19,32 +20,47 @@ nav{background:var(--slate);padding:1rem 5vw;display:flex;justify-content:space-
 .nav-logo-text{font-family:var(--sans);font-size:1rem;font-weight:600;color:#fff;}
 .nav-logo-text span{color:var(--g300);}
 .nav-badge{font-size:0.68rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);}
-.container{max-width:1100px;margin:0 auto;padding:40px 20px 80px;display:grid;grid-template-columns:300px 1fr;gap:20px;}
-.panel{background:var(--white);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+.container{max-width:1200px;margin:0 auto;padding:20px 20px 80px;display:grid;grid-template-columns:320px 1fr;gap:20px;height:calc(100vh - 64px);}
+.panel{background:var(--white);border:1px solid var(--border);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;}
 .panel-header{padding:16px 20px;border-bottom:1px solid var(--border);font-family:var(--serif);font-size:1rem;font-weight:700;color:var(--slate);}
 
+/* FILTER BUTTONS */
+.filter-bar{display:flex;gap:6px;padding:12px 16px;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+.filter-btn{padding:5px 12px;border-radius:20px;font-family:var(--sans);font-size:0.72rem;font-weight:500;border:1px solid var(--border);background:var(--white);color:var(--mid);cursor:pointer;transition:all 0.15s;white-space:nowrap;}
+.filter-btn:hover{background:var(--warm);}
+.filter-btn.active{background:var(--g700);color:#fff;border-color:var(--g700);}
+.filter-btn .filter-count{display:inline-block;background:rgba(255,255,255,0.25);border-radius:8px;padding:0 5px;margin-left:4px;font-size:0.65rem;}
+.filter-btn:not(.active) .filter-count{background:var(--warm);}
+
 /* DEALS LIST */
-.deal-item{padding:16px 20px;border-bottom:1px solid var(--border);cursor:pointer;transition:background 0.15s;}
+.deals-scroll{flex:1;overflow-y:auto;}
+.deal-item{padding:14px 20px;border-bottom:1px solid var(--border);cursor:pointer;transition:background 0.15s;}
 .deal-item:hover{background:var(--warm);}
 .deal-item.active{background:var(--warm);border-left:3px solid var(--g700);}
-.deal-company{font-weight:600;font-size:0.9rem;color:var(--slate);margin-bottom:3px;}
-.deal-meta{font-size:0.75rem;color:var(--soft);}
-.deal-unread{display:inline-block;background:var(--g700);color:#fff;border-radius:10px;padding:1px 7px;font-size:0.65rem;font-weight:600;margin-left:6px;}
-.status-dot{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:5px;}
-.dot-pending{background:#F59E0B;}
-.dot-loa_signed{background:var(--b300);}
-.dot-quotes_presented{background:var(--g500);}
-.dot-won{background:var(--g700);}
+.deal-company{font-weight:600;font-size:0.88rem;color:var(--slate);margin-bottom:3px;display:flex;align-items:center;justify-content:space-between;}
+.deal-customer{font-size:0.78rem;color:var(--mid);margin-bottom:4px;}
+.deal-meta{font-size:0.72rem;color:var(--soft);display:flex;align-items:center;gap:6px;}
+.deal-unread{display:inline-block;background:var(--g700);color:#fff;border-radius:10px;padding:1px 7px;font-size:0.65rem;font-weight:600;}
+.status-badge{display:inline-block;font-size:0.65rem;font-weight:600;padding:2px 8px;border-radius:10px;text-transform:uppercase;letter-spacing:0.03em;}
+.badge-pending{background:var(--amber-light);color:#92400E;}
+.badge-loa_sent{background:#DBEAFE;color:#1E40AF;}
+.badge-loa_signed{background:#DBEAFE;color:#1E40AF;}
+.badge-quotes_requested{background:#E0E7FF;color:#3730A3;}
+.badge-quotes_presented{background:#D1FAE5;color:#065F46;}
+.badge-contract_sent{background:#D1FAE5;color:#065F46;}
+.badge-won{background:#D1FAE5;color:var(--g700);}
+.badge-lost{background:var(--red-light);color:var(--red);}
+.badge-active{background:#D1FAE5;color:#065F46;}
 
 /* DEAL DETAIL */
-.detail-panel{display:flex;flex-direction:column;height:calc(100vh - 140px);}
-.detail-header{padding:20px 24px;border-bottom:1px solid var(--border);}
-.detail-company{font-family:var(--serif);font-size:1.4rem;font-weight:900;color:var(--slate);}
+.detail-panel{display:flex;flex-direction:column;height:100%;min-height:0;}
+.detail-header{padding:18px 24px;border-bottom:1px solid var(--border);}
+.detail-company{font-family:var(--serif);font-size:1.3rem;font-weight:900;color:var(--slate);}
 .detail-meta{font-size:0.78rem;color:var(--soft);margin-top:4px;}
 .detail-tabs{display:flex;border-bottom:1px solid var(--border);padding:0 24px;}
 .tab{padding:12px 16px;font-size:0.82rem;font-weight:500;color:var(--soft);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.15s;}
 .tab.active{color:var(--g700);border-bottom-color:var(--g700);}
-.tab-content{flex:1;overflow-y:auto;padding:20px 24px;}
+.tab-content{flex:1;overflow-y:auto;padding:20px 24px;min-height:0;}
 .tab-pane{display:none;}
 .tab-pane.active{display:block;}
 
@@ -57,26 +73,60 @@ nav{background:var(--slate);padding:1rem 5vw;display:flex;justify-content:space-
 .msg.client .msg-bubble{background:var(--warm);border:1px solid var(--border);color:var(--slate);border-bottom-left-radius:3px;}
 .msg.broker .msg-bubble{background:var(--g700);color:#fff;border-bottom-right-radius:3px;}
 .msg-label{font-size:0.65rem;color:var(--soft);margin-top:4px;padding:0 4px;}
-.reply-row{display:flex;gap:8px;padding:16px 24px;border-top:1px solid var(--border);background:var(--warm);}
+.reply-row{display:flex;gap:8px;padding:14px 24px;border-top:1px solid var(--border);background:var(--warm);flex-shrink:0;}
 .reply-input{flex:1;background:var(--white);border:1px solid var(--border);padding:10px 14px;font-family:var(--sans);font-size:0.875rem;border-radius:8px;outline:none;resize:none;}
 .reply-input:focus{border-color:var(--g700);}
 .reply-btn{background:var(--g700);color:#fff;border:none;padding:10px 18px;border-radius:8px;font-family:var(--sans);font-size:0.875rem;font-weight:500;cursor:pointer;}
 
 /* QUOTES */
-.quote-form{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
-.form-field{display:flex;flex-direction:column;gap:4px;}
-.form-field label{font-size:0.72rem;font-weight:500;color:var(--mid);}
-.form-field input{background:var(--white);border:1px solid var(--border);padding:8px 12px;font-family:var(--sans);font-size:0.875rem;border-radius:6px;outline:none;}
-.form-field input:focus{border-color:var(--g700);}
-.btn{padding:10px 20px;border-radius:6px;font-family:var(--sans);font-size:0.875rem;font-weight:500;border:none;cursor:pointer;}
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+.section-title{font-family:var(--serif);font-size:1rem;font-weight:700;color:var(--slate);}
+.section-count{font-size:0.72rem;font-weight:500;color:var(--soft);background:var(--warm);padding:2px 8px;border-radius:10px;}
+.quote-card{background:var(--warm);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:12px;}
+.quote-card-fields{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px;}
+.quote-card-fields.full-row{grid-template-columns:1fr;}
+.qc-field{display:flex;flex-direction:column;gap:3px;}
+.qc-field label{font-size:0.68rem;font-weight:500;color:var(--mid);text-transform:uppercase;letter-spacing:0.04em;}
+.qc-field input,.qc-field textarea{background:var(--white);border:1px solid var(--border);padding:7px 10px;font-family:var(--sans);font-size:0.82rem;border-radius:5px;outline:none;width:100%;}
+.qc-field input:focus,.qc-field textarea:focus{border-color:var(--g700);}
+.qc-field textarea{resize:vertical;min-height:36px;}
+.qc-field .readonly-val{font-size:0.85rem;font-weight:500;color:var(--slate);padding:4px 0;}
+.quote-card-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:4px;}
+.btn{padding:8px 16px;border-radius:6px;font-family:var(--sans);font-size:0.78rem;font-weight:500;border:none;cursor:pointer;transition:opacity 0.15s;}
+.btn:hover{opacity:0.85;}
 .btn-primary{background:var(--g700);color:#fff;}
 .btn-blue{background:var(--b700);color:#fff;}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--mid);}
+.btn-outline:hover{background:var(--warm);}
+.btn-danger{background:transparent;border:1px solid var(--red);color:var(--red);}
+.btn-danger:hover{background:var(--red-light);}
+.btn-approve{background:var(--g300);color:var(--slate);}
+.btn-push{background:var(--g700);color:#fff;padding:14px 28px;font-size:0.95rem;font-weight:600;border-radius:10px;width:100%;margin-top:8px;margin-bottom:28px;}
+.btn-push:hover{background:var(--g500);}
+
+/* ADD QUOTE FORM */
+.add-quote-form{background:var(--white);border:1px dashed var(--border);border-radius:10px;padding:16px;margin-bottom:16px;}
+.add-quote-title{font-size:0.82rem;font-weight:600;color:var(--mid);margin-bottom:12px;}
+.quote-form-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px;}
+
+/* LIVE QUOTES (read-only) */
+.live-quote{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:14px 18px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;}
+.live-quote-info{flex:1;}
+.live-quote-supplier{font-weight:600;font-size:0.9rem;color:var(--slate);}
+.live-quote-details{font-size:0.78rem;color:var(--mid);margin-top:3px;}
+.live-quote-selected{font-size:0.72rem;font-weight:600;color:var(--g700);display:flex;align-items:center;gap:4px;}
+
+/* DIVIDER */
+.section-divider{height:1px;background:var(--border);margin:28px 0;}
 
 /* INFO GRID */
 .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
 .info-item{background:var(--warm);border-radius:8px;padding:12px;}
 .info-label{font-size:0.68rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--soft);margin-bottom:4px;}
 .info-value{font-size:0.875rem;font-weight:500;color:var(--slate);}
+.info-editable{display:flex;flex-direction:column;gap:4px;}
+.info-editable input{background:var(--white);border:1px solid var(--border);padding:6px 10px;border-radius:6px;font-family:var(--sans);font-size:0.82rem;color:var(--slate);outline:none;width:100%;}
+.info-editable input:focus{border-color:var(--g700);}
 .status-select{background:var(--white);border:1px solid var(--border);padding:6px 10px;border-radius:6px;font-family:var(--sans);font-size:0.82rem;color:var(--slate);outline:none;}
 
 /* EMPTY */
@@ -91,9 +141,15 @@ nav{background:var(--slate);padding:1rem 5vw;display:flex;justify-content:space-
 .login-input{width:100%;background:var(--warm);border:1px solid var(--border);padding:12px 16px;font-family:var(--sans);font-size:0.9rem;border-radius:8px;outline:none;margin-bottom:12px;}
 .login-btn{width:100%;background:var(--b700);color:#fff;border:none;padding:12px;font-family:var(--sans);font-size:0.9rem;font-weight:500;border-radius:8px;cursor:pointer;}
 
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--slate);color:#fff;padding:12px 20px;border-radius:8px;font-size:0.82rem;font-weight:500;opacity:0;transition:opacity 0.3s;pointer-events:none;z-index:100;}
+.toast.show{opacity:1;}
+
 @media(max-width:800px){
-  .container{grid-template-columns:1fr;}
-  .quote-form{grid-template-columns:1fr;}
+  .container{grid-template-columns:1fr;height:auto;}
+  .detail-panel{height:auto;min-height:60vh;}
+  .quote-form-grid,.quote-card-fields{grid-template-columns:1fr;}
+  .info-grid{grid-template-columns:1fr;}
 }
 </style>
 </head>
@@ -118,7 +174,7 @@ nav{background:var(--slate);padding:1rem 5vw;display:flex;justify-content:space-
     <h2>broker login</h2>
     <p>enter your broker key to access the portal</p>
     <input type="password" class="login-input" id="broker-key" placeholder="broker key" onkeydown="if(event.key==='Enter')login()" />
-    <button class="login-btn" onclick="login()">sign in →</button>
+    <button class="login-btn" onclick="login()">sign in</button>
   </div>
 </div>
 
@@ -128,14 +184,15 @@ nav{background:var(--slate);padding:1rem 5vw;display:flex;justify-content:space-
 
     <!-- Deals list -->
     <div class="panel">
-      <div class="panel-header">all deals</div>
-      <div id="deals-list"></div>
+      <div class="panel-header">deals</div>
+      <div class="filter-bar" id="filter-bar"></div>
+      <div class="deals-scroll" id="deals-list"></div>
     </div>
 
     <!-- Deal detail -->
     <div class="panel detail-panel" id="deal-detail">
       <div class="empty-state">
-        <div style="font-size:2rem;">👈</div>
+        <div style="font-size:1.6rem;color:var(--soft);margin-bottom:6px;">&#8592;</div>
         <p>select a deal to view details</p>
       </div>
     </div>
@@ -143,14 +200,29 @@ nav{background:var(--slate);padding:1rem 5vw;display:flex;justify-content:space-
   </div>
 </div>
 
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
 <script>
 const API_BASE = 'https://app.edge-energy.uk';
-const BROKER_KEY = 'edge-broker-2026'; // Change this in production
+const BROKER_KEY = 'edge-broker-2026';
 let selectedDealId = null;
 let brokerKey = null;
 let allDeals = [];
+let activeFilter = 'all';
 let pollTimer = null;
+let dealPollTimer = null;
+let currentDealQuotes = { staged: [], approved: [] };
 
+/* ── Toast ── */
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+/* ── Login ── */
 function login() {
   const key = document.getElementById('broker-key').value.trim();
   if (key !== BROKER_KEY) { alert('invalid key'); return; }
@@ -158,8 +230,10 @@ function login() {
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('main').style.display = 'block';
   loadDeals();
+  dealPollTimer = setInterval(loadDeals, 30000);
 }
 
+/* ── Deals ── */
 async function loadDeals() {
   try {
     const res = await fetch(`${API_BASE}/api/broker/deals`, {
@@ -167,28 +241,63 @@ async function loadDeals() {
     });
     const data = await res.json();
     allDeals = data.deals || [];
+    renderFilterBar();
     renderDealsList();
-  } catch(e) { console.error(e); }
+  } catch(e) { console.error('loadDeals:', e); }
+}
+
+/* ── Filters ── */
+function getFilteredDeals() {
+  if (activeFilter === 'all') return allDeals;
+  if (activeFilter === 'need_review') return allDeals.filter(d => d.has_staged_quotes);
+  if (activeFilter === 'active') return allDeals.filter(d => !['won','lost'].includes(d.status));
+  if (activeFilter === 'won') return allDeals.filter(d => d.status === 'won');
+  if (activeFilter === 'lost') return allDeals.filter(d => d.status === 'lost');
+  return allDeals;
+}
+
+function renderFilterBar() {
+  const counts = {
+    all: allDeals.length,
+    need_review: allDeals.filter(d => d.has_staged_quotes).length,
+    active: allDeals.filter(d => !['won','lost'].includes(d.status)).length,
+    won: allDeals.filter(d => d.status === 'won').length,
+    lost: allDeals.filter(d => d.status === 'lost').length,
+  };
+  const labels = { all:'all', need_review:'need review', active:'active', won:'won', lost:'lost' };
+  document.getElementById('filter-bar').innerHTML = Object.keys(labels).map(key =>
+    `<button class="filter-btn ${activeFilter===key?'active':''}" onclick="setFilter('${key}')">${labels[key]}<span class="filter-count">${counts[key]}</span></button>`
+  ).join('');
+}
+
+function setFilter(f) {
+  activeFilter = f;
+  renderFilterBar();
+  renderDealsList();
 }
 
 function renderDealsList() {
   const container = document.getElementById('deals-list');
-  if (!allDeals.length) {
-    container.innerHTML = '<div class="empty-state"><p>no deals yet</p></div>';
+  const deals = getFilteredDeals();
+  if (!deals.length) {
+    container.innerHTML = '<div class="empty-state"><p>no deals match this filter</p></div>';
     return;
   }
-  container.innerHTML = allDeals.map(d => `
+  container.innerHTML = deals.map(d => `
     <div class="deal-item ${d.id === selectedDealId ? 'active' : ''}" onclick="openDeal('${d.id}')">
       <div class="deal-company">
-        <span class="status-dot dot-${d.status}"></span>
-        ${d.company}
+        <span>${escHtml(d.company)}</span>
         ${d.unread_count > 0 ? `<span class="deal-unread">${d.unread_count}</span>` : ''}
       </div>
-      <div class="deal-meta">${d.name} · ${d.status.replace(/_/g,' ')}</div>
+      <div class="deal-customer">${escHtml(d.name)}</div>
+      <div class="deal-meta">
+        <span class="status-badge badge-${d.status}">${d.status.replace(/_/g,' ')}</span>
+      </div>
     </div>
   `).join('');
 }
 
+/* ── Open deal ── */
 async function openDeal(dealId) {
   selectedDealId = dealId;
   renderDealsList();
@@ -196,30 +305,50 @@ async function openDeal(dealId) {
   const deal = allDeals.find(d => d.id === dealId);
   if (!deal) return;
 
-  // Load messages and quotes
-  const [msgRes, quotesRes] = await Promise.all([
+  const [msgRes, stagedRes, approvedRes] = await Promise.all([
     fetch(`${API_BASE}/api/broker/messages/${dealId}`, { headers: { 'x-broker-key': brokerKey } }),
-    fetch(`${API_BASE}/api/broker/quotes/${dealId}`, { headers: { 'x-broker-key': brokerKey } })
+    fetch(`${API_BASE}/api/broker/quotes?dealId=${dealId}&status=staged`, { headers: { 'x-broker-key': brokerKey } }),
+    fetch(`${API_BASE}/api/broker/quotes?dealId=${dealId}&status=approved`, { headers: { 'x-broker-key': brokerKey } })
   ]);
+
   const { messages } = await msgRes.json();
-  const { quotes } = await quotesRes.json();
+  const stagedData = await stagedRes.json();
+  const approvedData = await approvedRes.json();
 
-  renderDealDetail(deal, messages, quotes);
+  currentDealQuotes.staged = stagedData.quotes || [];
+  currentDealQuotes.approved = approvedData.quotes || [];
 
-  // Poll for new messages
+  renderDealDetail(deal, messages);
+
   clearInterval(pollTimer);
   pollTimer = setInterval(() => refreshMessages(dealId), 10000);
 }
 
+/* ── Refresh helpers ── */
 async function refreshMessages(dealId) {
-  const res = await fetch(`${API_BASE}/api/broker/messages/${dealId}`, {
-    headers: { 'x-broker-key': brokerKey }
-  });
-  const { messages } = await res.json();
-  renderMessages(messages);
-  loadDeals(); // refresh unread counts
+  try {
+    const res = await fetch(`${API_BASE}/api/broker/messages/${dealId}`, {
+      headers: { 'x-broker-key': brokerKey }
+    });
+    const { messages } = await res.json();
+    renderMessages(messages);
+    loadDeals();
+  } catch(e) { console.error('refreshMessages:', e); }
 }
 
+async function refreshQuotes(dealId) {
+  const [stagedRes, approvedRes] = await Promise.all([
+    fetch(`${API_BASE}/api/broker/quotes?dealId=${dealId}&status=staged`, { headers: { 'x-broker-key': brokerKey } }),
+    fetch(`${API_BASE}/api/broker/quotes?dealId=${dealId}&status=approved`, { headers: { 'x-broker-key': brokerKey } })
+  ]);
+  const stagedData = await stagedRes.json();
+  const approvedData = await approvedRes.json();
+  currentDealQuotes.staged = stagedData.quotes || [];
+  currentDealQuotes.approved = approvedData.quotes || [];
+  renderQuotesTab(dealId);
+}
+
+/* ── Time format ── */
 function formatTime(iso) {
   const d = new Date(iso);
   const diffMins = Math.floor((new Date() - d) / 60000);
@@ -229,6 +358,15 @@ function formatTime(iso) {
   return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
 }
 
+/* ── Escape HTML ── */
+function escHtml(s) {
+  if (!s) return '';
+  const d = document.createElement('div');
+  d.textContent = s;
+  return d.innerHTML;
+}
+
+/* ── Chat ── */
 function renderMessages(messages) {
   const container = document.getElementById('chat-thread');
   if (!container) return;
@@ -238,19 +376,20 @@ function renderMessages(messages) {
   }
   container.innerHTML = messages.map(m => `
     <div class="msg ${m.sender}">
-      <div class="msg-bubble">${m.body.replace(/\n/g,'<br>')}</div>
-      <div class="msg-label">${m.sender === 'client' ? 'client' : 'you'} · ${formatTime(m.created_at)}</div>
+      <div class="msg-bubble">${escHtml(m.body).replace(/\n/g,'<br>')}</div>
+      <div class="msg-label">${m.sender === 'client' ? 'client' : 'you'} &middot; ${formatTime(m.created_at)}</div>
     </div>
   `).join('');
   container.scrollTop = container.scrollHeight;
 }
 
-function renderDealDetail(deal, messages, quotes) {
+/* ── Main detail render ── */
+function renderDealDetail(deal, messages) {
   const panel = document.getElementById('deal-detail');
   panel.innerHTML = `
     <div class="detail-header">
-      <div class="detail-company">${deal.company}</div>
-      <div class="detail-meta">${deal.name} · ${deal.email} · ${deal.phone || '—'}</div>
+      <div class="detail-company">${escHtml(deal.company)}</div>
+      <div class="detail-meta">${escHtml(deal.name)} &middot; ${escHtml(deal.email)} &middot; ${escHtml(deal.phone) || '—'}</div>
     </div>
     <div class="detail-tabs">
       <div class="tab active" onclick="switchTab('chat')">chat</div>
@@ -258,73 +397,151 @@ function renderDealDetail(deal, messages, quotes) {
       <div class="tab" onclick="switchTab('info')">info</div>
     </div>
 
-    <!-- Chat tab -->
-    <div class="tab-pane active" id="tab-chat">
-      <div class="chat-messages" id="chat-thread"></div>
+    <div class="tab-content">
+      <!-- Chat tab -->
+      <div class="tab-pane active" id="tab-chat">
+        <div class="chat-messages" id="chat-thread"></div>
+      </div>
+
+      <!-- Quotes tab -->
+      <div class="tab-pane" id="tab-quotes"></div>
+
+      <!-- Info tab -->
+      <div class="tab-pane" id="tab-info">
+        <div style="margin-bottom:16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+          <span style="font-size:0.82rem;color:var(--mid);">status:</span>
+          <select class="status-select" onchange="updateDeal('${deal.id}', { status: this.value })">
+            ${['pending','loa_sent','loa_signed','quotes_requested','quotes_presented','contract_sent','won','lost'].map(s =>
+              `<option value="${s}" ${deal.status===s?'selected':''}>${s.replace(/_/g,' ')}</option>`
+            ).join('')}
+          </select>
+          <a href="${API_BASE}/${deal.id}?token=${deal.magic_token}" target="_blank" class="btn btn-blue" style="font-size:0.78rem;padding:6px 14px;">view client portal</a>
+        </div>
+
+        <div style="margin-bottom:16px;">
+          <div class="info-editable">
+            <label style="font-size:0.72rem;font-weight:500;color:var(--mid);">current supplier email (for LOA notification)</label>
+            <div style="display:flex;gap:8px;align-items:center;">
+              <input type="email" id="supplier-email-input" value="${escHtml(deal.current_supplier_email || '')}" placeholder="supplier@example.com" style="flex:1;background:var(--white);border:1px solid var(--border);padding:8px 12px;font-family:var(--sans);font-size:0.82rem;border-radius:6px;outline:none;" onfocus="this.style.borderColor='var(--g700)'" onblur="this.style.borderColor='var(--border)'" />
+              <button class="btn btn-primary" onclick="saveSupplierEmail('${deal.id}')">save</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-grid">
+          ${[
+            ['annual kWh', deal.annual_kwh ? Number(deal.annual_kwh).toLocaleString() + ' kWh' : '—'],
+            ['current supplier', deal.current_supplier || '—'],
+            ['contract end', deal.contract_end_date || '—'],
+            ['mpan', deal.mpan || '—'],
+            ['profile class', deal.profile_class || '—'],
+            ['current rate', deal.current_unit_rate ? deal.current_unit_rate + 'p/kWh' : '—'],
+            ['loa signed', deal.loa_signed_at ? new Date(deal.loa_signed_at).toLocaleDateString('en-GB') : '—'],
+            ['hubspot deal', deal.hubspot_deal_id || '—'],
+          ].map(([l,v]) => `<div class="info-item"><div class="info-label">${l}</div><div class="info-value">${v}</div></div>`).join('')}
+        </div>
+      </div>
     </div>
 
-    <!-- Quotes tab -->
-    <div class="tab-pane" id="tab-quotes">
-      <p style="font-size:0.82rem;color:var(--mid);margin-bottom:16px;">add quotes from suppliers below. they'll appear instantly in the client's deal room.</p>
-      <div class="quote-form">
-        <div class="form-field"><label>supplier name</label><input type="text" id="q-supplier" placeholder="e.g. Octopus Energy" /></div>
-        <div class="form-field"><label>unit rate (p/kWh)</label><input type="number" id="q-rate" placeholder="e.g. 21.3" step="0.1" /></div>
-        <div class="form-field"><label>standing charge (p/day)</label><input type="number" id="q-standing" placeholder="e.g. 42" step="0.1" /></div>
-        <div class="form-field"><label>contract length (months)</label><input type="number" id="q-length" placeholder="e.g. 24" /></div>
-        <div class="form-field"><label>quote reference</label><input type="text" id="q-ref" placeholder="optional" /></div>
-      </div>
-      <button class="btn btn-primary" onclick="addQuote('${deal.id}')">add quote →</button>
-      <div id="quotes-list" style="margin-top:20px;">${renderQuotesList(quotes)}</div>
-    </div>
-
-    <!-- Info tab -->
-    <div class="tab-pane" id="tab-info">
-      <div style="margin-bottom:16px;display:flex;align-items:center;gap:10px;">
-        <span style="font-size:0.82rem;color:var(--mid);">status:</span>
-        <select class="status-select" onchange="updateStatus('${deal.id}', this.value)">
-          ${['pending','loa_sent','loa_signed','quotes_requested','quotes_presented','contract_sent','won','lost'].map(s =>
-            `<option value="${s}" ${deal.status===s?'selected':''}>${s.replace(/_/g,' ')}</option>`
-          ).join('')}
-        </select>
-        <a href="${API_BASE}/${deal.id}?token=${deal.magic_token}" target="_blank" class="btn btn-blue" style="font-size:0.78rem;padding:6px 14px;">view client portal →</a>
-      </div>
-      <div class="info-grid">
-        ${[
-          ['annual kWh', deal.annual_kwh ? Number(deal.annual_kwh).toLocaleString() + ' kWh' : '—'],
-          ['current supplier', deal.current_supplier || '—'],
-          ['contract end', deal.contract_end_date || '—'],
-          ['mpan', deal.mpan || '—'],
-          ['profile class', deal.profile_class || '—'],
-          ['current rate', deal.current_unit_rate ? deal.current_unit_rate + 'p/kWh' : '—'],
-          ['loa signed', deal.loa_signed_at ? new Date(deal.loa_signed_at).toLocaleDateString('en-GB') : '—'],
-          ['hubspot deal', deal.hubspot_deal_id || '—'],
-        ].map(([l,v]) => `<div class="info-item"><div class="info-label">${l}</div><div class="info-value">${v}</div></div>`).join('')}
-      </div>
-    </div>
-
-    <!-- Reply input (always visible) -->
+    <!-- Reply input -->
     <div class="reply-row">
-      <textarea class="reply-input" id="reply-input" placeholder="reply to client…" rows="1" onkeydown="handleReplyKey(event,'${deal.id}')"></textarea>
+      <textarea class="reply-input" id="reply-input" placeholder="reply to client..." rows="1" onkeydown="handleReplyKey(event,'${deal.id}')"></textarea>
       <button class="reply-btn" onclick="sendReply('${deal.id}')">send</button>
     </div>
   `;
 
   renderMessages(messages);
+  renderQuotesTab(deal.id);
 }
 
-function renderQuotesList(quotes) {
-  if (!quotes || quotes.length === 0) return '<p style="color:var(--soft);font-size:0.82rem;">no quotes added yet</p>';
-  return quotes.map(q => `
-    <div style="background:var(--warm);border:1px solid var(--border);border-radius:8px;padding:12px 16px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;">
-      <div>
-        <div style="font-weight:600;font-size:0.9rem;">${q.supplier_name}</div>
-        <div style="font-size:0.78rem;color:var(--mid);">${q.unit_rate}p/kWh · ${q.standing_charge || '—'}p/day · ${q.contract_length || '—'} months</div>
-      </div>
-      <div style="font-size:0.72rem;color:var(--soft);">${q.is_selected ? '✓ selected' : ''}</div>
+/* ── Quotes Tab ── */
+function renderQuotesTab(dealId) {
+  const pane = document.getElementById('tab-quotes');
+  if (!pane) return;
+
+  const staged = currentDealQuotes.staged;
+  const approved = currentDealQuotes.approved;
+
+  pane.innerHTML = `
+    <!-- STAGING AREA -->
+    <div class="section-header">
+      <span class="section-title">Staging Area</span>
+      <span class="section-count">${staged.length} quote${staged.length !== 1 ? 's' : ''}</span>
     </div>
-  `).join('');
+    <p style="font-size:0.78rem;color:var(--mid);margin-bottom:14px;">
+      Edit, approve, or delete quotes before pushing them to the customer.
+    </p>
+
+    ${staged.length === 0 ? '<p style="color:var(--soft);font-size:0.82rem;margin-bottom:16px;">No staged quotes. Add one below.</p>' :
+      staged.map(q => renderStagedCard(q, dealId)).join('')}
+
+    <!-- Add Quote Form -->
+    <div class="add-quote-form">
+      <div class="add-quote-title">+ add new quote</div>
+      <div class="quote-form-grid">
+        <div class="qc-field"><label>supplier name</label><input type="text" id="q-supplier" placeholder="e.g. Octopus Energy" /></div>
+        <div class="qc-field"><label>unit rate (p/kWh)</label><input type="number" id="q-rate" placeholder="e.g. 21.3" step="0.1" /></div>
+        <div class="qc-field"><label>standing charge (p/day)</label><input type="number" id="q-standing" placeholder="e.g. 42" step="0.1" /></div>
+        <div class="qc-field"><label>contract length (months)</label><input type="number" id="q-length" placeholder="e.g. 24" /></div>
+        <div class="qc-field"><label>quote reference</label><input type="text" id="q-ref" placeholder="optional" /></div>
+        <div class="qc-field"><label>broker notes</label><input type="text" id="q-notes" placeholder="internal notes" /></div>
+      </div>
+      <button class="btn btn-primary" onclick="addQuote('${dealId}')">add quote</button>
+    </div>
+
+    <!-- Push Button -->
+    ${approved.length > 0 || staged.filter(q => q.review_status === 'approved' || false).length > 0 ? `
+    <button class="btn btn-push" onclick="pushToDealRoom('${dealId}')">Push to Deal Room &rarr;</button>
+    ` : ''}
+
+    <div class="section-divider"></div>
+
+    <!-- CUSTOMER'S DEAL ROOM -->
+    <div class="section-header">
+      <span class="section-title">Customer's Deal Room</span>
+      <span class="section-count">${approved.length} quote${approved.length !== 1 ? 's' : ''}</span>
+    </div>
+    <p style="font-size:0.78rem;color:var(--mid);margin-bottom:14px;">
+      These quotes are visible to the customer.
+    </p>
+
+    ${approved.length === 0 ? '<p style="color:var(--soft);font-size:0.82rem;">No quotes pushed yet.</p>' :
+      approved.map(q => `
+        <div class="live-quote">
+          <div class="live-quote-info">
+            <div class="live-quote-supplier">${escHtml(q.supplier_name)}</div>
+            <div class="live-quote-details">
+              ${q.unit_rate}p/kWh &middot; ${q.standing_charge || '—'}p/day &middot; ${q.contract_length || '—'} months
+              ${q.quote_ref ? ` &middot; ref: ${escHtml(q.quote_ref)}` : ''}
+            </div>
+          </div>
+          ${q.is_selected ? '<div class="live-quote-selected">&#10003; selected by customer</div>' : ''}
+        </div>
+      `).join('')}
+  `;
 }
 
+function renderStagedCard(q, dealId) {
+  return `
+    <div class="quote-card" id="qcard-${q.id}">
+      <div class="quote-card-fields">
+        <div class="qc-field"><label>supplier name</label><input type="text" id="qs-supplier-${q.id}" value="${escHtml(q.supplier_name)}" /></div>
+        <div class="qc-field"><label>unit rate (p/kWh)</label><input type="number" id="qs-rate-${q.id}" value="${q.unit_rate || ''}" step="0.1" /></div>
+        <div class="qc-field"><label>standing charge (p/day)</label><input type="number" id="qs-standing-${q.id}" value="${q.standing_charge || ''}" step="0.1" /></div>
+        <div class="qc-field"><label>contract length (months)</label><input type="number" id="qs-length-${q.id}" value="${q.contract_length || ''}" /></div>
+        <div class="qc-field"><label>quote reference</label><input type="text" id="qs-ref-${q.id}" value="${escHtml(q.quote_ref || '')}" /></div>
+        <div class="qc-field"><label>broker notes</label><input type="text" id="qs-notes-${q.id}" value="${escHtml(q.broker_notes || '')}" /></div>
+      </div>
+      <div class="quote-card-actions">
+        <button class="btn btn-danger" onclick="deleteQuote('${q.id}','${dealId}')">delete</button>
+        <button class="btn btn-outline" onclick="saveQuote('${q.id}','${dealId}')">save</button>
+        <button class="btn btn-approve" onclick="approveQuote('${q.id}','${dealId}')">approve</button>
+      </div>
+    </div>
+  `;
+}
+
+/* ── Tab switching ── */
 function switchTab(tab) {
   document.querySelectorAll('.tab').forEach((t,i) => {
     const tabs = ['chat','quotes','info'];
@@ -334,6 +551,7 @@ function switchTab(tab) {
   document.getElementById(`tab-${tab}`).classList.add('active');
 }
 
+/* ── Chat actions ── */
 async function sendReply(dealId) {
   const input = document.getElementById('reply-input');
   const body = input.value.trim();
@@ -351,6 +569,7 @@ function handleReplyKey(e, dealId) {
   if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendReply(dealId); }
 }
 
+/* ── Quote actions ── */
 async function addQuote(dealId) {
   const quote = {
     dealId,
@@ -359,27 +578,83 @@ async function addQuote(dealId) {
     standingCharge: parseFloat(document.getElementById('q-standing').value) || null,
     contractLength: parseInt(document.getElementById('q-length').value) || null,
     quoteRef: document.getElementById('q-ref').value.trim() || null,
+    brokerNotes: document.getElementById('q-notes').value.trim() || null,
   };
-  if (!quote.supplierName || !quote.unitRate) { alert('supplier name and unit rate required'); return; }
+  if (!quote.supplierName || !quote.unitRate) { alert('Supplier name and unit rate are required.'); return; }
   await fetch(`${API_BASE}/api/broker/quotes`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'x-broker-key': brokerKey },
     body: JSON.stringify(quote)
   });
-  openDeal(dealId);
+  showToast('Quote added to staging');
+  await refreshQuotes(dealId);
 }
 
-async function updateStatus(dealId, status) {
-  await fetch(`${API_BASE}/api/broker/deals/${dealId}`, {
+async function saveQuote(quoteId, dealId) {
+  const data = {
+    supplier_name: document.getElementById(`qs-supplier-${quoteId}`).value.trim(),
+    unit_rate: parseFloat(document.getElementById(`qs-rate-${quoteId}`).value),
+    standing_charge: parseFloat(document.getElementById(`qs-standing-${quoteId}`).value) || null,
+    contract_length: parseInt(document.getElementById(`qs-length-${quoteId}`).value) || null,
+    quote_ref: document.getElementById(`qs-ref-${quoteId}`).value.trim() || null,
+    broker_notes: document.getElementById(`qs-notes-${quoteId}`).value.trim() || null,
+  };
+  await fetch(`${API_BASE}/api/broker/quotes?id=${quoteId}`, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json', 'x-broker-key': brokerKey },
-    body: JSON.stringify({ status })
+    body: JSON.stringify(data)
   });
+  showToast('Quote saved');
+  await refreshQuotes(dealId);
+}
+
+async function approveQuote(quoteId, dealId) {
+  await fetch(`${API_BASE}/api/broker/quotes?id=${quoteId}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', 'x-broker-key': brokerKey },
+    body: JSON.stringify({ review_status: 'approved' })
+  });
+  showToast('Quote approved');
+  await refreshQuotes(dealId);
+}
+
+async function deleteQuote(quoteId, dealId) {
+  if (!confirm('Delete this quote?')) return;
+  await fetch(`${API_BASE}/api/broker/quotes?id=${quoteId}`, {
+    method: 'DELETE',
+    headers: { 'x-broker-key': brokerKey }
+  });
+  showToast('Quote deleted');
+  await refreshQuotes(dealId);
+}
+
+async function pushToDealRoom(dealId) {
+  if (!confirm('Are you sure? This will email the customer.')) return;
+  await fetch(`${API_BASE}/api/broker/quotes/push`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'x-broker-key': brokerKey },
+    body: JSON.stringify({ dealId })
+  });
+  showToast('Quotes pushed to deal room');
+  await refreshQuotes(dealId);
   loadDeals();
 }
 
-// Poll deals every 30s
-setInterval(loadDeals, 30000);
+/* ── Deal actions ── */
+async function updateDeal(dealId, fields) {
+  await fetch(`${API_BASE}/api/broker/deals?id=${dealId}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', 'x-broker-key': brokerKey },
+    body: JSON.stringify(fields)
+  });
+  showToast('Deal updated');
+  loadDeals();
+}
+
+async function saveSupplierEmail(dealId) {
+  const email = document.getElementById('supplier-email-input').value.trim();
+  await updateDeal(dealId, { current_supplier_email: email });
+}
 </script>
 </body>
 </html>

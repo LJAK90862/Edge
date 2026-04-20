@@ -37,6 +37,7 @@ export default async function handler(req, res) {
       .from('quotes')
       .select('*')
       .eq('deal_id', id)
+      .eq('review_status', 'approved')
       .order('unit_rate', { ascending: true });
 
     // Don't expose the magic token in the response

@@ -20,6 +20,7 @@ create table deals (
   annual_kwh numeric,
   current_supplier text,
   contract_end_date date,
+  current_supplier_email text,
   mpan text,
   profile_class text,
   current_unit_rate numeric,
@@ -62,7 +63,9 @@ create table quotes (
   standing_charge numeric,
   contract_length integer,
   quote_ref text,
-  is_selected boolean default false
+  is_selected boolean default false,
+  review_status text default 'staged' check (review_status in ('staged', 'approved', 'rejected')),
+  broker_notes text
 );
 
 -- Contact enquiries table

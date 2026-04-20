@@ -52,6 +52,24 @@ export default async function handler(req, res) {
         </div>`
       });
 
+      // Email current supplier if we have their email
+      if (loaDeal.current_supplier_email) {
+        try {
+          await sendEmail({
+            to: loaDeal.current_supplier_email,
+            subject: `Letter of Authority — ${loaDeal.company} — Edge Energy`,
+            html: `<div style="font-family:sans-serif;max-width:520px;margin:0 auto;padding:40px 20px;">
+              <p>Dear Sir/Madam,</p>
+              <p style="color:#4A5568;line-height:1.7;">We are writing to inform you that <strong>${loaDeal.company}</strong> has signed a Letter of Authority authorising Edge Energy to act on their behalf in relation to their energy supply.</p>
+              <p style="color:#4A5568;line-height:1.7;">As their appointed energy broker, we are authorised to approach suppliers, obtain pricing, and manage the procurement process for their energy contracts.</p>
+              <p style="color:#4A5568;line-height:1.7;">We may be in touch shortly to request contract and consumption data for the above customer. Please do not hesitate to contact us if you require any further information.</p>
+              <p style="color:#4A5568;line-height:1.7;">Kind regards,<br>Edge Energy</p>
+              <p style="color:#8896A6;font-size:0.82rem;">edge energy · hello@edgeenergy.co.uk</p>
+            </div>`
+          });
+        } catch(e) { console.error('Supplier email failed:', e); }
+      }
+
       // Email broker
       await sendEmail({
         to: BROKER_EMAIL,
