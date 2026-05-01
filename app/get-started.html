@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Get Started — Edge Energy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --green: #2D6A4F; --green2: #40916C; --green3: #52B788;
+  --slate: #1B2B3A; --mid: #5C6B62; --cream: #FAFAF8;
+  --border: #E4E4DC; --white: #FFFFFF;
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans: 'Inter', system-ui, sans-serif;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans); background: var(--cream);
+  color: var(--slate); min-height: 100vh;
+  display: flex; flex-direction: column;
+}
+
+/* NAV */
+nav {
+  padding: 1.2rem 5vw; display: flex;
+  justify-content: space-between; align-items: center;
+  border-bottom: 1px solid var(--border); background: var(--white);
+}
+.nav-logo { font-family: var(--serif); font-size: 1.2rem; font-weight: 900; color: var(--slate); text-decoration: none; }
+.nav-logo span { color: var(--green); }
+
+/* MAIN */
+main {
+  flex: 1; display: flex; align-items: center;
+  justify-content: center; padding: 60px 5vw;
+}
+.container { max-width: 520px; width: 100%; text-align: center; }
+
+/* STATES */
+.state { display: none; }
+.state.active { display: block; }
+
+/* LOADING STATE */
+.spinner {
+  width: 48px; height: 48px; border: 3px solid var(--border);
+  border-top-color: var(--green); border-radius: 50%;
+  animation: spin 0.8s linear infinite; margin: 0 auto 2rem;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ICON */
+.icon-wrap {
+  width: 72px; height: 72px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 2rem;
+}
+.icon-wrap.green { background: #D8F3DC; }
+.icon-wrap.blue { background: #DBEAFE; }
+.icon-wrap.red { background: #FEE2E2; }
+.icon { font-size: 2rem; }
+
+/* TYPOGRAPHY */
+h1 {
+  font-family: var(--serif); font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 900; color: var(--slate); line-height: 1.2;
+  margin-bottom: 1rem; letter-spacing: -0.02em;
+}
+h1 em { font-style: italic; color: var(--green); }
+p.lead {
+  font-size: 1rem; color: var(--mid); line-height: 1.8;
+  margin-bottom: 2rem; font-weight: 300;
+}
+p.small { font-size: 0.78rem; color: var(--mid); line-height: 1.7; margin-top: 1rem; }
+
+/* CARD */
+.card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 12px; padding: 2rem; margin: 2rem 0; text-align: left;
+}
+.card-row { display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 0; border-bottom: 1px solid var(--border); font-size: 0.875rem; }
+.card-row:last-child { border-bottom: none; }
+.card-row span:first-child { color: var(--mid); }
+.card-row span:last-child { font-weight: 500; color: var(--slate); }
+
+/* STEPS */
+.steps { display: flex; flex-direction: column; gap: 1rem; margin: 2rem 0; text-align: left; }
+.step { display: flex; gap: 1rem; align-items: flex-start; }
+.step-num {
+  width: 28px; height: 28px; border-radius: 50%; background: var(--green);
+  color: white; font-size: 0.75rem; font-weight: 600;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.step-text h3 { font-size: 0.9rem; font-weight: 600; color: var(--slate); margin-bottom: 2px; }
+.step-text p { font-size: 0.8rem; color: var(--mid); line-height: 1.5; }
+
+/* BUTTON */
+.btn {
+  display: inline-block; background: var(--green); color: white;
+  border: none; padding: 1rem 2.4rem; font-family: var(--sans);
+  font-size: 0.95rem; font-weight: 600; border-radius: 6px;
+  cursor: pointer; text-decoration: none; transition: background 0.2s, transform 0.15s;
+  width: 100%;
+}
+.btn:hover { background: var(--green2); transform: translateY(-1px); }
+.btn:disabled { background: var(--mid); cursor: not-allowed; transform: none; }
+.btn-outline {
+  display: inline-block; background: transparent; color: var(--green);
+  border: 1.5px solid var(--green); padding: 0.8rem 2rem;
+  font-family: var(--sans); font-size: 0.875rem; font-weight: 500;
+  border-radius: 6px; cursor: pointer; text-decoration: none;
+  transition: all 0.2s; width: 100%; margin-top: 0.75rem;
+}
+.btn-outline:hover { background: var(--green); color: white; }
+
+/* FOOTER */
+footer {
+  padding: 1.5rem 5vw; border-top: 1px solid var(--border);
+  text-align: center; font-size: 0.75rem; color: var(--mid);
+}
+footer a { color: var(--green); text-decoration: none; }
+
+/* PROGRESS BAR */
+.progress-bar {
+  width: 100%; height: 3px; background: var(--border);
+  border-radius: 2px; margin-bottom: 2rem; overflow: hidden;
+}
+.progress-fill {
+  height: 100%; background: var(--green);
+  border-radius: 2px; transition: width 0.5s ease;
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="https://edge-energy.uk" class="nav-logo">edge<span>.</span></a>
+  <span style="font-size:0.8rem;color:var(--mid)">Secure · SSL Encrypted</span>
+</nav>
+
+<main>
+  <div class="container">
+
+    <!-- STATE: LOADING -->
+    <div id="state-loading" class="state active">
+      <div class="spinner"></div>
+      <h1>One moment<em>…</em></h1>
+      <p class="lead">We're preparing your personalised quote request.</p>
+    </div>
+
+    <!-- STATE: CONFIRM -->
+    <div id="state-confirm" class="state">
+      <div class="progress-bar"><div class="progress-fill" id="progress" style="width:33%"></div></div>
+      <div class="icon-wrap blue"><span class="icon">⚡</span></div>
+      <h1>Let's get you a<br><em>better deal</em></h1>
+      <p class="lead">We'll start by sending you a Letter of Authority — a quick digital signature that lets us approach suppliers on your behalf.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-text">
+            <h3>Sign your Letter of Authority</h3>
+            <p>Takes 2 minutes. DocuSign will send it to your email right now.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-text">
+            <h3>We go to market</h3>
+            <p>We approach every major UK supplier and request quotes on your behalf.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-text">
+            <h3>You choose the best deal</h3>
+            <p>We send you a clear comparison. You pick the winner. We handle the switch.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" id="contact-card">
+        <div class="card-row"><span>Name</span><span id="display-name">—</span></div>
+        <div class="card-row"><span>Email</span><span id="display-email">—</span></div>
+        <div class="card-row"><span>Company</span><span id="display-company">—</span></div>
+      </div>
+
+      <button class="btn" id="btn-loa" onclick="sendLOA()">Send my Letter of Authority →</button>
+      <p class="small">Not you? <a href="https://edge-energy.uk" style="color:var(--green)">Go back to edge-energy.uk</a></p>
+    </div>
+
+    <!-- STATE: SENDING -->
+    <div id="state-sending" class="state">
+      <div class="progress-bar"><div class="progress-fill" style="width:66%"></div></div>
+      <div class="spinner"></div>
+      <h1>Sending your<br><em>LOA…</em></h1>
+      <p class="lead">We're sending your Letter of Authority via DocuSign right now.</p>
+    </div>
+
+    <!-- STATE: SUCCESS -->
+    <div id="state-success" class="state">
+      <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+      <div class="icon-wrap green"><span class="icon">✓</span></div>
+      <h1>LOA sent to<br>your <em>inbox</em></h1>
+      <p class="lead">Check your email for a DocuSign message from Edge Energy. Sign it and we'll get straight to work.</p>
+      <div class="card">
+        <div class="card-row"><span>Sent to</span><span id="success-email">—</span></div>
+        <div class="card-row"><span>From</span><span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="93fbf6fffffcd3f6f7f4f6f6fdf6e1f4eabdf0fcbde6f8">[email&#160;protected]</a></span></div>
+        <div class="card-row"><span>What's next</span><span>Sign the LOA → We get quotes</span></div>
+      </div>
+      <p class="small">Can't find the email? Check your spam folder or <a href="/cdn-cgi/l/email-protection#8ee6ebe2e2e1ceebeae9ebebe0ebfce9f7a0ede1a0fbe5" style="color:var(--green)">contact us</a> and we'll resend it.</p>
+    </div>
+
+    <!-- STATE: ERROR -->
+    <div id="state-error" class="state">
+      <div class="icon-wrap red"><span class="icon">!</span></div>
+      <h1>Something went<br><em>wrong</em></h1>
+      <p class="lead">We couldn't send your LOA automatically. Please get in touch and we'll sort it straight away.</p>
+      <a href="/cdn-cgi/l/email-protection#d6beb3babab996b3b2b1b3b3b8b3a4b1aff8b5b9f8a3bde9a5a3b4bcb3b5a2eb9a9997f684b3a7a3b3a5a2" class="btn">Email us directly</a>
+      <a href="https://edge-energy.uk" class="btn-outline">Back to website</a>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <p>Edge Energy Ltd · Independent Business Energy Broker · London<br>
+  <a href="https://edge-energy.uk">edge-energy.uk</a> · <a href="/cdn-cgi/l/email-protection#b1d9d4dddddef1d4d5d6d4d4dfd4c3d6c89fd2de9fc4da"><span class="__cf_email__" data-cfemail="d6beb3babab996b3b2b1b3b3b8b3a4b1aff8b5b9f8a3bd">[email&#160;protected]</span></a></p>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const N8N_WEBHOOK = 'REPLACE_WITH_MAKE_S3_WEBHOOK_URL';
+
+let contactData = {};
+
+function show(stateId) {
+  document.querySelectorAll('.state').forEach(s => s.classList.remove('active'));
+  document.getElementById(stateId).classList.add('active');
+}
+
+function getParams() {
+  const p = new URLSearchParams(window.location.search);
+  return {
+    contactId: p.get('contact') || p.get('contactId') || '',
+    name: p.get('name') || '',
+    email: p.get('email') || '',
+    company: p.get('company') || ''
+  };
+}
+
+async function init() {
+  const params = getParams();
+
+  if (!params.email && !params.contactId) {
+    show('state-error');
+    return;
+  }
+
+  contactData = params;
+
+  // Fill in contact details
+  document.getElementById('display-name').textContent = params.name || 'Not provided';
+  document.getElementById('display-email').textContent = params.email || 'Not provided';
+  document.getElementById('display-company').textContent = params.company || 'Not provided';
+  document.getElementById('success-email').textContent = params.email || 'your email';
+
+  show('state-confirm');
+}
+
+async function sendLOA() {
+  const btn = document.getElementById('btn-loa');
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+  show('state-sending');
+
+  try {
+    await fetch(N8N_WEBHOOK, {
+      method: 'POST',
+      mode: 'no-cors',
+      hea
