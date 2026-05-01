@@ -1,3 +1,7 @@
+[build]
+  base = "site/"
+  publish = "site/"
+
 [[headers]]
   for = "/*"
   [headers.values]
